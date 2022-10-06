@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "wireguard.fullname" . }}
+  name: wireguard
+  namespace: argocd
   labels:
     {{- include "wireguard.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: LoadBalancer
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 51820
       targetPort: 51820
       protocol: UDP
       name: main

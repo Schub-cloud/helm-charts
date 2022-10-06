@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "wireguard.fullname" . }}
+  name: wireguard
+  namespace: argocd
   labels:
     {{- include "wireguard.labels" . | nindent 4 }}
 spec:
@@ -28,15 +29,21 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: wireguard
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: linuxserver/wireguard:version-v1.0.20210914
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+            - name: main
+              containerPort: 51820
+              protocol: UDP
+          env:
+            - name: "Schub"
+              value: "SouthAmerica/Argentina"
+            # Keep the PEERS environment variable to force server mode
+            - name: "PEERS"
+              value: "clients-name"    
           livenessProbe:
             httpGet:
               path: /
@@ -59,3 +66,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      securityContext:
+        privileged: true
+      capabilities:
+        add:
+          - NET_ADMIN
