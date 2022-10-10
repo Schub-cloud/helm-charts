@@ -1,55 +1,38 @@
-# Default values for wireguard.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 replicaCount: 1
-
-wg0.conf.template: |
-    [Interface]
-    Address = 10.0.0.1/24
-    ListenPort = 51820
-    PrivateKey = {{ .Values.secret.privatekey }}
-
-    [Peer]
-    PublicKey = {{ .Values.secret.publickey }}
-    AllowedIPs = 0.0.0.0/0
 
 image:
   repository: hub.docker.com/linuxserver/wireguard
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: version-v1.0.20210914
 
-- name: wireguard
-  securityContext:
-    {{- toYaml .Values.securityContext | nindent 12 }}
-  image: linuxserver/wireguard:version-v1.0.20210914
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+wg0.conf.template: |
+    [Interface]
+    Address = 10.0.0.1/24
+    ListenPort = 51820
+    PrivateKey = ""
+
+    [Peer]
+    PublicKey = ""
+    AllowedIPs = 0.0.0.0/0
+
 serviceAccount:
-  # Specifies whether a service account should be created
   create: false
-  # Annotations to add to the service account
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
 
 podAnnotations: {}
 
 podSecurityContext:
   {}
-  # fsGroup: 2000
 
 securityContext:
   {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -63,8 +46,6 @@ ingress:
     acme.cert-manager.io/http01-edit-in-place: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   ingressClassName: nginx
   hosts:
     - host: wireguard.experiments.schub.cloud
@@ -75,51 +56,37 @@ ingress:
     - secretName: argocd-tls
       hosts:
         - wireguard.experiments.schub.cloud
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources:
   {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
 
 autoscaling:
   enabled: false
   minReplicas: 3
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
-
-ports:
-  - name: main
-    containerPort: 51820
-    protocol: UDP
-  env:
-    - name: "Schub"
-      value: "SouthAmerica/Argentina"
-    # Keep the PEERS environment variable to force server mode
-    - name: "PEERS"
-      value: "clients-name"    
-  livenessProbe:
-    httpGet:
-      path: /
-      port: http
-  readinessProbe:
-    httpGet:
-      path: /
-      port: http
+containers:
+  - name: wireguard
+    ports:
+      - port: 51820
+      - protocol: UDP
+      - name: main
+    env:
+      - name: "Schub"
+        value: "SouthAmerica/Argentina"
+      - name: "PEERS"
+        value: "clients-name"    
+    livenessProbe:
+      httpGet:
+        path: /
+        port: http
+    readinessProbe:
+      httpGet:
+        path: /
+        port: http
