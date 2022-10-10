@@ -1,5 +1,10 @@
 replicaCount: 1
 
+volumes:
+- name: wireguard
+  secret:
+    secretName: wireguard-secret
+
 image:
   repo: hub.docker.com/linuxserver/wireguard
   pullPolicy: IfNotPresent

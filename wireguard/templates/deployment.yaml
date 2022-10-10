@@ -51,6 +51,10 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumes }}
+          volumes:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -68,3 +72,4 @@ spec:
       capabilities:
         add:
           - NET_ADMIN
+      
