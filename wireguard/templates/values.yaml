@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: hub.docker.com/linuxserver/wireguard
+  repo: hub.docker.com/linuxserver/wireguard
   pullPolicy: IfNotPresent
   tag: version-v1.0.20210914
 
@@ -12,16 +12,6 @@ podSecurityContext:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
-wg0.conf.template: |
-    [Interface]
-    Address = 10.0.0.1/24
-    ListenPort = 51820
-    PrivateKey = ""
-
-    [Peer]
-    PublicKey = ""
-    AllowedIPs = 0.0.0.0/0
 
 serviceAccount:
   create: false

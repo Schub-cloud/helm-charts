@@ -31,7 +31,7 @@ spec:
         - name: wireguard
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: linuxserver/wireguard:version-v1.0.20210914
+          image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - port: 51820
@@ -45,12 +45,12 @@ spec:
               value: "clients-name"    
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: {{ (((.Values).livenessProbe).httpGet).path }}
+              port: {{ (((.Values).livenessProbe).httpGet).port }}
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: {{ (((.Values).readinessProbe).httpGet).path }}
+              port: {{ (((.Values).readinessProbe).httpGet).port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
