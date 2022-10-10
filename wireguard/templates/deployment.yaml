@@ -37,20 +37,18 @@ spec:
             - port: 51820
             - protocol: UDP
             - name: main
+          {{- with .Values.env }}
           env:
-            - name: "Schub"
-              value: "SouthAmerica/Argentina"
-            # Keep the PEERS environment variable to force server mode
-            - name: "PEERS"
-              value: "clients-name"    
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            httpGet:
-              path: {{ (((.Values).livenessProbe).httpGet).path }}
-              port: {{ (((.Values).livenessProbe).httpGet).port }}
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
           readinessProbe:
-            httpGet:
-              path: {{ (((.Values).readinessProbe).httpGet).path }}
-              port: {{ (((.Values).readinessProbe).httpGet).port }}
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
