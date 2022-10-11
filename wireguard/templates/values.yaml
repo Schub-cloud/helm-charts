@@ -67,7 +67,6 @@ tolerations: []
 
 affinity: {}
 containers:
-  - name: wireguard
     ports:
       - port: 51820
       - protocol: UDP
@@ -86,7 +85,7 @@ containers:
         path: /
         port: http
 
-wg0.conf.template: |
+wg0.conf.wireguardConfig: |
   [Interface]
   Address = 10.0.0.1/24
   ListenPort = 51820

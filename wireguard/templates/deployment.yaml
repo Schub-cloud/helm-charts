@@ -5,12 +5,15 @@ metadata:
   labels:
     {{- include "wireguard.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  selector:
-    matchLabels:
-      {{- include "wireguard.selectorLabels" . | nindent 6 }}
+  initContainers:
+    - name: "wireguard-template-replacement"
+      image: "busybox"
+      command: ["sh", "-c", "ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" /etc/wireguard-secret/wg0.conf.template > /etc/wireguard/wg0.conf; chmod 400 /etc/wireguard/wg0.conf"]
+      volumeMounts:
+        - name: wireguard-config
+          mountPath: /etc/wireguard/
+        - name: wireguard-secret
+          mountPath: /etc/wireguard-secret/
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,11 +23,6 @@ spec:
       labels:
         {{- include "wireguard.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "wireguard.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,6 +39,15 @@ spec:
           env:
             {{- toYaml . | nindent 8 }}
           {{- end }}
+          volumeMounts:
+            - name: wireguard-config
+              mountPath: /etc/wireguard/
+              readOnly: true
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN 
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 8 }}
@@ -51,10 +58,6 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumes }}
-          volumes:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -67,9 +70,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      securityContext:
-        privileged: true
-      capabilities:
-        add:
-          - NET_ADMIN
-      
+      volumes:
+        - name: wireguard-config
+          emptyDir: {}
+        - name: wireguard-secret
+          secret:
+            secretName: wireguard 
+      imagePullSecrets:
+        - name: docker-registry       
