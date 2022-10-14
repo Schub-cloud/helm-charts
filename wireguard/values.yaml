@@ -1,0 +1,62 @@
+replicaCount: 1
+
+image:
+  repo: linuxserver/wireguard
+  pullPolicy: IfNotPresent
+  tag: version-v1.0.20210914 
+
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+resources:
+  {}
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+ports:
+  - name: main
+    containerPort: 51820
+    protocol: UDP
+
+# livenessProbe:
+#   httpGet:
+#     path: /
+#     port: http
+
+# readinessProbe:
+#   httpGet:
+#     path: /
+#     port: http
+
+wireguardConfig: |
+  [Interface]
+  Address = 10.0.0.1/24
+  ListenPort = 51820
+  PrivateKey = 
+  [Peer]
+  PublicKey = 
+  AllowedIPs = 0.0.0.0/0

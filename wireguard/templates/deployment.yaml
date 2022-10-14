@@ -5,15 +5,12 @@ metadata:
   labels:
     {{- include "wireguard.labels" . | nindent 4 }}
 spec:
-  initContainers:
-    - name: "wireguard-template-replacement"
-      image: "busybox"
-      command: ["sh", "-c", "ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" /etc/wireguard-secret/wg0.conf.template > /etc/wireguard/wg0.conf; chmod 400 /etc/wireguard/wg0.conf"]
-      volumeMounts:
-        - name: wireguard-config
-          mountPath: /etc/wireguard/
-        - name: wireguard-secret
-          mountPath: /etc/wireguard-secret/
+  {{- if not .Values.autoscaling }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "wireguard.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -30,11 +27,10 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.ports }}
           ports:
-            - port: 51820
-            - protocol: UDP
-            - name: main
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.env }}
           env:
             {{- toYaml . | nindent 8 }}
@@ -50,11 +46,11 @@ spec:
                 - NET_ADMIN 
           {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.readinessProbe }}
           readinessProbe:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -72,9 +68,7 @@ spec:
       {{- end }}
       volumes:
         - name: wireguard-config
-          emptyDir: {}
-        - name: wireguard-secret
           secret:
-            secretName: wireguard 
+            secretName: {{ include "wireguard.fullname" . }}-config-secret
       imagePullSecrets:
         - name: docker-registry       

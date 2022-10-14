@@ -7,9 +7,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 51820
+    - name: main
       targetPort: 51820
       protocol: UDP
-      name: main
+      port: 51820
   selector:
     {{- include "wireguard.selectorLabels" . | nindent 4 }}
