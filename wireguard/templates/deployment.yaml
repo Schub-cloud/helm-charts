@@ -31,10 +31,17 @@ spec:
           ports:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.env }}
           env:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
+            - name: TZ
+              value: SouthAmerica/Brasilia
+            - name: PEERS
+              value: "2"
+            - name: SERVERPORT
+              value: "51820"
+            - name: INTERNAL_SUBNET
+              value: "8.8.4.4"
+            - name: SERVERURL
+              value: argocd.experiments.schub.cloud
           volumeMounts:
             - name: wireguard-config
               mountPath: /etc/wireguard/
