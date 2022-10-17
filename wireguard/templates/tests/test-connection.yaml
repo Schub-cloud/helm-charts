@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: alpine
       command: ['wget']
-      args: ['{{ include "wireguard.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "wireguard.fullname" . }}:{{ ((((.Values).service).spec).ports).port }}']
   restartPolicy: Never

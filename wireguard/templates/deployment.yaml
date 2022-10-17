@@ -22,6 +22,11 @@ spec:
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: "wireguard-template-replacement"
+          image: alpine
+          command: ["sh", "-c"]
+          args: ["apk -y update", "apk -y add --upgrade linux-headers", "ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" "]
       containers:
         - name: wireguard
           securityContext:
@@ -35,11 +40,15 @@ spec:
             - name: TZ
               value: SouthAmerica/Brasilia
             - name: PEERS
-              value: "2"
+              value: "1"
             - name: SERVERPORT
               value: "51820"
             - name: INTERNAL_SUBNET
               value: "8.8.4.4"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
             - name: SERVERURL
               value: argocd.experiments.schub.cloud
           volumeMounts:
@@ -50,7 +59,8 @@ spec:
             privileged: true
             capabilities:
               add:
-                - NET_ADMIN 
+                - NET_ADMIN
+                - SYS_MODULE 
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
