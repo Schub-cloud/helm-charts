@@ -5,9 +5,14 @@ image:
   pullPolicy: IfNotPresent
   tag: 1.0.20210914
 
-podSecurityContext:
-  runAsUser: 0
-  runAsGroup: 0
+podSecurityContext: {}
+
+securityContext:
+  privileged: true
+  capabilities:
+    add:
+      - NET_ADMIN
+      - SYS_MODULE
 
 imagePullSecrets: []
 nameOverride: ""
@@ -17,8 +22,6 @@ serviceAccount:
   create: false
 
 podAnnotations: {}
-
-securityContext: {}
 
 resources: {}
 
@@ -57,3 +60,9 @@ wireguardConfig: |
   [Peer]
   PublicKey = 
   AllowedIPs = 0.0.0.0/0
+
+env:
+  TZ: SouthAmerica/Brasilia
+  PEERS: "1"
+  PUID: "1000"
+  PGID: "1000"
