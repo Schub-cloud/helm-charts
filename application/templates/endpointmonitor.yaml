@@ -1,0 +1,31 @@
+{{- if and .Values.endpointMonitor .Values.endpointMonitor.enabled (or (and .Values.route .Values.route.enabled) (and .Values.ingress .Values.ingress.enabled))}}
+apiVersion: endpointmonitor.stakater.com/v1alpha1
+kind: EndpointMonitor
+metadata:
+  labels:
+{{ include "application.labels.application" . | indent 4 }}
+{{ include "application.labels.chart" . | indent 4 }}
+{{- if .Values.endpointMonitor.additionalLabels }}
+{{ toYaml .Values.endpointMonitor.additionalLabels | indent 4 }}
+{{- end }}
+{{- if .Values.endpointMonitor.annotations }}
+  annotations:
+{{ toYaml .Values.endpointMonitor.annotations | indent 4 }}
+{{- end }}
+  name: {{ template "application.name" . }}
+  namespace: {{ template "application.namespace" . }}
+spec:
+  forceHttps: true
+  urlFrom:
+{{- if and .Values.route .Values.route.enabled }}
+    routeRef:
+      name:  {{ template "application.name" . }}
+{{- end }}
+{{- if and .Values.ingress .Values.ingress.enabled }}
+    ingressRef:
+      name:  {{ template "application.name" . }}
+{{- end }}
+{{- if .Values.endpointMonitor.additionalConfig }}
+{{ toYaml .Values.endpointMonitor.additionalConfig | indent 2 }}
+{{- end }}
+{{- end }}
