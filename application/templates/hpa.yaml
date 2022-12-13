@@ -1,28 +1,28 @@
-{{- if .Values.autoscaling }}
-{{- if and .Values.autoscaling.enabled .Values.deployment }}
-apiVersion: autoscaling/v2beta2
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "application.name" . }}
+  name: {{ include "application.fullname" . }}
   labels:
-    {{ include "application.labels.application" . | nindent 4 }}
-    {{ include "application.labels.chart" . | nindent 4 }}
-  {{- if .Values.autoscaling.additionalLabels }}
-    {{- toYaml .Values.autoscaling.additionalLabels | nindent 4 }}
-  {{- end }}
-  {{- if .Values.autoscaling.annotations }}
-  annotations:
-    {{- toYaml .Values.autoscaling.annotations | nindent 4 }}
-  {{- end }}    
-  namespace: {{ template "application.namespace" . }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "application.name" . }}
+    name: {{ include "application.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
-    {{- toYaml .Values.autoscaling.metrics | nindent 4 }}
-{{- end }}
+    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
 {{- end }}
