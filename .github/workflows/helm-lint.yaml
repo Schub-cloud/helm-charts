@@ -3,7 +3,7 @@ name: Linting helm Charts
 on: push
 
 jobs:
-  lint-test:
+  linting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
