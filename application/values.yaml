@@ -40,6 +40,18 @@ service:
   type: ClusterIP
   port: 80
 
+probes:
+  liveness:
+    enabled: true
+    probe: 
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+  readiness:
+    enabled: false
+    probe:
+
 ingress:
   enabled: false
   className: ""
