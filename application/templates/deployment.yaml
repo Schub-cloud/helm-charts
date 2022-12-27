@@ -47,6 +47,11 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- range .Values.config.volumes }}
+            {{- toYaml ( required "A valid volume mount is required!" .mount) | nindent 10 }}
+            {{- end }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -58,4 +63,9 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:    
+        {{- range .Values.config.volumes }}
+        {{- toYaml ( required "A valid volume config is required!" .config) | nindent 6 }}
+        {{- end }}
       {{- end }}
