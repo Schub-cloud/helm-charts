@@ -42,12 +42,12 @@ service:
 
 probes:
   liveness:
-    enabled: true
+    enabled: false
     probe: 
-      exec:
-        command:
-        - cat
-        - /tmp/healthy
+    #  exec:
+    #    command:
+    #    - cat
+    #    - /tmp/healthy
   readiness:
     enabled: false
     probe:
