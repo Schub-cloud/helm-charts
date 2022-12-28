@@ -39,27 +39,27 @@ securityContext: {}
 config:
   enabled: false
   volumes:
-  - volume: first_volume
-    config:
-    - name: foo
-      secret:
-        secretName: mysecret
-        optional: false
-    mount:
-    - name: foo
-      mountPath: "/etc/foo"
-      readOnly: true
-  - volume: second_volume
-    config:
-    - name: config-vol
-      configMap:
-        name: log-config
-        items:
-          - key: log_level
-            path: log_level
-    mount:
-    - name: config-vol
-      mountPath: /etc/config
+    #first_volume: 
+    #  config:
+    #  - name: volume1
+    #    secret:
+    #      secretName: mysecret
+    #      optional: false  
+    #  mount:
+    #  - name: volume1
+    #    readOnly: true
+    #    mountPath: /app/application-config.json
+    #second_volume: 
+    #  config:
+    #  - name: config-vol
+    #    configMap:
+    #      name: log-config
+    #      items:
+    #        - key: log_level
+    #          path: log_level
+    #  mount:
+    #  - name: config-vol
+    #    mountPath: /etc/config
 
 service:
   type: ClusterIP
