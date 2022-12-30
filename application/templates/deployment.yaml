@@ -37,6 +37,12 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- if .Values.variables.enabled }}
+          envFrom:
+            {{- range .Values.variables.envs }}
+            {{- toYaml (required "A valid Environment Variable is required!" .) | nindent 10 }}
+            {{- end }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /
