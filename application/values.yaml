@@ -41,14 +41,14 @@ config:
   volumes:
     #first_volume: 
     #  config:
-    #  - name: volume1
+    #  - name: secret-vol
     #    secret:
     #      secretName: mysecret
     #      optional: false  
     #  mount:
-    #  - name: volume1
+    #  - name: secret-vol
     #    readOnly: true
-    #    mountPath: /app/application-config.json
+    #    mountPath: /app/application-config
     #second_volume: 
     #  config:
     #  - name: config-vol
