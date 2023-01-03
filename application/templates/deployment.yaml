@@ -37,9 +37,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- if .Values.variables.enabled }}
+          {{- if .Values.envVars.enabled }}
           envFrom:
-            {{- range .Values.variables.envs }}
+            {{- range .Values.envVars.envs }}
             {{- toYaml (required "A valid Environment Variable is required!" .) | nindent 10 }}
             {{- end }}
           {{- end }}
