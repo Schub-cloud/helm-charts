@@ -18,7 +18,7 @@ helm upgrade --install rabbitmq-scaling-demo-app ./rabbitmq-sample-app -n monito
 ```
 ## Deploy HPA
 ```
-kubectl apply -f ./hpa-custom-metric.yaml -n monitoing
+kubectl apply -f ./hpa-custom-metric/hpa-custom-metric.yaml -n monitoing
 ```
 
 ## Priority Class
