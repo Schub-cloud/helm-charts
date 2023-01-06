@@ -24,5 +24,5 @@ kubectl apply -f ./hpa-custom-metric/hpa-custom-metric.yaml -n monitoing
 ## Priority Class
 To use this priority class in you pods we need to update the parameter in values.yaml file to **priorityClassName:""** to the name of priority class 
 ```
-kubectl apply -f ./priority-class.yaml -n monitoring
+kubectl apply -f ./priority-class/priority-class.yaml -n monitoring
 ```
