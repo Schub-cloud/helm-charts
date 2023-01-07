@@ -20,6 +20,9 @@ spec:
       labels:
         {{- include "application.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.priorityClassName.enabled }}
+      priorityClassName: "{{ .Values.priorityClassName.name }}"
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
