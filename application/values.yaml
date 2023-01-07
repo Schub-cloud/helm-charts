@@ -80,3 +80,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Enable priorityClass
+priorityClassName:
+  enabled: false
+  name: ""
