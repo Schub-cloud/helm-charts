@@ -36,6 +36,31 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+config:
+  enabled: false
+  volumes:
+    #first_volume: 
+    #  config:
+    #  - name: secret-vol
+    #    secret:
+    #      secretName: mysecret
+    #      optional: false  
+    #  mount:
+    #  - name: secret-vol
+    #    readOnly: true
+    #    mountPath: /app/application-config
+    #second_volume: 
+    #  config:
+    #  - name: config-vol
+    #    configMap:
+    #      name: log-config
+    #      items:
+    #        - key: log_level
+    #          path: log_level
+    #  mount:
+    #  - name: config-vol
+    #    mountPath: /etc/config
+
 service:
   type: ClusterIP
   port: 80
