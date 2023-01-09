@@ -43,16 +43,22 @@ spec:
             {{- toYaml (required "A valid Environment Variable is required!" .) | nindent 10 }}
             {{- end }}
           {{- end }}
+          {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml (required "A valid livenessProbe is required!" .Values.probes.liveness.probe) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.probes.readiness.enabled }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml (required "A valid readinessProbe is required!" .Values.probes.readiness.probe) | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.config.enabled }}
+          volumeMounts:
+            {{- range .Values.config.volumes }}
+            {{- toYaml ( required "A valid volume mount is required!" .mount) | nindent 10 }}
+            {{- end }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -64,4 +70,10 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.enabled }}
+      volumes:    
+        {{- range .Values.config.volumes }}
+        {{- toYaml ( required "A valid volume config is required!" .config) | nindent 6 }}
+        {{- end }}
       {{- end }}

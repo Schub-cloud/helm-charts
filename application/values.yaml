@@ -46,9 +46,46 @@ envVars:
     #- secretRef:
     #    name: env-secrets
 
+config:
+  enabled: false
+  volumes:
+    #first_volume: 
+    #  config:
+    #  - name: secret-vol
+    #    secret:
+    #      secretName: mysecret
+    #      optional: false  
+    #  mount:
+    #  - name: secret-vol
+    #    readOnly: true
+    #    mountPath: /app/application-config
+    #second_volume: 
+    #  config:
+    #  - name: config-vol
+    #    configMap:
+    #      name: log-config
+    #      items:
+    #        - key: log_level
+    #          path: log_level
+    #  mount:
+    #  - name: config-vol
+    #    mountPath: /etc/config
+
 service:
   type: ClusterIP
   port: 80
+
+probes:
+  liveness:
+    enabled: false
+    probe: 
+    #  exec:
+    #    command:
+    #    - cat
+    #    - /tmp/healthy
+  readiness:
+    enabled: false
+    probe:
 
 ingress:
   enabled: false
