@@ -36,6 +36,16 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+envVars:
+  enabled: false
+  envs:
+    #first_env:
+    #- configMapRef:
+    #    name: env-configmap
+    #second_env:
+    #- secretRef:
+    #    name: env-secrets
+
 config:
   enabled: false
   volumes:
