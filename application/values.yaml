@@ -120,6 +120,16 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
+  customMetrics:
+    enabled: false
+    metric:
+      name: ""
+    describedObject:
+      apiVersion: ""
+      kind: ""
+      name: ""
+    target:
+      value: ""
   # targetMemoryUtilizationPercentage: 80
   
 # Enable podMonitor, serviceMonitor
