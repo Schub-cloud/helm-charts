@@ -1,0 +1,14 @@
+{{- if .Values.prometheusOperator.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Values.prometheusOperator.serviceMonitor.name }}
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "application.selectorLabels" . | nindent 6 }}
+  endpoints:
+  - port: {{ .Values.prometheusOperator.serviceMonitor.port }}
+{{- end }}
