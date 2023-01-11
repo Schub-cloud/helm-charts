@@ -73,7 +73,16 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  enable_rabbitmq_custom_metric: false
+  customMetrics:
+    enabled: false
+    metric:
+      name: ""
+    describedObject:
+      apiVersion: ""
+      kind: ""
+      name: ""
+    target:
+      value: ""
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
