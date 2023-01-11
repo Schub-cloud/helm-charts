@@ -75,12 +75,17 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
   
-# Enable prometheus-operator
+# Enable podMonitor, serviceMonitor
 prometheusOperator:
   serviceMonitor:
     enabled: false
+    name: ""
+    port: ""
   podMonitor:
     enabled: false
+    name: ""
+    port: ""
+    
 
 nodeSelector: {}
 
