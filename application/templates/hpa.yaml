@@ -19,18 +19,18 @@ spec:
         name: cpu
         targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- if .Values.autoscaling.renable_rabbitmq_custom_metric }}
+    {{- if .Values.autoscaling.customMetrics.enabled }}
     - type: Object
       object:
         metric:
-          name: rabbitmq_queue_messages
+          name: {{ .Values.autoscaling.customMetrics.metric.name }}
         describedObject:
-          apiVersion: "v1"
-          kind: Service
-          name: {{ include "application.fullname" . }}
+          apiVersion: {{ .Values.autoscaling.customMetrics.describedObject.apiVersion }}
+          kind: {{ .Values.autoscaling.customMetrics.describedObject.kind }}
+          name: {{ .Values.autoscaling.customMetrics.describedObject.name }}
         target:
           type: Value
-          value: 100
+          value: {{ .Values.autoscaling.customMetrics.target.value }}
     {{- end }}
     {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
