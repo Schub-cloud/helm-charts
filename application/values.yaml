@@ -82,6 +82,6 @@ tolerations: []
 affinity: {}
 
 # Enable priorityClass
-priorityClassName:
+priorityClass:
   enabled: false
   name: ""
