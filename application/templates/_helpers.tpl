@@ -36,6 +36,12 @@ Common labels
 {{- define "application.labels" -}}
 helm.sh/chart: {{ include "application.chart" . }}
 {{ include "application.selectorLabels" . }}
+{{- if and .Values.reloader.auto (not .Values.reloader.custom)}}
+reloader.stakater.com/auto: "true"
+{{- end }}
+{{- if .Values.reloader.custom }}
+{{ toYaml (required "A valid reloader config is required!" .Values.reloader.custom.values) }}
+{{- end }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}

@@ -46,6 +46,14 @@ envVars:
     #- secretRef:
     #    name: env-secrets
 
+#enable automatic restart upon confimgap/secret changes
+reloader: 
+  auto: false
+  custom:
+    #values:
+    #  configmap.reloader.stakater.com/reload: "foo-configmap,bar-configmap,baz-configmap"
+    #  secret.reloader.stakater.com/reload: "foo-secret,bar-secret,baz-secret"
+
 config:
   enabled: false
   volumes:
