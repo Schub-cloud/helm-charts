@@ -31,17 +31,23 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
+Common annotations
 */}}
-{{- define "application.labels" -}}
-helm.sh/chart: {{ include "application.chart" . }}
-{{ include "application.selectorLabels" . }}
-{{- if and .Values.reloader.auto (not .Values.reloader.custom)}}
+{{- define "application.annotations" -}}
+{{- if and .Values.reloader.auto (not .Values.reloader.custom) -}}
 reloader.stakater.com/auto: "true"
 {{- end }}
 {{- if .Values.reloader.custom }}
 {{ toYaml (required "A valid reloader config is required!" .Values.reloader.custom.values) }}
 {{- end }}
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "application.labels" -}}
+helm.sh/chart: {{ include "application.chart" . }}
+{{ include "application.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
