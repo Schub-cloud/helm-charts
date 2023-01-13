@@ -19,9 +19,9 @@ spec:
         name: cpu
         targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{ - range $metrics := .Values.autoscaling.customMetrics }}
-    {{ - range $decribeObject := $metrics.describedObject }} 
-    {{ - range $target := $metrics.target }} 
+    {{- range $metrics := .Values.autoscaling.customMetrics }}
+    {{- range $decribeObject := $metrics.describedObject }} 
+    {{- range $target := $metrics.target }} 
     - type: Object
       object:
         metric:
