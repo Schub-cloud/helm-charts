@@ -51,9 +51,8 @@ reloader:
   enabled: false
   auto: true
   custom:
-    #values:
-    #  configmap.reloader.stakater.com/reload: "foo-configmap,bar-configmap,baz-configmap"
-    #  secret.reloader.stakater.com/reload: "foo-secret,bar-secret,baz-secret"
+    #configmap.reloader.stakater.com/reload: "foo-configmap,bar-configmap,baz-configmap"
+    #secret.reloader.stakater.com/reload: "foo-secret,bar-secret,baz-secret"
 
 config:
   enabled: false

@@ -37,8 +37,8 @@ Common annotations
 {{- if and .Values.reloader.enabled  .Values.reloader.auto -}}
 reloader.stakater.com/auto: "true"
 {{- end }}
-{{- if and .Values.reloader.enabled .Values.reloader.custom }}
-{{ toYaml (required "A valid reloader config is required!" .Values.reloader.custom.values) }}
+{{- if and .Values.reloader.enabled .Values.reloader.custom -}}
+{{ toYaml (required "A valid reloader config is required!" .Values.reloader.custom) }}
 {{- end }}
 {{- end }}
 
