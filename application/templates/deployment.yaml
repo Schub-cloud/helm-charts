@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "application.fullname" . }}
+  {{- if .Values.reloader.enabled}}
   annotations:
     {{- include "application.annotations" . | nindent 4 }}
+  {{- end}}
   labels:
     {{- include "application.labels" . | nindent 4 }}
 spec:
