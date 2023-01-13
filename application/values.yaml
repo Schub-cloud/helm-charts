@@ -48,7 +48,8 @@ envVars:
 
 #enable automatic restart upon confimgap/secret changes
 reloader: 
-  auto: false
+  enabled: false
+  auto: true
   custom:
     #values:
     #  configmap.reloader.stakater.com/reload: "foo-configmap,bar-configmap,baz-configmap"
