@@ -19,21 +19,19 @@ spec:
         name: cpu
         targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- range $metrics := .Values.autoscaling.customMetrics }}
-    {{- range $decribeObject := $metrics.describedObject }} 
-    {{- range $target := $metrics.target }} 
+    {{- range $k, $v := .Values.autoscaling.customMetric }}
     - type: Object
       object:
         metric:
-          name: {{ $metrics.name }}
+          name: {{ $v.name }}
         describedObject:
-          {{ $decribeObject }}
+          apiVersion: {{ $v.describedObject.apiVersion }}
+          kind: {{ $v.describedObject.kind }}
+          name: {{ $v.describedObject.name }}
         target:
           type: Value
-          value: {{ $target.value }}
+          value: {{ $v.target.value }}
     {{- end }} 
-    {{- end }} 
-    {{- end }}
     {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
