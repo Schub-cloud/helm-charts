@@ -73,23 +73,23 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  customMetrics:
-    metricA:
-      name: "A"
-      describedObject:
-        apiVersion: ""
-        kind: ""
-        name: ""
-      target:
-        value: ""
-    metricB:
-      name: "B"
-      describedObject:
-        apiVersion: ""
-        kind: ""
-        name: ""
-      target:
-        value: ""
+#   customMetrics:
+#     metricA:
+#       name: "A"
+#       describedObject:
+#         apiVersion: ""
+#         kind: ""
+#         name: ""
+#       target:
+#         value: ""
+#     metricB:
+#       name: "B"
+#       describedObject:
+#         apiVersion: ""
+#         kind: ""
+#         name: ""
+#       target:
+#         value: ""
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
