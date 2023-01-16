@@ -1,5 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "application.fullname" . }}
@@ -17,9 +17,11 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- range $k, $v := .Values.autoscaling.customMetric }}
+    {{- range $k, $v := .Values.autoscaling.customMetrics }}
     - type: Object
       object:
         metric:
@@ -36,6 +38,8 @@ spec:
     - type: Resource
       resource:
         name: memory
-        targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}
