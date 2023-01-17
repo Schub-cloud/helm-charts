@@ -31,7 +31,7 @@ spec:
           kind: {{ $v.describedObject.kind }}
           name: {{ $v.describedObject.name }}
         target:
-          type: Value
+          type: {{ $v.target.type }}
           value: {{ $v.target.value }}
     {{- end }} 
     {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
