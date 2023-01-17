@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "application.fullname" . }}
+  {{- if .Values.reloader.enabled}}
+  annotations:
+    {{- include "application.annotations" . | nindent 4 }}
+  {{- end}}
   labels:
     {{- include "application.labels" . | nindent 4 }}
 spec:
@@ -20,6 +24,9 @@ spec:
       labels:
         {{- include "application.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.priorityClass.enabled }}
+      priorityClassName: "{{ .Values.priorityClass.name }}"
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -37,16 +44,28 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- if .Values.envVars.enabled }}
+          envFrom:
+            {{- range .Values.envVars.envs }}
+            {{- toYaml (required "A valid Environment Variable is required!" .) | nindent 10 }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml (required "A valid livenessProbe is required!" .Values.probes.liveness.probe) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.probes.readiness.enabled }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml (required "A valid readinessProbe is required!" .Values.probes.readiness.probe) | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.config.enabled }}
+          volumeMounts:
+            {{- range .Values.config.volumes }}
+            {{- toYaml ( required "A valid volume mount is required!" .mount) | nindent 10 }}
+            {{- end }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -58,4 +77,10 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.enabled }}
+      volumes:    
+        {{- range .Values.config.volumes }}
+        {{- toYaml ( required "A valid volume config is required!" .config) | nindent 6 }}
+        {{- end }}
       {{- end }}

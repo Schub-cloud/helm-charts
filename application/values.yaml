@@ -36,9 +36,64 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+envVars:
+  enabled: false
+  envs:
+    #first_env:
+    #- configMapRef:
+    #    name: env-configmap
+    #second_env:
+    #- secretRef:
+    #    name: env-secrets
+
+#enable automatic restart upon confimgap/secret changes
+reloader: 
+  enabled: false
+  auto: true
+  custom:
+    #configmap.reloader.stakater.com/reload: "foo-configmap,bar-configmap,baz-configmap"
+    #secret.reloader.stakater.com/reload: "foo-secret,bar-secret,baz-secret"
+
+config:
+  enabled: false
+  volumes:
+    #first_volume: 
+    #  config:
+    #  - name: secret-vol
+    #    secret:
+    #      secretName: mysecret
+    #      optional: false  
+    #  mount:
+    #  - name: secret-vol
+    #    readOnly: true
+    #    mountPath: /app/application-config
+    #second_volume: 
+    #  config:
+    #  - name: config-vol
+    #    configMap:
+    #      name: log-config
+    #      items:
+    #        - key: log_level
+    #          path: log_level
+    #  mount:
+    #  - name: config-vol
+    #    mountPath: /etc/config
+
 service:
   type: ClusterIP
   port: 80
+
+probes:
+  liveness:
+    enabled: false
+    probe: 
+    #  exec:
+    #    command:
+    #    - cat
+    #    - /tmp/healthy
+  readiness:
+    enabled: false
+    probe:
 
 ingress:
   enabled: false
@@ -72,6 +127,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
+
   cpu:
     type: AverageValue
     targetCPUUtilizationPercentage: 80
@@ -97,10 +153,25 @@ autoscaling:
 #       target:
 #         type:
 #         value: ""
-   
+  
+# Enable podMonitor, serviceMonitor
+prometheusOperator:
+  serviceMonitor:
+    enabled: false
+    name: ""
+    port: ""
+  podMonitor:
+    enabled: false
+    name: ""
+    port: ""
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+# Enable priorityClass
+priorityClass:
+  enabled: false
+  name: ""

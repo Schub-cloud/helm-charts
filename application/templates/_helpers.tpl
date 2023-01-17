@@ -31,6 +31,17 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Common annotations
+*/}}
+{{- define "application.annotations" -}}
+{{- if .Values.reloader.auto -}}
+reloader.stakater.com/auto: "true"
+{{- else -}}
+{{ toYaml (required "A valid reloader config is required!" .Values.reloader.custom) }}
+{{- end }}
+{{- end }}
+
+{{/*
 Common labels
 */}}
 {{- define "application.labels" -}}
