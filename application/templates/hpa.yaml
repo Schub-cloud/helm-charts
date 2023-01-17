@@ -13,13 +13,13 @@ spec:
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+    {{- if .Values.autoscaling.cpu }}
     - type: Resource
       resource:
         name: cpu
         target:
-          type: {{ .Values.autoscaling.cpu.type }}
-          averageValue: {{ .Values.autoscaling.cpu.targetCPUUtilizationPercentage }}
+          type: {{ .Values.autoscaling.cpu.targetType }}
+          averageValue: {{ .Values.autoscaling.cpu.targetUtilizationPercentage }}
     {{- end }}
     {{- range $k, $v := .Values.autoscaling.customMetrics }}
     - type: Object
@@ -31,15 +31,15 @@ spec:
           kind: {{ $v.describedObject.kind }}
           name: {{ $v.describedObject.name }}
         target:
-          type: {{ $v.target.type }}
+          type: {{ $v.target.targetType }}
           value: {{ $v.target.value }}
     {{- end }} 
-    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- if .Values.autoscaling.memory }}
     - type: Resource
       resource:
         name: memory
         target:
-          type: {{ .Values.autoscaling.memory.type }}
-          averageValue: {{ .Values.autoscaling.memory.targetMemoryUtilizationPercentage }}
+          type: {{ .Values.autoscaling.memory.targetType }}
+          averageValue: {{ .Values.autoscaling.memory.targetUtilizationPercentage }}
     {{- end }}
 {{- end }}
