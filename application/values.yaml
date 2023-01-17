@@ -72,7 +72,12 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+  cpu:
+    type: AverageValue
+    targetCPUUtilizationPercentage: 80
+  memory:
+    type: AverageValue
+    targetMemoryUtilizationPercentage: 80
 #   customMetrics:
 #     metricA:
 #       name: "A"
@@ -90,7 +95,7 @@ autoscaling:
 #         name: ""
 #       target:
 #         value: ""
-  # targetMemoryUtilizationPercentage: 80
+   
 
 nodeSelector: {}
 
