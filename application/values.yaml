@@ -128,12 +128,12 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
 
-  cpu:
-    type: AverageValue
-    targetCPUUtilizationPercentage: 80
-  memory:
-    type: AverageValue
-    targetMemoryUtilizationPercentage: 80
+#   cpu:
+#     targetType: AverageValue
+#     targetUtilizationPercentage: 80
+#   memory:
+#     targetType: AverageValue
+#     targetUtilizationPercentage: 80
 #   customMetrics:
 #     metricA:
 #       name: "A"
@@ -142,7 +142,7 @@ autoscaling:
 #         kind: ""
 #         name: ""
 #       target:
-#         type:
+#         targetType:
 #         value: ""
 #     metricB:
 #       name: "B"
@@ -151,7 +151,7 @@ autoscaling:
 #         kind: ""
 #         name: ""
 #       target:
-#         type:
+#         targetType:
 #         value: ""
   
 # Enable podMonitor, serviceMonitor
