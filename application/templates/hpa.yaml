@@ -18,8 +18,8 @@ spec:
       resource:
         name: cpu
         target:
-          type: AverageValue
-          averageValue: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+          type: {{ .Values.autoscaling.cpu.type }}
+          averageValue: {{ .Values.autoscaling.cpu.targetCPUUtilizationPercentage }}
     {{- end }}
     {{- range $k, $v := .Values.autoscaling.customMetrics }}
     - type: Object
@@ -39,7 +39,7 @@ spec:
       resource:
         name: memory
         target:
-          type: AverageValue
-          averageValue: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+          type: {{ .Values.autoscaling.memory.type }}
+          averageValue: {{ .Values.autoscaling.memory.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}
