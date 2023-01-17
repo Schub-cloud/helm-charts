@@ -86,6 +86,7 @@ autoscaling:
 #         kind: ""
 #         name: ""
 #       target:
+#         type:
 #         value: ""
 #     metricB:
 #       name: "B"
@@ -94,6 +95,7 @@ autoscaling:
 #         kind: ""
 #         name: ""
 #       target:
+#         type:
 #         value: ""
    
 
