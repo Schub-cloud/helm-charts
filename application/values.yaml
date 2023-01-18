@@ -127,8 +127,32 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+
+#   cpu:
+#     targetType: Utilization
+#     targetUtilizationPercentage: 80
+#   memory:
+#     targetType: Utilization
+#     targetUtilizationPercentage: 80
+#   customMetrics:
+#     metricA:
+#       name: "A"
+#       describedObject:
+#         apiVersion: ""
+#         kind: ""
+#         name: ""
+#       target:
+#         targetType: averageUtilization
+#         value: ""
+#     metricB:
+#       name: "B"
+#       describedObject:
+#         apiVersion: ""
+#         kind: ""
+#         name: ""
+#       target:
+#         targetType:
+#         value: ""
   
 # Enable podMonitor, serviceMonitor
 prometheusOperator:
@@ -140,7 +164,6 @@ prometheusOperator:
     enabled: false
     name: ""
     port: ""
-    
 
 nodeSelector: {}
 
