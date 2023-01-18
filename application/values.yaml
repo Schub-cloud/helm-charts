@@ -129,10 +129,10 @@ autoscaling:
   maxReplicas: 100
 
 #   cpu:
-#     targetType: AverageValue
+#     targetType: Utilization
 #     targetUtilizationPercentage: 80
 #   memory:
-#     targetType: AverageValue
+#     targetType: Utilization
 #     targetUtilizationPercentage: 80
 #   customMetrics:
 #     metricA:
@@ -142,7 +142,7 @@ autoscaling:
 #         kind: ""
 #         name: ""
 #       target:
-#         targetType:
+#         targetType: averageUtilization
 #         value: ""
 #     metricB:
 #       name: "B"
