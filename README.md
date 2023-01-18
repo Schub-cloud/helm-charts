@@ -29,3 +29,8 @@ This repo uses [Trunk Based Development](https://trunkbaseddevelopment.com/#scal
 - Pull requests should be created from feature branch to main.
 - After pipeline is passing and code is approved, it should be squashed and merged to main.
 - For a release, a release tag should be created on the main branch.
+
+## Running tests
+You will need to install golang, check `test/go.sum` for the right minimum version.
+
+Go into test folder and run `go test ./...` this should run all tests.
