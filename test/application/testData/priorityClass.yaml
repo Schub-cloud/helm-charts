@@ -1,0 +1,40 @@
+---
+# Source: application/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application
+  labels:
+    helm.sh/chart: application-0.1.0
+    app.kubernetes.io/name: application
+    app.kubernetes.io/instance: application
+    app.kubernetes.io/version: "0.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: application
+      app.kubernetes.io/instance: application
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: application
+        app.kubernetes.io/instance: application
+    spec:
+      priorityClassName: "low"
+      serviceAccountName: application
+      securityContext:
+        {}
+      containers:
+        - name: application
+          securityContext:
+            {}
+          image: "nginx:0.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {}
