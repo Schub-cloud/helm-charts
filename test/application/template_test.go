@@ -41,6 +41,16 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "priorityClassHigh.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
+
+// Test case for env from config map and secrets (test if when values file provide a configmap as env the deployment renders the envFrom directive correctly)
+		{
+			name: "envFromConfigMap",
+			values: map[string]string{
+				"configMap.name": "test-configmap",
+			},
+			golden:          "envFromConfigMap.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
 	}
 
 	for _, testCase := range testCases {
