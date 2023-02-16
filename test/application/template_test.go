@@ -41,6 +41,26 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "priorityClassHigh.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
+		
+// Test case of mountable config maps and secrets (test if when values provide a mountable config map it renders it mounted in the container of the deployment)
+		{
+			name: "mountConfigMap",
+			values: map[string]string{
+				"configMap.enabled": "true",
+				"configMap.name":    "test-configmap",
+			},
+			golden:          "mountConfigMap.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
+		{
+			name: "mountSecret",
+			values: map[string]string{
+
+				"secret.name":    "my-secret",
+			},
+			golden:          "mountSecret.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
 	}
 
 	for _, testCase := range testCases {
