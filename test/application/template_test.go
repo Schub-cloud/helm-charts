@@ -41,6 +41,21 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "priorityClassHigh.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
+// Test case for automatic deployment restart on secret and configmap update (test if given an auto reload config is given the right annotations are added to deployment template)
+		{
+			name: "autoReloadEnabled",
+			values: map[string]string{
+				"autoReload.enabled": "true",
+			},
+			golden: "autoReloadEnabled.yaml",
+		},
+		{
+			name: "autoReloadDisabled",
+			values: map[string]string{
+				"autoReload.enabled": "false",
+			},
+			golden: "autoReloadDisabled.yaml",
+		},
 	}
 
 	for _, testCase := range testCases {
