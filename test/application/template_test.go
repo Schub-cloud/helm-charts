@@ -41,6 +41,22 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "priorityClassHigh.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
+		{
+			name: "autoReloadEnabled",
+			values: map[string]string{
+				"reloader.enabled": "true",
+			},
+			golden:          "autoReloadEnabled.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
+		{
+			name: "autoReloadDisabled",
+			values: map[string]string{
+				"reloader.enabled": "false",
+			},
+			golden:          "autoReloadDisabled.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
 	}
 
 	for _, testCase := range testCases {
