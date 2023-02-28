@@ -22,8 +22,6 @@ spec:
         app.kubernetes.io/name: application
         app.kubernetes.io/instance: application
     spec:
-      autoReload:
-        enabled: false
       serviceAccountName: application
       securityContext:
         {}
