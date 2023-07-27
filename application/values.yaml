@@ -41,7 +41,13 @@ securityContext: {}
 # - name: <VAR_NAME>
 #   value: <VAR_VALUE>
 env: {}
-# KEY: VALUE
+# KEY:
+#   value: VALUE
+# KEY2:
+#   valueFrom:
+#     secretKeyRef:
+#       name: secret-name
+#       key: secret-key-name
 
 envVars:
   enabled: false
