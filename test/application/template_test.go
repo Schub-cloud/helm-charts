@@ -60,9 +60,18 @@ func TestTemplateRender(t *testing.T) {
 		{
 			name: "envVarsWithKeyValuePairs",
 			values: map[string]string{
-				"env.key": "value",
+				"env.KEY.value": "my-valye",
 			},
 			golden:          "envVarsWithKeyValuePairs.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
+		{
+			name: "envVarsWithKeyValuePairsAndValueFrom",
+			values: map[string]string{
+				"env.KEY.valueFrom.configMapKeyRef.name": "confit-map-name",
+				"env.KEY.valueFrom.configMapKeyRef.key":  "confit-map-key",
+			},
+			golden:          "envVarsWithKeyValuePairsAndValueFrom.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
 	}

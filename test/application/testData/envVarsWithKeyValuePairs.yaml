@@ -26,17 +26,17 @@ spec:
       securityContext:
         {}
       containers:
-        - name: application
-          securityContext:
+      - name: application
+        securityContext:
             {}
-          image: "nginx:0.0.0"
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          env:
-            - name: key
-              value: value
-          resources:
+        image: "nginx:0.0.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        env:
+        - name: KEY
+          value: my-valye
+        resources:
             {}
