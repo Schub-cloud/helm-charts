@@ -4,8 +4,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: application
-  annotations:
-    reloader.stakater.com/auto: "true"
   labels:
     helm.sh/chart: application-0.1.0
     app.kubernetes.io/name: application
@@ -37,5 +35,8 @@ spec:
           - name: http
             containerPort: 80
             protocol: TCP
+        env:
+        - name: KEY
+          value: my-valye
         resources:
             {}

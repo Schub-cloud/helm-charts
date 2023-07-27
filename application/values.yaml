@@ -36,6 +36,19 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# env vars to be rendered as
+# env:
+# - name: <VAR_NAME>
+#   value: <VAR_VALUE>
+env: {}
+# KEY:
+#   value: VALUE
+# KEY2:
+#   valueFrom:
+#     secretKeyRef:
+#       name: secret-name
+#       key: secret-key-name
+
 envVars:
   enabled: false
   envs:
@@ -47,7 +60,7 @@ envVars:
     #    name: env-secrets
 
 #enable automatic restart upon confimgap/secret changes
-reloader: 
+reloader:
   enabled: false
   auto: true
   custom:
@@ -57,17 +70,17 @@ reloader:
 config:
   enabled: false
   volumes:
-    #first_volume: 
+    #first_volume:
     #  config:
     #  - name: secret-vol
     #    secret:
     #      secretName: mysecret
-    #      optional: false  
+    #      optional: false
     #  mount:
     #  - name: secret-vol
     #    readOnly: true
     #    mountPath: /app/application-config
-    #second_volume: 
+    #second_volume:
     #  config:
     #  - name: config-vol
     #    configMap:
@@ -86,7 +99,7 @@ service:
 probes:
   liveness:
     enabled: false
-    probe: 
+    probe:
     #  exec:
     #    command:
     #    - cat
@@ -153,7 +166,7 @@ autoscaling:
 #       target:
 #         targetType:
 #         value: ""
-  
+
 # Enable podMonitor, serviceMonitor
 prometheusOperator:
   serviceMonitor:

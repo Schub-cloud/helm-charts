@@ -57,6 +57,23 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "autoReloadDisabled.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
+		{
+			name: "envVarsWithKeyValuePairs",
+			values: map[string]string{
+				"env.KEY.value": "my-valye",
+			},
+			golden:          "envVarsWithKeyValuePairs.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
+		{
+			name: "envVarsWithKeyValuePairsAndValueFrom",
+			values: map[string]string{
+				"env.KEY.valueFrom.configMapKeyRef.name": "confit-map-name",
+				"env.KEY.valueFrom.configMapKeyRef.key":  "confit-map-key",
+			},
+			golden:          "envVarsWithKeyValuePairsAndValueFrom.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
 	}
 
 	for _, testCase := range testCases {
