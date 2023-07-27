@@ -44,6 +44,13 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- with .Values.env }}
+          env:
+            {{- range $k, $v := . }}
+            - name: {{ $k }}
+              value: {{ $v }}
+            {{- end }}
+          {{- end}}
           {{- if .Values.envVars.enabled }}
           envFrom:
             {{- range .Values.envVars.envs }}
@@ -79,7 +86,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if .Values.config.enabled }}
-      volumes:    
+      volumes:
         {{- range .Values.config.volumes }}
         {{- toYaml ( required "A valid volume config is required!" .config) | nindent 6 }}
         {{- end }}
