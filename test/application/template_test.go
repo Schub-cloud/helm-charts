@@ -57,6 +57,14 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "autoReloadDisabled.yaml",
 			renderTemplates: []string{"templates/deployment.yaml"},
 		},
+		{
+			name: "envVarsWithKeyValuePairs",
+			values: map[string]string{
+				"env.key": "value",
+			},
+			golden:          "envVarsWithKeyValuePairs.yaml",
+			renderTemplates: []string{"templates/deployment.yaml"},
+		},
 	}
 
 	for _, testCase := range testCases {
