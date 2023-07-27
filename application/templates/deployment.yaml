@@ -35,44 +35,44 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          {{- with .Values.env }}
-          env:
-            {{- range $k, $v := . }}
-            - name: {{ $k }}
-              value: {{ $v }}
-            {{- end }}
-          {{- end}}
-          {{- if .Values.envVars.enabled }}
-          envFrom:
-            {{- range .Values.envVars.envs }}
-            {{- toYaml (required "A valid Environment Variable is required!" .) | nindent 10 }}
-            {{- end }}
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        {{- if .Values.env }}
+        env:
+        {{- range $key, $value := .Values.env }}
+        - name: {{ include "application.tplvalues.render" ( dict "value" $key "context" $ ) }}
+{{ include "application.tplvalues.render" ( dict "value" $value "context" $ ) | indent 10 }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.envVars.enabled }}
+        envFrom:
+          {{- range .Values.envVars.envs }}
+          {{- toYaml (required "A valid Environment Variable is required!" .) | nindent 10 }}
           {{- end }}
-          {{- if .Values.probes.liveness.enabled }}
-          livenessProbe:
-            {{- toYaml (required "A valid livenessProbe is required!" .Values.probes.liveness.probe) | nindent 12 }}
+        {{- end }}
+        {{- if .Values.probes.liveness.enabled }}
+        livenessProbe:
+          {{- toYaml (required "A valid livenessProbe is required!" .Values.probes.liveness.probe) | nindent 12 }}
+        {{- end }}
+        {{- if .Values.probes.readiness.enabled }}
+        readinessProbe:
+          {{- toYaml (required "A valid readinessProbe is required!" .Values.probes.readiness.probe) | nindent 12 }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.config.enabled }}
+        volumeMounts:
+          {{- range .Values.config.volumes }}
+          {{- toYaml ( required "A valid volume mount is required!" .mount) | nindent 10 }}
           {{- end }}
-          {{- if .Values.probes.readiness.enabled }}
-          readinessProbe:
-            {{- toYaml (required "A valid readinessProbe is required!" .Values.probes.readiness.probe) | nindent 12 }}
-          {{- end }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.config.enabled }}
-          volumeMounts:
-            {{- range .Values.config.volumes }}
-            {{- toYaml ( required "A valid volume mount is required!" .mount) | nindent 10 }}
-            {{- end }}
-          {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
