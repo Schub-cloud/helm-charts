@@ -67,11 +67,9 @@ spec:
         {{- end }}
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
-        {{- if .Values.config.enabled }}
+        {{- if .Values.volumeMounts }}
         volumeMounts:
-          {{- range .Values.config.volumes }}
-          {{- toYaml ( required "A valid volume mount is required!" .mount) | nindent 10 }}
-          {{- end }}
+          {{- toYaml ( required "A valid volume mount is required!" .Values.volumeMounts) | nindent 10 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -85,9 +83,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.config.enabled }}
+      {{- if .Values.volumes }}
       volumes:
-        {{- range .Values.config.volumes }}
-        {{- toYaml ( required "A valid volume config is required!" .config) | nindent 6 }}
-        {{- end }}
+        {{- toYaml ( required "A valid volume config is required!" .Values.volumes) | nindent 8 }}
       {{- end }}

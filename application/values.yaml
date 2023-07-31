@@ -36,6 +36,15 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+pvcs: {}
+  # pvc-name:
+  #   storageClassName: manual
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   resources:
+  #     requests:
+  #       storage: 3Gi
+
 # env vars to be rendered as
 # env:
 # - name: <VAR_NAME>
@@ -67,30 +76,16 @@ reloader:
     #configmap.reloader.stakater.com/reload: "foo-configmap,bar-configmap,baz-configmap"
     #secret.reloader.stakater.com/reload: "foo-secret,bar-secret,baz-secret"
 
-config:
-  enabled: false
-  volumes:
-    #first_volume:
-    #  config:
-    #  - name: secret-vol
-    #    secret:
-    #      secretName: mysecret
-    #      optional: false
-    #  mount:
-    #  - name: secret-vol
-    #    readOnly: true
-    #    mountPath: /app/application-config
-    #second_volume:
-    #  config:
-    #  - name: config-vol
-    #    configMap:
-    #      name: log-config
-    #      items:
-    #        - key: log_level
-    #          path: log_level
-    #  mount:
-    #  - name: config-vol
-    #    mountPath: /etc/config
+volumeMounts: []
+#  - name: secret-vol
+#    readOnly: true
+#    mountPath: /app/application-config
+
+volumes: []
+#  - name: secret-vol
+#    secret:
+#      secretName: mysecret
+#      optional: false
 
 service:
   type: ClusterIP

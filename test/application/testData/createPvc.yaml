@@ -1,0 +1,11 @@
+---
+# Source: application/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: manual
