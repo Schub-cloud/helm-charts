@@ -37,6 +37,13 @@ securityContext: {}
   # runAsUser: 1000
 
 pvcs: {}
+  # pvc-name:
+  #   storageClassName: manual
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   resources:
+  #     requests:
+  #       storage: 3Gi
 
 # env vars to be rendered as
 # env:
