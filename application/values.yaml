@@ -36,6 +36,8 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+pvcs: {}
+
 # env vars to be rendered as
 # env:
 # - name: <VAR_NAME>

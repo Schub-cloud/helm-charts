@@ -1,0 +1,10 @@
+{{- if .Values.pvcs }}
+{{- range $key, $value := .Values.pvcs }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $key }}
+spec:
+{{ include "application.tplvalues.render" ( dict "value" $value "context" $ ) | indent 2 }}
+{{- end }}
+{{- end }}
