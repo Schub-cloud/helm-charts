@@ -1,0 +1,15 @@
+pvcs:
+  my-pvc:
+    storageClassName: efs
+    resources:
+      requests:
+        storage: 3Gi
+
+volumes:
+  - name: vol1
+    persistentVolumeClaim:
+      claimName: my-pvc
+
+volumeMounts:
+  - name: vol1
+    mountPath: /

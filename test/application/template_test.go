@@ -20,6 +20,7 @@ func TestTemplateRender(t *testing.T) {
 	testCases := []struct {
 		name            string
 		values          map[string]string
+		valuesFiles     []string
 		golden          string
 		renderTemplates []string
 	}{
@@ -83,6 +84,15 @@ func TestTemplateRender(t *testing.T) {
 			golden:          "createPvc.yaml",
 			renderTemplates: []string{"templates/pvc.yaml"},
 		},
+		{
+			name:        "createAndMountPVC",
+			golden:      "createAndMountPVC.yaml",
+			valuesFiles: []string{"testdata/valueFiles/createAndMountPVC.yaml"},
+			renderTemplates: []string{
+				"templates/pvc.yaml",
+				"templates/deployment.yaml",
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
@@ -91,7 +101,8 @@ func TestTemplateRender(t *testing.T) {
 			subT.Parallel()
 
 			options := &helm.Options{
-				SetValues: testCase.values,
+				SetValues:   testCase.values,
+				ValuesFiles: testCase.valuesFiles,
 			}
 
 			output := helm.RenderTemplate(t, options, helmChartPath, releaseName, testCase.renderTemplates)
