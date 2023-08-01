@@ -93,6 +93,16 @@ func TestTemplateRender(t *testing.T) {
 				"templates/deployment.yaml",
 			},
 		},
+		{
+			name:        "createAndMountPVCWithStaticPV",
+			golden:      "createAndMountPVCWithStaticPV.yaml",
+			valuesFiles: []string{"testdata/valueFiles/createAndMountPVCWithStaticPV.yaml"},
+			renderTemplates: []string{
+				"templates/pvc.yaml",
+				"templates/pvs.yaml",
+				"templates/deployment.yaml",
+			},
+		},
 	}
 
 	for _, testCase := range testCases {

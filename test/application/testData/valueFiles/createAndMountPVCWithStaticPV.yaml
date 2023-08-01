@@ -1,0 +1,30 @@
+pvcs:
+  my-vol:
+    storageClassName: efs
+    resources:
+      requests:
+        storage: 3Gi
+
+pvs:
+  my-vol:
+    capacity:
+      storage: 5Gi
+    volumeMode: Filesystem
+    accessModes:
+      - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    storageClassName: efs-sc
+    mountOptions:
+      - tls
+    csi:
+      driver: efs.csi.aws.com
+      volumeHandle: fs-e8a95a42:/dir1
+
+volumes:
+  - name: vol1
+    persistentVolumeClaim:
+      claimName: my-pvc
+
+volumeMounts:
+  - name: vol1
+    mountPath: /

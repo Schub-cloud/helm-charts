@@ -45,6 +45,21 @@ pvcs: {}
   #     requests:
   #       storage: 3Gi
 
+pvs: {}
+  # capacity:
+  #   storage: 5Gi
+  # volumeMode: Filesystem
+  # accessModes:
+  #   - ReadWriteMany
+  # persistentVolumeReclaimPolicy: Retain
+  # storageClassName: efs-sc
+  # mountOptions:
+  #   - tls
+  # csi:
+  #   driver: efs.csi.aws.com
+  #   volumeHandle: fs-e8a95a42:/dir1
+
+
 # env vars to be rendered as
 # env:
 # - name: <VAR_NAME>

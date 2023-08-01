@@ -1,4 +1,34 @@
 ---
+# Source: application/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-vol
+spec:
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: efs
+---
+# Source: application/templates/pvs.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-vol
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 5Gi
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-e8a95a42:/dir1
+  mountOptions:
+  - tls
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  volumeMode: Filesystem
+---
 # Source: application/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -22,7 +52,6 @@ spec:
         app.kubernetes.io/name: application
         app.kubernetes.io/instance: application
     spec:
-      priorityClassName: "high"
       serviceAccountName: application
       securityContext:
         {}
@@ -38,3 +67,10 @@ spec:
             protocol: TCP
         resources:
             {}
+        volumeMounts:
+          - mountPath: /
+            name: vol1
+      volumes:
+        - name: vol1
+          persistentVolumeClaim:
+            claimName: my-pvc
