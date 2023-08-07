@@ -3,6 +3,16 @@ entries:
   application:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2023-08-07T10:56:53.61442434Z"
+    description: A generic Helm chart for Kubernetes, to help deploying generic applications
+    digest: 1936715da7f8433a43c4853484bb574469219c807dd60163eb7272e1ee20dac8
+    name: application
+    type: application
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/application-0.5.0/application-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2023-08-01T15:55:27.491035284Z"
     description: A generic Helm chart for Kubernetes, to help deploying generic applications
     digest: 23f33ed8a3f378d951f3d0dc1c40955698c94eea9b881d0088f35ecf7c5ba160
@@ -52,4 +62,4 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/postgrescluster-5.4.0/postgrescluster-5.4.0.tgz
     version: 5.4.0
-generated: "2023-08-01T15:55:27.491152586Z"
+generated: "2023-08-07T10:56:53.61443934Z"
