@@ -134,6 +134,29 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs: {}
+  # - name: tls-gateway
+  #   namespace: addons
+  hostNames:
+  # - production.odoo.schub.cloud
+  rules: {}
+  # - matches:
+  #   - path:
+  #       type: PathPrefix
+  #       value: /
+  #   filters:
+  #     - type: ResponseHeaderModifier
+  #       responseHeaderModifier:
+  #         add:
+  #           - name: Content-Security-Policy
+  #             value: upgrade-insecure-requests
+  #   backendRefs:
+  #   - name: odoo
+  #     port: 8069
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
