@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: application
   labels:
-    helm.sh/chart: application-0.4.0
+    helm.sh/chart: application-0.5.1
     app.kubernetes.io/name: application
     app.kubernetes.io/instance: application
     app.kubernetes.io/version: "0.0.0"
@@ -14,7 +14,7 @@ spec:
   parentRefs:
     - name: tls-gateway
       namespace: addons
-  hostNames:
+  hostnames:
     - production.odoo.schub.cloud
   rules:
     - backendRefs:

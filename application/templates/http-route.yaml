@@ -14,7 +14,7 @@ metadata:
 spec:
   parentRefs:
     {{- toYaml .Values.httpRoute.parentRefs | nindent 4}}
-  hostNames:
+  hostnames:
     {{- toYaml .Values.httpRoute.hostNames | nindent 4}}
   rules:
     {{- toYaml .Values.httpRoute.rules | nindent 4}}
