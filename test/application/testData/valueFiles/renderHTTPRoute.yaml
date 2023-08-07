@@ -1,0 +1,21 @@
+httpRoute:
+  enabled: true
+  parentRefs:
+  - name: tls-gateway
+    namespace: addons
+  hostNames:
+  - production.odoo.schub.cloud
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    filters:
+      - type: ResponseHeaderModifier
+        responseHeaderModifier:
+          add:
+            - name: Content-Security-Policy
+              value: upgrade-insecure-requests
+    backendRefs:
+    - name: odoo
+      port: 8069

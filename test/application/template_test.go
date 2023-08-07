@@ -103,6 +103,14 @@ func TestTemplateRender(t *testing.T) {
 				"templates/deployment.yaml",
 			},
 		},
+		{
+			name:        "renderHTTPRoute",
+			golden:      "renderHTTPRoute.yaml",
+			valuesFiles: []string{"testdata/valueFiles/renderHTTPRoute.yaml"},
+			renderTemplates: []string{
+				"templates/http-route.yaml",
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
