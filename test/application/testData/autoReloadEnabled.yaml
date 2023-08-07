@@ -7,7 +7,7 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    helm.sh/chart: application-0.3.0
+    helm.sh/chart: application-0.4.0
     app.kubernetes.io/name: application
     app.kubernetes.io/instance: application
     app.kubernetes.io/version: "0.0.0"

@@ -1,0 +1,32 @@
+---
+# Source: application/templates/http-route.yaml
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: application
+  labels:
+    helm.sh/chart: application-0.4.0
+    app.kubernetes.io/name: application
+    app.kubernetes.io/instance: application
+    app.kubernetes.io/version: "0.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  parentRefs:
+    - name: tls-gateway
+      namespace: addons
+  hostNames:
+    - production.odoo.schub.cloud
+  rules:
+    - backendRefs:
+      - name: odoo
+        port: 8069
+      filters:
+      - responseHeaderModifier:
+          add:
+          - name: Content-Security-Policy
+            value: upgrade-insecure-requests
+        type: ResponseHeaderModifier
+      matches:
+      - path:
+          type: PathPrefix
+          value: /
