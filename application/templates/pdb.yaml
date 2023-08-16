@@ -1,3 +1,4 @@
+{{- if .Values.pdb }}
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -14,3 +15,4 @@ spec:
   selector:
     matchLabels:
       {{- include "application.selectorLabels" . | nindent 6 }}
+{{- end}}
