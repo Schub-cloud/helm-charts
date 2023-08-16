@@ -45,7 +45,6 @@ reloader.stakater.com/auto: "true"
 Common labels
 */}}
 {{- define "application.labels" -}}
-helm.sh/chart: {{ include "application.chart" . }}
 {{ include "application.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
