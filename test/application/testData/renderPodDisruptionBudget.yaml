@@ -1,0 +1,19 @@
+---
+# Source: application/templates/pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: application
+  labels:
+    helm.sh/chart: application-0.5.1
+    app.kubernetes.io/name: application
+    app.kubernetes.io/instance: application
+    app.kubernetes.io/version: "0.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  minAvailable: 1
+  maxUnavailable: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: application
+      app.kubernetes.io/instance: application

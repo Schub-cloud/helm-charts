@@ -111,6 +111,14 @@ func TestTemplateRender(t *testing.T) {
 				"templates/http-route.yaml",
 			},
 		},
+		{
+			name:        "renderPodDisruptionBudget",
+			golden:      "renderPodDisruptionBudget.yaml",
+			valuesFiles: []string{"testdata/valueFiles/renderPodDisruptionBudget.yaml"},
+			renderTemplates: []string{
+				"templates/pdb.yaml",
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
