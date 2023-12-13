@@ -1,0 +1,10 @@
+# Source: application/templates/config-map.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  odoo.conf: |
+    # Contents of odoo.conf
+    [general]
+    key = value
