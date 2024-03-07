@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboard-configmap
+  namespace: wazuh
+data: 
+  opensearch_dashboards.yml: |2-
+{{ .Files.Get "files/conf/dashboard-conf/opensearch_dashboards.yml" | nindent 4 }}

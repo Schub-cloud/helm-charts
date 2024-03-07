@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wazuh-conf
+  namespace: wazuh
+data:
+{{ (.Files.Glob "files/conf/master-conf/master.conf" ).AsConfig | indent 2 }}
+{{ (.Files.Glob "files/conf/master-conf/worker.conf" ).AsConfig | indent 2 }}
