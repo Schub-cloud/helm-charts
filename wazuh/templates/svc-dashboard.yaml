@@ -1,0 +1,22 @@
+{{- if .Values.wazuh-dashboard.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard
+  namespace: wazuh
+  labels:
+    app: wazuh-dashboard
+    # dns: {{ required "wazuh-dashboard.dns is required" .Values.wazuh-dashboard.dns }}
+  annotations:
+    # domainName: {{ required "wazuh-dashboard.domain is required" .Values.wazuh-dashboard.domain }}
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{ required "wazuh-dashboard.balancer-cert is required" .Values.wazuh-dashboard.balancer-cert }}
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+spec:
+  type: LoadBalancer
+  selector:
+    app: wazuh-dashboard
+  ports:
+    - name: dashboard
+      port: 443
+      targetPort: 5601

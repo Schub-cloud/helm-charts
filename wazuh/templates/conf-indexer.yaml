@@ -1,0 +1,11 @@
+{{- if .Values.wazuh-indexer.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: indexer-configmap
+  namespace: wazuh
+data:
+  internal_users.yml: |
+# TODO - Add  
+  opensearch.yml: |-
+# TODO - Add  

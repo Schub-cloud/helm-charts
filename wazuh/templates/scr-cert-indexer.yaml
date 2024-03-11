@@ -1,0 +1,26 @@
+{{- if .Values.wazuh-indexer.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: indexer-certs
+  namespace: wazuh
+type: Opaque
+data:
+  admin-key.pem: |
+# TODO - Add  
+  admin.pem: |
+# TODO - Add  
+  dashboard-key.pem: |
+# TODO - Add  
+  dashboard.pem: |
+# TODO - Add  
+  filebeat-key.pem: |
+# TODO - Add  
+  filebeat.pem: |
+# TODO - Add  
+  node-key.pem: |
+# TODO - Add  
+  node.pem: |
+# TODO - Add  
+  root-ca.pem: |
+# TODO - Add  

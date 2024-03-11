@@ -1,0 +1,9 @@
+{{- if .Values.wazuh-master.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wazuh-configmap
+  namespace: wazuh
+data:
+# TODO - Add  
+# TODO - Add  

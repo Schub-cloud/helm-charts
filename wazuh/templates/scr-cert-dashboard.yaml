@@ -1,0 +1,14 @@
+{{- if .Values.wazuh-dashboard.enabled}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dashboard-certs
+  namespace: wazuh
+type: Opaque
+data:
+  cert.pem: |
+# TODO - Add  
+  key.pem: | 
+# TODO - Add  
+  root-ca.pem: |
+# TODO - Add  

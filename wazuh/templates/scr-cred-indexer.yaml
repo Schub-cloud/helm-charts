@@ -1,0 +1,18 @@
+# Copyright (C) 2019, Wazuh Inc.
+#
+# This program is a free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public
+# License (version 2) as published by the FSF - Free Software
+# Foundation.
+
+# Wazuh API credentials secret
+
+{{- if .Values.wazuh-indexer.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: indexer-cred
+  namespace: wazuh
+data:
+  username: {{ required "wazuh-indexer.username is required" .Values.wazuh-indexer.username | b64enc }} 
+  password: {{ required "wazuh-indexer.password is required" .Values.wazuh-indexer.password | b64enc }}
