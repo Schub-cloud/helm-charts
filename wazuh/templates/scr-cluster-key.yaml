@@ -6,11 +6,12 @@
 # Foundation.
 
 # Wazuh cluster key secret
-{{- if .Values.wazuh-cluster.enabled }}
+{{- if .Values.wazuh_cluster.enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
   name: wazuh-cluster-key
   namespace: wazuh
 data:
-  key: {{ required "wazuh-cluster.key is required" .Values.wazuh-cluster.key | b64enc }} 
+  key: {{ required "wazuh-cluster.key is required" .Values.wazuh_cluster.key | b64enc }} 
+{{- end}}

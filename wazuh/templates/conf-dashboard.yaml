@@ -1,9 +1,9 @@
-{{- if .Values.wazuh-dashboard.enabled }}
+{{- if .Values.wazuh_dashboard.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dashboard-configmap
   namespace: wazuh
 data: 
-  opensearch_dashboards.yml: |2-
-# TODO - Add  
+{{ (.Files.Glob "files/conf/dashboard_conf/*").AsConfig | indent 2 }}
+{{- end}}

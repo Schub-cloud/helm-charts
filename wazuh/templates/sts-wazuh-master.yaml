@@ -7,14 +7,14 @@
 
 # Wazuh master StatefulSet
 
-{{- if .Values.wazuh-master.enabled }}
+{{- if .Values.wazuh_master.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: wazuh-manager-master
   namespace: wazuh
 spec:
-  replicas: 1
+  replicas: {{ required "wazuh-master.replicas is required" .Values.wazuh_master.replicas }}
   selector:
     matchLabels:
       app: wazuh-manager
@@ -42,14 +42,14 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: {{ required "wazuh-master.image is required" .Values.wazuh-master.image }} 
+          image: {{ required "wazuh-master.image is required" .Values.wazuh_master.image }} 
           resources: 
             limits:
-              cpu: {{ required "wazuh-master.resources.limits.cpu is required" .Values.wazuh-master.resources.limits.cpu }}
-              memory: {{ required "wazuh-master.resources.limits.memory is required" .Values.wazuh-master.resources.limits.memory }}
+              cpu: {{ required "wazuh-master.resources.limits.cpu is required" .Values.wazuh_master.resources.limits.cpu }}
+              memory: {{ required "wazuh-master.resources.limits.memory is required" .Values.wazuh_master.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-master.resources.requests.cpu is required" .Values.wazuh-master.resources.requests.cpu }}
-              memory: {{ required "wazuh-master.resources.requests.memory is required" .Values.wazuh-master.resources.requests.memory }}
+              cpu: {{ required "wazuh-master.resources.requests.cpu is required" .Values.wazuh_master.resources.requests.cpu }}
+              memory: {{ required "wazuh-master.resources.requests.memory is required" .Values.wazuh_master.resources.requests.memory }}
           securityContext:
             capabilities:
               add: ["SYS_CHROOT"]
@@ -160,4 +160,5 @@ spec:
         storageClassName: wazuh-storage
         resources:
           requests:
-            storage: {{ required "wazuh-master.volume-storage is required" .Values.wazuh-master.volume-storage }} 
+            storage: {{ required "wazuh-master.volume-storage is required" .Values.wazuh_master.volume_storage }} 
+{{- end}}

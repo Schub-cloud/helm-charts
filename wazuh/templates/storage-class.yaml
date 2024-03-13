@@ -7,9 +7,10 @@
 
 # Wazuh StorageClass
 
-{{- if .Values.wazuh-master.enabled and .Values.wazuh-worker.enabled and .Values.wazuh-indexer.enabled}}
+{{- if and (.Values.wazuh_master.enabled) (.Values.wazuh_workers.enabled) (.Values.wazuh_indexer.enabled)}}
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: wazuh-storage
-# provisioner: k8s.io/minikube-hostpath
+provisioner: k8s.io/minikube-hostpath
+{{- end}}

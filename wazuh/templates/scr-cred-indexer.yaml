@@ -7,12 +7,13 @@
 
 # Wazuh API credentials secret
 
-{{- if .Values.wazuh-indexer.enabled }}
+{{- if .Values.wazuh_indexer.enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
   name: indexer-cred
   namespace: wazuh
 data:
-  username: {{ required "wazuh-indexer.username is required" .Values.wazuh-indexer.username | b64enc }} 
-  password: {{ required "wazuh-indexer.password is required" .Values.wazuh-indexer.password | b64enc }}
+  username: {{ required "wazuh-indexer.username is required" .Values.wazuh_indexer.username | b64enc }} 
+  password: {{ required "wazuh-indexer.password is required" .Values.wazuh_indexer.password | b64enc }}
+{{- end}}

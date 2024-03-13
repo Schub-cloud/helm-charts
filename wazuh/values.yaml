@@ -1,70 +1,73 @@
-wazuh-master:
+wazuh_master:
   enabled: true
-  auth-password: DefaultPassword
+  authd_password: DefaultPassword
+  replicas: 1
   image: 'wazuh/wazuh-manager:4.7.2'
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
-      cpu: 2
-      memory: 2Gi
-  volume-storage: 500M
+      cpu: 400m
+      memory: 512Mi
+    limits:
+      cpu: 400m
+      memory: 512Mi
+  volume_storage: 500Mi
 
-wazuh-workers:
+wazuh_workers:
   enabled: true
+  replicas: 1
   dns: route53
   domain: changeme.com # TODO: Change this for a Hosted Zone you configured in AWS Route 53
   image: 'wazuh/wazuh-manager:4.7.2'
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
-      cpu: 2
-      memory: 2Gi
-  volume-storage: 500M
+      cpu: 400m
+      memory: 512Mi
+    limits:
+      cpu: 400m
+      memory: 512Mi
+  volume_storage: 500Mi
 
 
-wazuh-dashboard:
+wazuh_dashboard:
   enabled: true
   username: default
   password: DefaultPassword
+  replicas: 1
   dns: route53
   domain: changeme.com
-  balancer-cert: changeme
+  balancer_cert: changeme
   image: 'wazuh/wazuh-dashboard:4.7.2'
   resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
     requests:
       cpu: 500m
       memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
 
-wazuh-indexer:
+wazuh_indexer:
   enabled: true
   username: admin
   password: DefaultPassword
   replicas: 1
   image: 'wazuh/wazuh-indexer:4.7.2'
   resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
     requests:
       cpu: 500m
       memory: 1Gi
-  volume-storage: 500M
+    limits:
+      cpu: 1
+      memory: 2Gi
+  volume_storage: 500M
 
-wazuh-api:
+wazuh_api:
   username: wazuh-wui
-  password: DefaultPassword
+  password: DefaultPassword.1234
 
-wazuh-cluster:
+wazuh_cluster:
   enabled: true
   key: MTIzYTQ1YmM2N2RlZjg5MWdoMjNpNDVqazY3bDhtbjk=
 
-wazuh-manager:
+wazuh_manager:
   dns: route53
   domain: changeme.com

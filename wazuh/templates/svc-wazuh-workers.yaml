@@ -1,4 +1,4 @@
-{{- if .Values.wazuh-workers.enabled }}
+{{- if .Values.wazuh_workers.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,9 +6,9 @@ metadata:
   namespace: wazuh
   labels:
     app: wazuh-manager
-    # dns: {{ required "wazuh-workers.dns is required" .Values.wazuh-workers.dns }}
+    # dns: {{ required "wazuh-workers.dns is required" .Values.wazuh_workers.dns }}
   annotations:
-    # domainName: {{ required "wazuh-workers.domain is required" .Values.wazuh-workers.domain }}  
+    # domainName: {{ required "wazuh-workers.domain is required" .Values.wazuh_workers.domain }}  
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
 spec:
   type: LoadBalancer
@@ -19,3 +19,4 @@ spec:
     - name: agents-events
       port: 1514
       targetPort: 1514
+{{- end}}

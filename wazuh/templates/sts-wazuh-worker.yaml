@@ -7,14 +7,14 @@
 
 # Wazuh workers StatefulSet
 
-{{- if .Values.wazuh-workers.enabled }}
+{{- if .Values.wazuh_workers.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: wazuh-manager-worker
   namespace: wazuh
 spec:
-  replicas: 2
+  replicas: {{ required "wazuh-workers.replicas is required" .Values.wazuh_workers.replicas }}
   selector:
     matchLabels:
       app: wazuh-manager
@@ -45,14 +45,14 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: {{ required "wazuh-workers.image is required" .Values.wazuh-workers.image }}
+          image: {{ required "wazuh-workers.image is required" .Values.wazuh_workers.image }}
           resources: 
             limits:
-              cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuh-workers.resources.limits.cpu }}
-              memory: {{ required "wazuh-workers.resources.limits.memory is required" .Values.wazuh-workers.resources.limits.memory }}
+              cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuh_workers.resources.limits.cpu }}
+              memory: {{ required "wazuh-workers.resources.limits.memory is required" .Values.wazuh_workers.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-workers.resources.requests.cpu is required" .Values.wazuh-workers.resources.requests.cpu }}
-              memory: {{ required "wazuh-workers.resources.requests.memory is required" .Values.wazuh-workers.resources.requests.memory }}
+              cpu: {{ required "wazuh-workers.resources.requests.cpu is required" .Values.wazuh_workers.resources.requests.cpu }}
+              memory: {{ required "wazuh-workers.resources.requests.memory is required" .Values.wazuh_workers.resources.requests.memory }}
           securityContext:
             capabilities:
               add: ["SYS_CHROOT"]
@@ -147,4 +147,5 @@ spec:
         storageClassName: wazuh-storage
         resources:
           requests:
-            storage: {{ required "wazuh-workers.volume-storage is required" .Values.wazuh-workers.volume-storage }} 
+            storage: {{ required "wazuh-workers.volume-storage is required" .Values.wazuh_workers.volume_storage }} 
+{{- end}}

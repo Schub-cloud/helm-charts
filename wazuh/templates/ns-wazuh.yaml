@@ -5,14 +5,11 @@
 # License (version 2) as published by the FSF - Free Software
 # Foundation.
 
-# Wazuh authd password secret
+# Wazuh namespace
 
-{{- if .Values.wazuh_master.enabled }}
+{{- if and (.Values.wazuh_master.enabled) (.Values.wazuh_workers.enabled) (.Values.wazuh_indexer.enabled)}}
 apiVersion: v1
-kind: Secret
+kind: Namespace
 metadata:
-  name: wazuh-authd-pass
-  namespace: wazuh
-data:
-  authd.pass: {{ required "authd.password is required" .Values.wazuh_master.authd_password | b64enc }} 
+  name: wazuh
 {{- end}}

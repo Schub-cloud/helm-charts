@@ -7,12 +7,13 @@
 
 # Wazuh API credentials secret
 
-{{- if .Values.wazuh-dashboard.enabled and .Values.wazuh-master.enabled}}
+{{- if and (.Values.wazuh_dashboard.enabled) (.Values.wazuh_master.enabled)}}
 apiVersion: v1
 kind: Secret
 metadata:
   name: wazuh-api-cred
   namespace: wazuh
 data:
-  username: {{ required "wazuh-api.username is required" .Values.api.username | b64enc }}
-  password: {{ required "wazuh-api.password is required" .Values.api.password | b64enc }}
+  username: {{ required "wazuh-api.username is required" .Values.wazuh_api.username | b64enc }}
+  password: {{ required "wazuh-api.password is required" .Values.wazuh_api.password | b64enc }}
+{{- end}}

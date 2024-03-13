@@ -7,12 +7,13 @@
 
 # Wazuh dashboard API credentials secret
 
-{{- if .Values.wazuh-dashboard.enabled }}
+{{- if .Values.wazuh_dashboard.enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
   name: dashboard-cred
   namespace: wazuh
 data:
-  username: {{ required "wazuh-dashboard.username is required" .Values.wazuh-dashboard.username | b64enc }} 
-  password: {{ required "wazuh-dashboard.password is required" .Values.wazuh-dashboard.password | b64enc }}
+  username: {{ required "wazuh-dashboard.username is required" .Values.wazuh_dashboard.username | b64enc }} 
+  password: {{ required "wazuh-dashboard.password is required" .Values.wazuh_dashboard.password | b64enc }}
+{{- end}}

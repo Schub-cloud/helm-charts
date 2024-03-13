@@ -1,4 +1,4 @@
-{{- if .Values.wazuh-indexer.enabled }}
+{{- if .Values.wazuh_indexer.enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -7,20 +7,21 @@ metadata:
 type: Opaque
 data:
   admin-key.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/admin-key.pem" | b64enc | indent 4 }}
   admin.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/admin.pem" | b64enc | indent 4 }}
   dashboard-key.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/dashboard-key.pem" | b64enc | indent 4 }}
   dashboard.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/dashboard.pem" | b64enc | indent 4 }}
   filebeat-key.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/filebeat-key.pem" | b64enc | indent 4 }}
   filebeat.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/filebeat.pem" | b64enc | indent 4 }}
   node-key.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/node-key.pem" | b64enc | indent 4 }}
   node.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/node.pem" | b64enc | indent 4 }}
   root-ca.pem: |
-# TODO - Add  
+{{ .Files.Get "files/certs/indexer/root-ca.pem" | b64enc | indent 4 }}
+{{- end}}

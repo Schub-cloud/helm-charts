@@ -1,4 +1,4 @@
-{{- if .Values.wazuh-cluster.enabled }}
+{{- if .Values.wazuh_cluster.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,3 +14,4 @@ spec:
       port: 1516
       targetPort: 1516
   clusterIP: None
+{{- end}}

@@ -1,11 +1,11 @@
-{{- if .Values.wazuh-indexer.enabled }}
+{{- if .Values.wazuh_indexer.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: wazuh-indexer
   namespace: wazuh
 spec:
-  replicas: {{ required "wazuh-indexer.replicas is required" .Values.wazuh-indexer.replicas }}
+  replicas: {{ required "wazuh-indexer.replicas is required" .Values.wazuh_indexer.replicas }}
   selector:
     matchLabels:
       app: wazuh-indexer
@@ -51,14 +51,14 @@ spec:
             privileged: true
       containers:
         - name: wazuh-indexer
-          image: {{ required "wazuh-indexer.image is required" .Values.wazuh-indexer.image }}
+          image: {{ required "wazuh-indexer.image is required" .Values.wazuh_indexer.image }}
           resources: 
             limits:
-              cpu: {{ required "wazuh-indexer.resources.limits.cpu is required" .Values.wazuh-indexer.resources.limits.cpu }}
-              memory: {{ required "wazuh-indexer.resources.limits.memory is required" .Values.wazuh-indexer.resources.limits.memory }}
+              cpu: {{ required "wazuh-indexer.resources.limits.cpu is required" .Values.wazuh_indexer.resources.limits.cpu }}
+              memory: {{ required "wazuh-indexer.resources.limits.memory is required" .Values.wazuh_indexer.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-indexer.resources.requests.cpu is required" .Values.wazuh-indexer.resources.requests.cpu }}
-              memory: {{ required "wazuh-indexer.resources.requests.memory is required" .Values.wazuh-indexer.resources.requests.memory }}
+              cpu: {{ required "wazuh-indexer.resources.requests.cpu is required" .Values.wazuh_indexer.resources.requests.cpu }}
+              memory: {{ required "wazuh-indexer.resources.requests.memory is required" .Values.wazuh_indexer.resources.requests.memory }}
           env:
             - name: OPENSEARCH_JAVA_OPTS
               value: '-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true'
@@ -127,4 +127,5 @@ spec:
         storageClassName: wazuh-storage
         resources:
           requests:
-            storage: {{ required "wazuh-indexer.volume-storage is required" .Values.wazuh-indexer.volume-storage }} 
+            storage: {{ required "wazuh-indexer.volume-storage is required" .Values.wazuh_indexer.volume_storage }} 
+{{- end}}

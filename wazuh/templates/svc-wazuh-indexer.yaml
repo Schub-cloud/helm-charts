@@ -1,4 +1,4 @@
-{{- if .Values.wazuh-indexer.enabled }}
+{{- if .Values.wazuh_indexer.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,3 +14,4 @@ spec:
       port: 9300
       targetPort: 9300
   clusterIP: None
+{{- end}}

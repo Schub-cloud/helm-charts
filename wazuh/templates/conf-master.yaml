@@ -1,9 +1,9 @@
-{{- if .Values.wazuh-master.enabled }}
+{{- if .Values.wazuh_master.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: wazuh-configmap
+  name: wazuh-conf
   namespace: wazuh
 data:
-# TODO - Add  
-# TODO - Add  
+{{ (.Files.Glob "files/conf/wazuh_conf/*").AsConfig | indent 2 }}
+{{- end}}

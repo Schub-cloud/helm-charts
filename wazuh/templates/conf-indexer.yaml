@@ -1,11 +1,9 @@
-{{- if .Values.wazuh-indexer.enabled }}
+{{- if .Values.wazuh_indexer.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: indexer-configmap
   namespace: wazuh
 data:
-  internal_users.yml: |
-# TODO - Add  
-  opensearch.yml: |-
-# TODO - Add  
+{{ (.Files.Glob "files/conf/indexer_conf/*").AsConfig | indent 2 }}
+{{- end}}
