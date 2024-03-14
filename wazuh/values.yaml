@@ -1,6 +1,6 @@
 wazuh_master:
   enabled: true
-  authd_password: DefaultPassword
+  authd_password: password
   replicas: 1
   image: 'wazuh/wazuh-manager:4.7.2'
   resources:
@@ -30,8 +30,8 @@ wazuh_workers:
 
 wazuh_dashboard:
   enabled: true
-  username: default
-  password: DefaultPassword
+  username: kibanaserver
+  password: kibanaserver
   replicas: 1
   dns: route53
   domain: changeme.com
@@ -48,7 +48,7 @@ wazuh_dashboard:
 wazuh_indexer:
   enabled: true
   username: admin
-  password: DefaultPassword
+  password: SecretPassword
   replicas: 1
   image: 'wazuh/wazuh-indexer:4.7.2'
   resources:
@@ -62,12 +62,15 @@ wazuh_indexer:
 
 wazuh_api:
   username: wazuh-wui
-  password: DefaultPassword.1234
+  password: MyS3cr37P450r.*-
 
 wazuh_cluster:
   enabled: true
-  key: MTIzYTQ1YmM2N2RlZjg5MWdoMjNpNDVqazY3bDhtbjk=
+  key: 123a45bc67def891gh23i45jk67l8mn9
 
 wazuh_manager:
   dns: route53
   domain: changeme.com
+
+wazuh_sc:
+  provisioner: k8s.io/minikube-hostpath

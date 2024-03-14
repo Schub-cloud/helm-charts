@@ -12,5 +12,10 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: wazuh-storage
-provisioner: k8s.io/minikube-hostpath
+provisioner: {{ required "wazuh-sc.provisioner is required" .Values.wazuh_sc.provisioner }} 
+# parameters:
+#  encrypted: 'true'
+#  type: gp2
+# volumeBindingMode: WaitForFirstConsumer
+# reclaimPolicy: Retain  # Useful in case you delete the PersistentVolumeClaim
 {{- end}}
