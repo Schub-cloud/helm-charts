@@ -1,6 +1,6 @@
 wazuh_master:
   enabled: true
-  authd_password: password
+  authd_password: D3f4u1tP4ssw0rd.*-
   replicas: 1
   image: 'wazuh/wazuh-manager:4.7.2'
   resources:
@@ -31,7 +31,7 @@ wazuh_workers:
 wazuh_dashboard:
   enabled: true
   username: kibanaserver
-  password: kibanaserver
+  password: kibanaserver # FIXME - When Changing this password the dashboard doesn't start
   replicas: 1
   dns: route53
   domain: changeme.com
@@ -48,7 +48,7 @@ wazuh_dashboard:
 wazuh_indexer:
   enabled: true
   username: admin
-  password: SecretPassword
+  password: D3f4u1tP4ssw0rd.*-
   replicas: 1
   image: 'wazuh/wazuh-indexer:4.7.2'
   resources:
@@ -62,11 +62,11 @@ wazuh_indexer:
 
 wazuh_api:
   username: wazuh-wui
-  password: MyS3cr37P450r.*-
+  password: D3f4u1tP4ssw0rd.*-
 
 wazuh_cluster:
   enabled: true
-  key: 123a45bc67def891gh23i45jk67l8mn9
+  key: 1a3b5de7f8gh9ij3l5kl8mn9
 
 wazuh_manager:
   dns: route53
