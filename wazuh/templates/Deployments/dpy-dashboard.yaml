@@ -1,11 +1,11 @@
-{{- if .Values.wazuh_dashboard.enabled }}
+{{- if .Values.wazuhDashboard.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wazuh-dashboard
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
 spec:
-  replicas: {{ required "wazuh-dashboard.replicas is required" .Values.wazuh_dashboard.replicas }}
+  replicas: {{ .Values.wazuhDashboard.replicas }}
   selector:
     matchLabels:
       app: wazuh-dashboard
@@ -24,14 +24,14 @@ spec:
             secretName: dashboard-certs
       containers:
         - name: wazuh-dashboard
-          image: {{ required "wazuh-dashboard.image is required" .Values.wazuh_dashboard.image }}
+          image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}" 
           resources:
             limits:
-              cpu: {{ required "wazuh-dashboard.resources.limits.cpu is required" .Values.wazuh_dashboard.resources.limits.cpu }}
-              memory: {{ required "wazuh-dashboard.resources.limits.memory is required" .Values.wazuh_dashboard.resources.limits.memory }}
+              cpu: {{ required "wazuh-dashboard.resources.limits.cpu is required" .Values.wazuhDashboard.resources.limits.cpu }}
+              memory: {{ required "wazuh-dashboard.resources.limits.memory is required" .Values.wazuhDashboard.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-dashboard.resources.requests.cpu is required" .Values.wazuh_dashboard.resources.requests.cpu }}
-              memory: {{ required "wazuh-dashboard.resources.requests.memory is required" .Values.wazuh_dashboard.resources.requests.memory }}
+              cpu: {{ required "wazuh-dashboard.resources.requests.cpu is required" .Values.wazuhDashboard.resources.requests.cpu }}
+              memory: {{ required "wazuh-dashboard.resources.requests.memory is required" .Values.wazuhDashboard.resources.requests.memory }}
           volumeMounts:
             - name: config
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
@@ -81,7 +81,7 @@ spec:
               value: /usr/share/wazuh-dashboard/certs/cert.pem
             - name: SERVER_SSL_KEY
               value: /usr/share/wazuh-dashboard/certs/key.pem
-            - name: WAZUH_API_URL
+            - name: wazuhApi_URL
               value: https://wazuh-manager-master-0.wazuh-cluster
             - name: API_USERNAME
               valueFrom:

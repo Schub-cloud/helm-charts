@@ -1,0 +1,22 @@
+{{- if .Values.wazuhDashboard.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: wazuh-dashboard
+    # dns: {{ required "wazuh-dashboard.dns is required" .Values.wazuhDashboard.dns }}
+  {{- with .Values.wazuhDashboard.svcAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: wazuh-dashboard
+  ports:
+    - name: dashboard
+      port: 443
+      targetPort: 5601
+{{- end}}

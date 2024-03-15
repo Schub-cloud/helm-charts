@@ -7,14 +7,14 @@
 
 # Wazuh workers StatefulSet
 
-{{- if .Values.wazuh_workers.enabled }}
+{{- if .Values.wazuhWorkers.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: wazuh-manager-worker
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
 spec:
-  replicas: {{ required "wazuh-workers.replicas is required" .Values.wazuh_workers.replicas }}
+  replicas: {{ required "wazuh-workers.replicas is required" .Values.wazuhWorkers.replicas }}
   selector:
     matchLabels:
       app: wazuh-manager
@@ -45,14 +45,14 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: {{ required "wazuh-workers.image is required" .Values.wazuh_workers.image }}
+          image: {{ required "wazuh-workers.image is required" .Values.wazuhWorkers.image }}
           resources: 
             limits:
-              cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuh_workers.resources.limits.cpu }}
-              memory: {{ required "wazuh-workers.resources.limits.memory is required" .Values.wazuh_workers.resources.limits.memory }}
+              cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuhWorkers.resources.limits.cpu }}
+              memory: {{ required "wazuh-workers.resources.limits.memory is required" .Values.wazuhWorkers.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-workers.resources.requests.cpu is required" .Values.wazuh_workers.resources.requests.cpu }}
-              memory: {{ required "wazuh-workers.resources.requests.memory is required" .Values.wazuh_workers.resources.requests.memory }}
+              cpu: {{ required "wazuh-workers.resources.requests.cpu is required" .Values.wazuhWorkers.resources.requests.cpu }}
+              memory: {{ required "wazuh-workers.resources.requests.memory is required" .Values.wazuhWorkers.resources.requests.memory }}
           securityContext:
             capabilities:
               add: ["SYS_CHROOT"]
@@ -132,7 +132,7 @@ spec:
               value: /etc/ssl/filebeat.pem
             - name: SSL_KEY
               value: /etc/ssl/filebeat.key
-            - name: WAZUH_CLUSTER_KEY
+            - name: wazuhCluster_KEY
               valueFrom:
                 secretKeyRef:
                   name: wazuh-cluster-key
@@ -140,12 +140,12 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: wazuh-manager-worker
-        namespace: wazuh
+        namespace: {{ .Values.nameSpace }}
       spec:
         accessModes:
           - ReadWriteOnce
         storageClassName: wazuh-storage
         resources:
           requests:
-            storage: {{ required "wazuh-workers.volume-storage is required" .Values.wazuh_workers.volume_storage }} 
+            storage: {{ required "wazuh-workers.volume-storage is required" .Values.wazuhWorkers.volumeStorage }} 
 {{- end}}

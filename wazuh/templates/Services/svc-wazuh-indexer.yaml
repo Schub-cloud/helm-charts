@@ -1,11 +1,15 @@
-{{- if .Values.wazuh_indexer.enabled }}
+{{- if .Values.wazuhIndexer.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
   name: wazuh-indexer
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-indexer
+  {{- with .Values.wazuhIndexer.svcAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     app: wazuh-indexer

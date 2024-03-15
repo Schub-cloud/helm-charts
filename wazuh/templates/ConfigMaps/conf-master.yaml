@@ -1,9 +1,9 @@
-{{- if .Values.wazuh_master.enabled }}
+{{- if .Values.wazuhMaster.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: wazuh-conf
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
 data:
 {{ (.Files.Glob "files/conf/wazuh_conf/*").AsConfig | indent 2 }}
 {{- end}}

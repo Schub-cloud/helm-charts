@@ -1,4 +1,4 @@
-wazuh_master:
+wazuhMaster:
   enabled: true
   authd_password: D3f4u1tP4ssw0rd.*-
   replicas: 1
@@ -10,12 +10,12 @@ wazuh_master:
     limits:
       cpu: 400m
       memory: 512Mi
-  volume_storage: 500Mi
+  volumeStorage: 500Mi
+  svcAnnotations:
 
-wazuh_workers:
+wazuhWorkers:
   enabled: true
   replicas: 1
-  dns: route53
   domain: changeme.com # TODO: Change this for a Hosted Zone you configured in AWS Route 53
   image: 'wazuh/wazuh-manager:4.7.2'
   resources:
@@ -25,18 +25,18 @@ wazuh_workers:
     limits:
       cpu: 400m
       memory: 512Mi
-  volume_storage: 500Mi
+  volumeStorage: 500Mi
+  svcAnnotations:
 
-
-wazuh_dashboard:
+wazuhDashboard:
   enabled: true
   username: kibanaserver
   password: kibanaserver # FIXME - When Changing this password the dashboard doesn't start
   replicas: 1
-  dns: route53
   domain: changeme.com
   balancer_cert: changeme
-  image: 'wazuh/wazuh-dashboard:4.7.2'
+  imageRepository: wazuh/wazuh-dashboard
+  imageTag: '4.7.2'
   resources:
     requests:
       cpu: 500m
@@ -44,8 +44,9 @@ wazuh_dashboard:
     limits:
       cpu: 1
       memory: 2Gi
+  svcAnnotations:
 
-wazuh_indexer:
+wazuhIndexer:
   enabled: true
   username: admin
   password: D3f4u1tP4ssw0rd.*-
@@ -58,19 +59,22 @@ wazuh_indexer:
     limits:
       cpu: 1
       memory: 2Gi
-  volume_storage: 500M
+  volumeStorage: 500M
 
-wazuh_api:
+wazuhApi:
   username: wazuh-wui
   password: D3f4u1tP4ssw0rd.*-
 
-wazuh_cluster:
+wazuhCluster:
   enabled: true
   key: 1a3b5de7f8gh9ij3l5kl8mn9
+  port: 1516
+  targetPort: 1516
 
-wazuh_manager:
-  dns: route53
+wazuhManager:
   domain: changeme.com
 
-wazuh_sc:
+wazuhStorageClass:
   provisioner: k8s.io/minikube-hostpath
+
+nameSpace: wazuh

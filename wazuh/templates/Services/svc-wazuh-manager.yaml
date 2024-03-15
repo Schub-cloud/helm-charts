@@ -1,15 +1,16 @@
-{{- if and (.Values.wazuh_master.enabled) (.Values.wazuh_workers.enabled) (.Values.wazuh_cluster.enabled)}}
+{{- if and (.Values.wazuhMaster.enabled) (.Values.wazuhWorkers.enabled) (.Values.wazuhCluster.enabled)}}
 apiVersion: v1
 kind: Service
 metadata:
   name: wazuh  # Don't change, unless you update the Wazuh dashboard app config
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-manager
-    # dns: {{ required "wazuh_manager.dns is required" .Values.wazuh_manager.dns }}
+    # dns: {{ required "wazuhManager.dns is required" .Values.wazuhManager.dns }}
+  {{- with .Values.wazuhMaster.svcAnnotations }}
   annotations:
-    # domainName: {{ required "wazuh_manager.domain is required" .Values.wazuh_manager.domain }}
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: LoadBalancer
   selector:

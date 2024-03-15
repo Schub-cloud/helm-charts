@@ -1,9 +1,9 @@
-{{- if .Values.wazuh_dashboard.enabled }}
+{{- if .Values.wazuhDashboard.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dashboard-configmap
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
 data: 
 {{ (.Files.Glob "files/conf/dashboard_conf/*").AsConfig | indent 2 }}
 {{- end}}

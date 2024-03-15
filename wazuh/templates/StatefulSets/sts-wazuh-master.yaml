@@ -7,14 +7,14 @@
 
 # Wazuh master StatefulSet
 
-{{- if .Values.wazuh_master.enabled }}
+{{- if .Values.wazuhMaster.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: wazuh-manager-master
-  namespace: wazuh
+  namespace: {{ .Values.nameSpace }}
 spec:
-  replicas: {{ required "wazuh-master.replicas is required" .Values.wazuh_master.replicas }}
+  replicas: {{ required "wazuh-master.replicas is required" .Values.wazuhMaster.replicas }}
   selector:
     matchLabels:
       app: wazuh-manager
@@ -42,14 +42,14 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: {{ required "wazuh-master.image is required" .Values.wazuh_master.image }} 
+          image: {{ required "wazuh-master.image is required" .Values.wazuhMaster.image }} 
           resources: 
             limits:
-              cpu: {{ required "wazuh-master.resources.limits.cpu is required" .Values.wazuh_master.resources.limits.cpu }}
-              memory: {{ required "wazuh-master.resources.limits.memory is required" .Values.wazuh_master.resources.limits.memory }}
+              cpu: {{ required "wazuh-master.resources.limits.cpu is required" .Values.wazuhMaster.resources.limits.cpu }}
+              memory: {{ required "wazuh-master.resources.limits.memory is required" .Values.wazuhMaster.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-master.resources.requests.cpu is required" .Values.wazuh_master.resources.requests.cpu }}
-              memory: {{ required "wazuh-master.resources.requests.memory is required" .Values.wazuh_master.resources.requests.memory }}
+              cpu: {{ required "wazuh-master.resources.requests.cpu is required" .Values.wazuhMaster.resources.requests.cpu }}
+              memory: {{ required "wazuh-master.resources.requests.memory is required" .Values.wazuhMaster.resources.requests.memory }}
           securityContext:
             capabilities:
               add: ["SYS_CHROOT"]
@@ -145,7 +145,7 @@ spec:
                 secretKeyRef:
                   name: wazuh-api-cred
                   key: password
-            - name: WAZUH_CLUSTER_KEY
+            - name: wazuhCluster_KEY
               valueFrom:
                 secretKeyRef:
                   name: wazuh-cluster-key
@@ -153,12 +153,12 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: wazuh-manager-master
-        namespace: wazuh
+        namespace: {{ .Values.nameSpace }}
       spec:
         accessModes:
           - ReadWriteOnce
         storageClassName: wazuh-storage
         resources:
           requests:
-            storage: {{ required "wazuh-master.volume-storage is required" .Values.wazuh_master.volume_storage }} 
+            storage: {{ required "wazuh-master.volume-storage is required" .Values.wazuhMaster.volumeStorage }} 
 {{- end}}
