@@ -50,7 +50,7 @@ spec:
               subPath: root-ca.pem
               readOnly: true
           ports:
-            - containerPort: 5601
+            - containerPort: {{ .Values.wazuhDashboard.targetPort }}
               name: dashboard
           env:
             - name: INDEXER_URL

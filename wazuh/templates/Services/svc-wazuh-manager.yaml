@@ -7,7 +7,7 @@ metadata:
   labels:
     app: wazuh-manager
     # dns: {{ required "wazuhManager.dns is required" .Values.wazuhManager.dns }}
-  {{- with .Values.wazuhMaster.svcAnnotations }}
+  {{- with .Values.wazuhManager.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -18,9 +18,9 @@ spec:
     node-type: master
   ports:
     - name: registration
-      port: 1515
-      targetPort: 1515
+      port: {{ .Values.wazuhManager.ports.regPort }}
+      targetPort: {{ .Values.wazuhManager.ports.regTargetPort }}
     - name: api
-      port: 55000
-      targetPort: 55000
+      port: {{ .Values.wazuhManager.ports.apiPort }}
+      targetPort: {{ .Values.wazuhManager.ports.apiTargetPort }}
 {{- end}}

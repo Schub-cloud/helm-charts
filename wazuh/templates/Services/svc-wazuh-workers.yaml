@@ -18,6 +18,6 @@ metadata:
     node-type: worker
   ports:
     - name: agents-events
-      port: 1514
-      targetPort: 1514
+      port: {{ .Values.wazuhWorkers.port }}
+      targetPort: {{ .Values.wazuhWorkers.targetPort }}
 {{- end}}

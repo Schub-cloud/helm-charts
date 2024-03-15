@@ -113,9 +113,9 @@ spec:
               subPath: internal_users.yml
               readOnly: true
           ports:
-            - containerPort: 9200
+            - containerPort: {{ .Values.wazuhIndexer.targetPort }}
               name: indexer-rest
-            - containerPort: 9300
+            - containerPort: {{ .Values.wazuhIndexer.nodeTargetPort }}
               name: indexer-nodes
   volumeClaimTemplates:
     - metadata:

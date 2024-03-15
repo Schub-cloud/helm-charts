@@ -27,6 +27,8 @@ wazuhWorkers:
       memory: 512Mi
   volumeStorage: 500Mi
   svcAnnotations:
+  port: 1514
+  targetPort: 1514
 
 wazuhDashboard:
   enabled: true
@@ -45,6 +47,8 @@ wazuhDashboard:
       cpu: 1
       memory: 2Gi
   svcAnnotations:
+  port: 443
+  targetPort: 5601
 
 wazuhIndexer:
   enabled: true
@@ -60,6 +64,10 @@ wazuhIndexer:
       cpu: 1
       memory: 2Gi
   volumeStorage: 500M
+  port: 9200
+  targetPort: 9200
+  nodePort: 9300
+  nodeTargetPort: 9300
 
 wazuhApi:
   username: wazuh-wui
@@ -73,6 +81,11 @@ wazuhCluster:
 
 wazuhManager:
   domain: changeme.com
+  ports:
+    regPort: 1515
+    regTargetPort: 1515 
+    apiPort: 55000
+    apiTargetPort: 55000
 
 wazuhStorageClass:
   provisioner: k8s.io/minikube-hostpath

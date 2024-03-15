@@ -108,11 +108,11 @@ spec:
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
           ports: 
-            - containerPort: 1515
+            - containerPort: {{ .Values.wazuhManager.ports.regTargetPort }}
               name: registration
-            - containerPort: 1516
+            - containerPort: {{ .Values.wazuhCluster.targetPort }}
               name: cluster
-            - containerPort: 55000
+            - containerPort: {{ .Values.wazuhManager.ports.apiTargetPort }}
               name: api
           env: # TODO - Change
             - name: INDEXER_URL 
