@@ -6,12 +6,12 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-manager
-    # dns: {{ required "wazuh-workers.dns is required" .Values.wazuhWorkers.dns }}
+    # dns: {{ .Values.wazuhWorkers.dns }}
   {{- with .Values.wazuhWorkers.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  spec:
+spec:
   type: LoadBalancer
   selector:
     app: wazuh-manager

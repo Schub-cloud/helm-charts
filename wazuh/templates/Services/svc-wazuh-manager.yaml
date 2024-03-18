@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-manager
-    # dns: {{ required "wazuhManager.dns is required" .Values.wazuhManager.dns }}
+    # dns: {{ .Values.wazuhManager.dns }}
   {{- with .Values.wazuhManager.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-dashboard
-    # dns: {{ required "wazuh-dashboard.dns is required" .Values.wazuhDashboard.dns }}
+    # dns: {{ .Values.wazuhDashboard.dns }}
   {{- with .Values.wazuhDashboard.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
