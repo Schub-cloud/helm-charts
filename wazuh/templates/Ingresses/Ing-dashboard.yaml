@@ -1,21 +1,21 @@
-{{- if .Values.wazuhIngress.enabled -}}
+{{- if .Values.wazuhDashboard.ingress.enabled -}}
 apiVersion:  networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: wazuh-ingress
-  {{- with .Values.wazuhIngress.annotations }}
+  {{- with .Values.wazuhDashboard.ingress.annotations }}
   annotations:
     {{- range $key, $value := . }}
     {{ $key }}: {{ tpl $value $ | quote }}
     {{- end }}
   {{- end }}
 spec:
-  {{- with .Values.wazuhIngress.tls }}
+  {{- with .Values.wazuhDashboard.ingress.tls }}
   tls:
     {{- tpl (toYaml .) $ | nindent 4 }}
   {{- end }}
   rules:
-    - host: {{ .Values.wazuhIngress.host }}
+    - host: {{ .Values.wazuhDashboard.ingress.host }}
       http:
         paths:
           - backend:

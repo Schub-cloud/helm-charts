@@ -51,11 +51,17 @@ wazuhDashboard:
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   port: 443
   targetPort: 5601
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    host: "wazuh.schub.com"
 
 wazuhIndexer:
   enabled: true
   username: admin
-  password: D3f4u1tP4ssw0rd.*-
+  password: DefaultPassword
   replicas: 1
   image: 'wazuh/wazuh-indexer:4.7.2'
   resources:
@@ -65,7 +71,7 @@ wazuhIndexer:
     limits:
       cpu: 1
       memory: 2Gi
-  volumeStorage: 500M
+  volumeStorage: 500Mi
   port: 9200
   targetPort: 9200
   nodePort: 9300
@@ -93,10 +99,3 @@ wazuhStorageClass:
   provisioner: k8s.io/minikube-hostpath
 
 nameSpace: wazuh
-
-wazuhIngress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-  host: "wazuh.example.com"
