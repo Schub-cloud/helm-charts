@@ -33,7 +33,7 @@ wazuhWorkers:
 wazuhDashboard:
   enabled: true
   username: kibanaserver
-  password: kibanaserver # FIXME - When Changing this password the dashboard doesn't start
+  password: kibanaserver 
   replicas: 1
   domain: changeme.com
   balancer_cert: changeme
@@ -61,7 +61,7 @@ wazuhDashboard:
 wazuhIndexer:
   enabled: true
   username: admin
-  password: DefaultPassword
+  password: SecretPassword
   replicas: 1
   image: 'wazuh/wazuh-indexer:4.7.2'
   resources:
