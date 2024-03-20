@@ -1,6 +1,6 @@
 wazuhMaster:
   enabled: true
-  authd_password: D3f4u1tP4ssw0rd.*-
+  authd_password: password
   replicas: 1
   image: 'wazuh/wazuh-manager:4.7.2'
   resources:
