@@ -1,0 +1,21 @@
+{{- if .Values.wazuhCluster.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: wazuh-cluster
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: wazuh-manager
+  {{- with .Values.wazuhCluster.svcAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    app: wazuh-manager
+  ports:
+    - name: cluster
+      port: {{ .Values.wazuhCluster.port }}
+      targetPort: {{ .Values.wazuhCluster.targetPort }}
+  clusterIP: None
+{{- end}}

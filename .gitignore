@@ -1,1 +1,5 @@
 .vscode
+wazuh/files/certs/dashboard/*.pem
+wazuh/files/certs/dashboard/*.csr 
+wazuh/files/certs/indexer/*.pem
+wazuh/files/certs/indexer/*.csr

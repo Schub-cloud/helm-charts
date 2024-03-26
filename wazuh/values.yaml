@@ -1,0 +1,111 @@
+wazuhMaster:
+  enabled: true
+  authd_password: password
+  replicas: 1
+  imageRepository: wazuh/wazuh-manager
+  imageTag: '4.7.2'
+  resources:
+    requests:
+      cpu: 400m
+      memory: 512Mi
+    limits:
+      cpu: 400m
+      memory: 512Mi
+  volumeStorage: 500Mi
+  svcAnnotations:
+    # domainName: 'changeme'
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+
+wazuhWorkers:
+  enabled: true
+  replicas: 1
+  domain: changeme.com # TODO: Change this for a Hosted Zone you configured in AWS Route 53
+  imageRepository: wazuh/wazuh-manager
+  imageTag: '4.7.2'
+  resources:
+    requests:
+      cpu: 400m
+      memory: 512Mi
+    limits:
+      cpu: 400m
+      memory: 512Mi
+  volumeStorage: 500Mi
+  svcAnnotations:
+    # domainName: 'wazuh-manager.some-domain.com'  # TODO: Change this for a Hosted Zone you configured in AWS Route 53
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+  port: 1514
+  targetPort: 1514
+
+wazuhDashboard:
+  enabled: true
+  username: kibanaserver
+  password: kibanaserver 
+  replicas: 1
+  domain: changeme.com
+  balancer_cert: changeme
+  imageRepository: wazuh/wazuh-dashboard
+  imageTag: '4.7.2'
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  svcAnnotations:
+    # domainName: 'changeme'
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: 'changeme'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+  port: 443
+  targetPort: 5601
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  host: "wazuh.schub.com"
+
+wazuhIndexer:
+  enabled: true
+  username: admin
+  password: SecretPassword
+  replicas: 1
+  imageRepository: wazuh/wazuh-indexer
+  imageTag: '4.7.2'
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  volumeStorage: 500Mi
+  port: 9200
+  targetPort: 9200
+  nodePort: 9300
+  nodeTargetPort: 9300
+
+wazuhApi:
+  username: wazuh-wui
+  password: MyS3cr37P450r.*-
+
+wazuhCluster:
+  enabled: true
+  key: 123a45bc67def891gh23i45jk67l8mn9
+  port: 1516
+  targetPort: 1516
+
+wazuhManager:
+  domain: changeme.com
+  ports:
+    regPort: 1515
+    regTargetPort: 1515 
+    apiPort: 55000
+    apiTargetPort: 55000
+
+wazuhStorageClass:
+  provisioner: k8s.io/minikube-hostpath
+
+nameSpace: wazuh

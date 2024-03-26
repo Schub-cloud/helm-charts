@@ -1,0 +1,39 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion:  networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wazuh-ingress
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- range $key, $value := . }}
+    {{ $key }}: {{ tpl $value $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: dashboard
+                port:
+                  number: {{ .Values.wazuhDashboard.port }}
+            path: /
+            pathType: Prefix
+          - backend:
+              service:
+                name: wazuh
+                port:
+                  number: {{ .Values.wazuhManager.ports.regPort }}
+            path: /enrollment
+            pathType: Prefix
+          - backend:
+              service:
+                name: wazuh-workers
+                port:
+                  number: {{ .Values.wazuhWorkers.port }}
+            path: /agent-communication
+            pathType: Prefix
+{{- end -}}
+
