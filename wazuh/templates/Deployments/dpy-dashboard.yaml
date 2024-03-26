@@ -27,11 +27,11 @@ spec:
           image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}" 
           resources:
             limits:
-              cpu: {{ required "wazuh-dashboard.resources.limits.cpu is required" .Values.wazuhDashboard.resources.limits.cpu }}
-              memory: {{ required "wazuh-dashboard.resources.limits.memory is required" .Values.wazuhDashboard.resources.limits.memory }}
+              cpu: {{ required "wazuhDashboard.resources.limits.cpu is required" .Values.wazuhDashboard.resources.limits.cpu }}
+              memory: {{ required "wazuhDashboard.resources.limits.memory is required" .Values.wazuhDashboard.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-dashboard.resources.requests.cpu is required" .Values.wazuhDashboard.resources.requests.cpu }}
-              memory: {{ required "wazuh-dashboard.resources.requests.memory is required" .Values.wazuhDashboard.resources.requests.memory }}
+              cpu: {{ required "wazuhDashboard.resources.requests.cpu is required" .Values.wazuhDashboard.resources.requests.cpu }}
+              memory: {{ required "wazuhDashboard.resources.requests.memory is required" .Values.wazuhDashboard.resources.requests.memory }}
           volumeMounts:
             - name: config
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
@@ -81,7 +81,7 @@ spec:
               value: /usr/share/wazuh-dashboard/certs/cert.pem
             - name: SERVER_SSL_KEY
               value: /usr/share/wazuh-dashboard/certs/key.pem
-            - name: wazuhApi_URL
+            - name: WAZUH_API_URL
               value: https://wazuh-manager-master-0.wazuh-cluster
             - name: API_USERNAME
               valueFrom:

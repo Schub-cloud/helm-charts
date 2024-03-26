@@ -42,7 +42,7 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: {{ required "wazuh-master.image is required" .Values.wazuhMaster.image }} 
+          image: "{{ .Values.wazuhMaster.imageRepository }}:{{ .Values.wazuhMaster.imageTag }}"
           resources: 
             limits:
               cpu: {{ required "wazuh-master.resources.limits.cpu is required" .Values.wazuhMaster.resources.limits.cpu }}
@@ -114,7 +114,7 @@ spec:
               name: cluster
             - containerPort: {{ .Values.wazuhManager.ports.apiTargetPort }}
               name: api
-          env: # TODO - Change
+          env: 
             - name: INDEXER_URL 
               value: 'https://wazuh-indexer-0.wazuh-indexer:9200'
             - name: INDEXER_USERNAME

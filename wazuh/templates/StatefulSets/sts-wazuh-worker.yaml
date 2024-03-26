@@ -45,7 +45,7 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: {{ required "wazuh-workers.image is required" .Values.wazuhWorkers.image }}
+          image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}"
           resources: 
             limits:
               cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuhWorkers.resources.limits.cpu }}
