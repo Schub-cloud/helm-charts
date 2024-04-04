@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-dashboard
+    # dns: route53
   {{- with .Values.wazuhDashboard.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

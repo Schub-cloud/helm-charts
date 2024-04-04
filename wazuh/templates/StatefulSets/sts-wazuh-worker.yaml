@@ -132,7 +132,7 @@ spec:
               value: /etc/ssl/filebeat.pem
             - name: SSL_KEY
               value: /etc/ssl/filebeat.key
-            - name: wazuhCluster_KEY
+            - name: WAZUH_CLUSTER_KEY
               valueFrom:
                 secretKeyRef:
                   name: wazuh-cluster-key

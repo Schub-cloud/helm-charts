@@ -27,11 +27,11 @@ spec:
           image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}" 
           resources:
             limits:
-              cpu: {{ required "wazuhDashboard.resources.limits.cpu is required" .Values.wazuhDashboard.resources.limits.cpu }}
-              memory: {{ required "wazuhDashboard.resources.limits.memory is required" .Values.wazuhDashboard.resources.limits.memory }}
+              cpu: {{ .Values.wazuhDashboard.resources.limits.cpu }}
+              memory: {{ .Values.wazuhDashboard.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuhDashboard.resources.requests.cpu is required" .Values.wazuhDashboard.resources.requests.cpu }}
-              memory: {{ required "wazuhDashboard.resources.requests.memory is required" .Values.wazuhDashboard.resources.requests.memory }}
+              cpu: {{ .Values.wazuhDashboard.resources.requests.cpu }}
+              memory: {{ .Values.wazuhDashboard.resources.requests.memory }}
           volumeMounts:
             - name: config
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml

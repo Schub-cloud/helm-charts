@@ -45,11 +45,11 @@ spec:
           image: "{{ .Values.wazuhMaster.imageRepository }}:{{ .Values.wazuhMaster.imageTag }}"
           resources: 
             limits:
-              cpu: {{ required "wazuh-master.resources.limits.cpu is required" .Values.wazuhMaster.resources.limits.cpu }}
-              memory: {{ required "wazuh-master.resources.limits.memory is required" .Values.wazuhMaster.resources.limits.memory }}
+              cpu: {{ .Values.wazuhMaster.resources.limits.cpu }}
+              memory: {{ .Values.wazuhMaster.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-master.resources.requests.cpu is required" .Values.wazuhMaster.resources.requests.cpu }}
-              memory: {{ required "wazuh-master.resources.requests.memory is required" .Values.wazuhMaster.resources.requests.memory }}
+              cpu: {{ .Values.wazuhMaster.resources.requests.cpu }}
+              memory: {{ .Values.wazuhMaster.resources.requests.memory }}
           securityContext:
             capabilities:
               add: ["SYS_CHROOT"]
@@ -114,8 +114,8 @@ spec:
               name: cluster
             - containerPort: {{ .Values.wazuhManager.ports.apiTargetPort }}
               name: api
-          env: 
-            - name: INDEXER_URL 
+          env:
+            - name: INDEXER_URL
               value: 'https://wazuh-indexer-0.wazuh-indexer:9200'
             - name: INDEXER_USERNAME
               valueFrom:
@@ -145,7 +145,7 @@ spec:
                 secretKeyRef:
                   name: wazuh-api-cred
                   key: password
-            - name: wazuhCluster_KEY
+            - name: WAZUH_CLUSTER_KEY
               valueFrom:
                 secretKeyRef:
                   name: wazuh-cluster-key
