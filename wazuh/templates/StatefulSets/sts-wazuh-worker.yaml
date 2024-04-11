@@ -46,7 +46,7 @@ spec:
       containers:
         - name: wazuh-manager
           image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}"
-          resources: 
+          resources:
             limits:
               cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuhWorkers.resources.limits.cpu }}
               memory: {{ required "wazuh-workers.resources.limits.memory is required" .Values.wazuhWorkers.resources.limits.memory }}
@@ -107,13 +107,13 @@ spec:
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
           ports:
-            - containerPort: {{ .Values.wazuhWorkers.targetPort }}
+            - containerPort: {{ .Values.wazuhWorkers.port }}
               name: agents-events
-            - containerPort: {{ .Values.wazuhCluster.targetPort }}
+            - containerPort: {{ .Values.wazuhCluster.port }}
               name: cluster
           env:
             - name: INDEXER_URL
-              value: 'https://wazuh-indexer-0.wazuh-indexer:9200'
+              value: 'wazuh-indexer.wazuh.svc.cluster.local:9200'
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:

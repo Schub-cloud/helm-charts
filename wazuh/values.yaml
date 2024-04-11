@@ -19,7 +19,6 @@ wazuhMaster:
 wazuhWorkers:
   enabled: true
   replicas: 1
-  domain: changeme.com # TODO: Change this for a Hosted Zone you configured in AWS Route 53
   imageRepository: wazuh/wazuh-manager
   imageTag: '4.7.2'
   resources:
@@ -31,7 +30,6 @@ wazuhWorkers:
       memory: 1Gi
   volumeStorage: 500Mi
   svcAnnotations:
-    # domainName: 'wazuh-manager.some-domain.com'  # TODO: Change this for a Hosted Zone you configured in AWS Route 53
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   port: 1514
   targetPort: 1514
@@ -53,19 +51,18 @@ wazuhDashboard:
       cpu: 500m
       memory: 1Gi
   svcAnnotations:
-    # domainName: 'changeme'
-    # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: 'changeme'
-    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   port: 443
   targetPort: 5601
 
 ingress:
-  enabled: false
+  enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   host: "wazuh.schub.com"
+#  tls: 
+#    - hosts:
+#      secretName:
 
 wazuhIndexer:
   enabled: true

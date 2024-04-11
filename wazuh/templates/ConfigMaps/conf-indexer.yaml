@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: indexer-configmap
+  name: indexer-conf
   namespace: {{ .Values.nameSpace }}
 data:
 {{ (.Files.Glob "files/conf/indexer_conf/*").AsConfig | indent 2 }}

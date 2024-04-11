@@ -23,17 +23,17 @@ spec:
             secretName: indexer-certs
         - name: indexer-conf
           configMap:
-            name: indexer-configmap
+            name: indexer-conf
       initContainers:
         - name: volume-mount-hack
           image: busybox
-          resources: 
+          resources:
             requests:
-              cpu: 50m 
-              memory: 128Mi 
+              cpu: 50m
+              memory: 128Mi
             limits:
-              cpu: 100m 
-              memory: 256Mi 
+              cpu: 100m
+              memory: 256Mi
           command:
             - sh
             - '-c'
@@ -113,9 +113,9 @@ spec:
               subPath: internal_users.yml
               readOnly: true
           ports:
-            - containerPort: {{ .Values.wazuhIndexer.targetPort }}
+            - containerPort: {{ .Values.wazuhIndexer.port }}
               name: indexer-rest
-            - containerPort: {{ .Values.wazuhIndexer.nodeTargetPort }}
+            - containerPort: {{ .Values.wazuhIndexer.nodePort }}
               name: indexer-nodes
   volumeClaimTemplates:
     - metadata:
