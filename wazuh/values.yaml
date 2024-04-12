@@ -23,11 +23,11 @@ wazuhWorkers:
   imageTag: '4.7.2'
   resources:
     requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
       cpu: 400m
       memory: 512Mi
-    limits:
-      cpu: 500m
-      memory: 1Gi
   volumeStorage: 500Mi
   svcAnnotations:
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
@@ -51,6 +51,8 @@ wazuhDashboard:
       cpu: 500m
       memory: 1Gi
   svcAnnotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   port: 443
   targetPort: 5601
 

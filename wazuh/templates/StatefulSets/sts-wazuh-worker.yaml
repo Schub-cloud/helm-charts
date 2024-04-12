@@ -14,7 +14,7 @@ metadata:
   name: wazuh-manager-worker
   namespace: {{ .Values.nameSpace }}
 spec:
-  replicas: {{ required "wazuh-workers.replicas is required" .Values.wazuhWorkers.replicas }}
+  replicas: {{ .Values.wazuhWorkers.replicas }}
   selector:
     matchLabels:
       app: wazuh-manager
@@ -45,14 +45,14 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}"
+          image: "{{ .Values.wazuhWorkers.imageRepository }}:{{ .Values.wazuhWorkers.imageTag }}"
           resources:
             limits:
-              cpu: {{ required "wazuh-workers.resources.limits.cpu is required" .Values.wazuhWorkers.resources.limits.cpu }}
-              memory: {{ required "wazuh-workers.resources.limits.memory is required" .Values.wazuhWorkers.resources.limits.memory }}
+              cpu: {{ .Values.wazuhWorkers.resources.limits.cpu }}
+              memory: {{ .Values.wazuhWorkers.resources.limits.memory }}
             requests:
-              cpu: {{ required "wazuh-workers.resources.requests.cpu is required" .Values.wazuhWorkers.resources.requests.cpu }}
-              memory: {{ required "wazuh-workers.resources.requests.memory is required" .Values.wazuhWorkers.resources.requests.memory }}
+              cpu: {{ .Values.wazuhWorkers.resources.requests.cpu }}
+              memory: {{ .Values.wazuhWorkers.resources.requests.memory }}
           securityContext:
             capabilities:
               add: ["SYS_CHROOT"]
@@ -113,7 +113,7 @@ spec:
               name: cluster
           env:
             - name: INDEXER_URL
-              value: 'wazuh-indexer.wazuh.svc.cluster.local:9200'
+              value: 'https://wazuh-indexer-0.wazuh-indexer:9200'
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -147,5 +147,5 @@ spec:
         storageClassName: wazuh-storage
         resources:
           requests:
-            storage: {{ required "wazuh-workers.volume-storage is required" .Values.wazuhWorkers.volumeStorage }} 
+            storage: {{ .Values.wazuhWorkers.volumeStorage }} 
 {{- end}}

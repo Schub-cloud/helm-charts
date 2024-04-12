@@ -6,10 +6,10 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-indexer
-  {{- with .Values.wazuhIndexer.svcAnnotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+#  {{- with .Values.wazuhIndexer.svcAnnotations }}
+#  annotations:
+#    {{- toYaml . | nindent 4 }}
+#  {{- end }}
 spec:
   selector:
     app: wazuh-indexer

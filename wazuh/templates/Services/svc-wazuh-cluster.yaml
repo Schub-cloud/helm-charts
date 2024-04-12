@@ -6,10 +6,10 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-manager
-  {{- with .Values.wazuhCluster.svcAnnotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+#  {{- with .Values.wazuhCluster.svcAnnotations }}
+#  annotations:
+#    {{- toYaml . | nindent 4 }}
+#  {{- end }}
 spec:
   selector:
     app: wazuh-manager
