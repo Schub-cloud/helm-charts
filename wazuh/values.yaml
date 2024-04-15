@@ -115,14 +115,14 @@ wazuhIndexer:
       config_version: 2
     admin:
       hash: "$2y$12$K/SpwjtB.wOHJ/Nc6GVRDuc1h0rM1DfvziFRNPtk27P.c4yDr9njO"
-      reserved: true
+      reserved: true # Deleting a reserved user will result in the deployment not working.
       backend_roles:
       - "admin"
       description: "Demo admin user"
     
     kibanaserver:
       hash: "$2a$12$4AcgAt3xwOWadA5s5blL6ev39OXDNhmOesEoo33eZtrq2N0YrU3H."
-      reserved: true
+      reserved: true # Deleting a reserved user will result in the deployment not working.
       description: "Demo kibanaserver user"
 
     testUser:
