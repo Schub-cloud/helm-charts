@@ -6,4 +6,6 @@ metadata:
   namespace: {{ .Values.nameSpace }}
 data:
 {{ (.Files.Glob "files/conf/indexer_conf/*").AsConfig | indent 2 }}
+  internal_users.yml: |-
+{{- toYaml .Values.wazuhIndexer.internalUsers | nindent 4 }}
 {{- end}}

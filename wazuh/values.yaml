@@ -66,25 +66,6 @@ ingress:
 #    - hosts:
 #      secretName:
 
-wazuhIndexer:
-  enabled: true
-  username: admin
-  password: SecretPassword
-  replicas: 1
-  imageRepository: wazuh/wazuh-indexer
-  imageTag: '4.7.2'
-  resources:
-    requests:
-      cpu: 500m
-      memory: 1Gi
-    limits:
-      cpu: 1
-      memory: 2Gi
-  volumeStorage: 500Mi
-  port: 9200
-  targetPort: 9200
-  nodePort: 9300
-  nodeTargetPort: 9300
 
 wazuhApi:
   username: wazuh-wui
@@ -108,3 +89,45 @@ wazuhStorageClass:
   provisioner: k8s.io/minikube-hostpath
 
 nameSpace: wazuh
+
+wazuhIndexer:
+  enabled: true
+  username: admin
+  password: SecretPassword
+  replicas: 1
+  imageRepository: wazuh/wazuh-indexer
+  imageTag: '4.7.2'
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  volumeStorage: 500Mi
+  port: 9200
+  targetPort: 9200
+  nodePort: 9300
+  nodeTargetPort: 9300
+  internalUsers:
+    _meta:
+      type: "internalusers"
+      config_version: 2
+    admin:
+      hash: "$2y$12$K/SpwjtB.wOHJ/Nc6GVRDuc1h0rM1DfvziFRNPtk27P.c4yDr9njO"
+      reserved: true
+      backend_roles:
+      - "admin"
+      description: "Demo admin user"
+    
+    kibanaserver:
+      hash: "$2a$12$4AcgAt3xwOWadA5s5blL6ev39OXDNhmOesEoo33eZtrq2N0YrU3H."
+      reserved: true
+      description: "Demo kibanaserver user"
+
+    testUser:
+      hash: "$2y$12$K/SpwjtB.wOHJ/Nc6GVRDuc1h0rM1DfvziFRNPtk27P.c4yDr9njO"
+      reserved: false
+      backend_roles:
+      - "admin"
+      description: "Test extra user"
