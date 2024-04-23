@@ -1,0 +1,22 @@
+{{- if .Values.wazuhDashboard.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: wazuh-dashboard
+    # dns: route53
+  {{- with .Values.wazuhDashboard.svcAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: wazuh-dashboard
+  ports:
+    - name: dashboard
+      port: {{ .Values.wazuhDashboard.port }}
+      targetPort: {{ .Values.wazuhDashboard.targetPort }}
+{{- end}}

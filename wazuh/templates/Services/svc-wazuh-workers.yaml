@@ -1,0 +1,23 @@
+{{- if .Values.wazuhWorkers.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: wazuh-workers
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: wazuh-manager
+    # dns: route53
+  {{- with .Values.wazuhWorkers.svcAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: wazuh-manager
+    node-type: worker
+  ports:
+    - name: agents-events
+      port: {{ .Values.wazuhWorkers.port }}
+      targetPort: {{ .Values.wazuhWorkers.targetPort }}
+{{- end}}
