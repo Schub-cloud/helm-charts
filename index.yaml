@@ -92,4 +92,15 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/postgrescluster-5.4.0/postgrescluster-5.4.0.tgz
     version: 5.4.0
-generated: "2023-08-16T11:08:54.590112588Z"
+  wazuh:
+  - apiVersion: v2
+    appVersion: 0.0.0
+    created: "2024-04-25T18:08:04.62775629Z"
+    description: A Helm chart for Kubernetes
+    digest: 89b8ee5c912f60fa54f218873ab101ff86b06972e3fcbfb53229ce7ed26bfcfc
+    name: wazuh
+    type: application
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.1.0/wazuh-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-04-25T18:08:04.627796495Z"
