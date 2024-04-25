@@ -28,7 +28,7 @@ jobs:
         with:
           release-branch: main
           minor-identifier: "feat:"
-          prefix: global-
+          prefix: wazuh-
 
       - name: Install yq
         id: setup-yq
@@ -40,12 +40,12 @@ jobs:
 
       - name: Upgrade Version
         run: |
-          cd global
-          yq -i ".version = \"${{ env.TAG }}\"" wazuh/Chart.yaml
+          cd wazuh
+          yq -i ".version = \"${{ env.TAG }}\"" Chart.yaml
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git add wazuh/Chart.yaml
-          git commit -m "AUTO: Bump Helm Chart version to ${{ steps.version.outputs.version }}"
+          git add Chart.yaml
+          git commit -m "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
           git push
 
       - name: Helm login
@@ -54,7 +54,7 @@ jobs:
 
       - name: Helm Package
         run: |
-          helm package global
+          helm package wazuh
 
       - name: Helm Push
         shell: bash
