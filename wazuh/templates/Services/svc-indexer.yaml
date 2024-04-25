@@ -1,0 +1,21 @@
+{{- if .Values.wazuhIndexer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: indexer
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: wazuh-indexer
+#  {{- with .Values.wazuhIndexer.svcAnnotations }}
+#  annotations:
+#    {{- toYaml . | nindent 4 }}
+#  {{- end }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: wazuh-indexer
+  ports:
+    - name: indexer-rest
+      port: {{ .Values.wazuhIndexer.port }}
+      targetPort: {{ .Values.wazuhIndexer.targetPort }}
+{{- end}}
