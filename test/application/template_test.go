@@ -94,6 +94,14 @@ func TestTemplateRender(t *testing.T) {
 			},
 		},
 		{
+			name:        "createConfigMap",
+			golden:      "createConfigMap.yaml",
+			valuesFiles: []string{"testdata/valueFiles/createConfigMap.yaml"},
+			renderTemplates: []string{
+				"templates/config-map.yaml",
+			},
+		},
+		{
 			name:        "createAndMountPVCWithStaticPV",
 			golden:      "createAndMountPVCWithStaticPV.yaml",
 			valuesFiles: []string{"testdata/valueFiles/createAndMountPVCWithStaticPV.yaml"},

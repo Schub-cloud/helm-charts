@@ -225,3 +225,12 @@ affinity: {}
 priorityClass:
   enabled: false
   name: ""
+
+#configMap:
+# name: my-configmap
+#  data:
+#    odoo.conf: |
+#     [options]
+#     addons_path = /mnt/extra-addons
+#     data_dir = /var/lib/odoo
+#     proxy_mode = true
