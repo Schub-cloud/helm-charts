@@ -1,6 +1,10 @@
 name: Merge PR Wazuh
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wazuh/Chart.yaml'
 
 jobs:
   build:
