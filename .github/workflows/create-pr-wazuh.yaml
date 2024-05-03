@@ -16,6 +16,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create new branch
+        run: git checkout -b temporary-branch/wazuh-version-${{ steps.version.outputs.version }}
+
       - name: Install helm
         run: |
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -37,18 +40,12 @@ jobs:
       - name: Echo Tags
         run: |
           echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 8-13)" >> $GITHUB_ENV
-        
-      - name: Create new branch
-        run: git checkout -b new-branch
 
       - name: Upgrade Version
         run: |
           cd wazuh
           yq -i ".version = \"${{ env.TAG }}\"" Chart.yaml
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git add Chart.yaml
-          git commit -m "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
+          cd ..
 
       - name: Create Pull Request
         id: cpr
@@ -57,8 +54,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          branch: "temporary-branch/wazuh-version-${{ steps.version.outputs.version }}."
+          branch: "temporary-branch/wazuh-version-${{ steps.version.outputs.version }}"
           delete-branch: true
           title: 'wazuh-version-${{ steps.version.outputs.version }}'
           labels: |
             automated pr
+          add-paths: wazuh/Chart.yaml
