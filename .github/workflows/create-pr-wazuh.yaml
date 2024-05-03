@@ -1,4 +1,4 @@
-name: Deploy Wazuh
+name: Create PR Wazuh
 on:
   workflow_dispatch:
 
@@ -37,6 +37,9 @@ jobs:
       - name: Echo Tags
         run: |
           echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 8-13)" >> $GITHUB_ENV
+        
+      - name: Create new branch
+        run: git checkout -b new-branch
 
       - name: Upgrade Version
         run: |
@@ -46,32 +49,16 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git add Chart.yaml
           git commit -m "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
-          git push
 
-      - name: Helm login
-        run: |
-          helm registry login https://ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Helm Package
-        run: |
-          helm package wazuh
-
-      - name: Helm Push
-        shell: bash
-        run: |
-          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/schub/helm-charts/wazuh
-      
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.1
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{ steps.version.outputs.version }}
-          tag_prefix: ""
-
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          branch: "temporary-branch/wazuh-version-${{ steps.version.outputs.version }}."
+          delete-branch: true
+          title: 'wazuh-version-${{ steps.version.outputs.version }}'
+          labels: |
+            automated pr

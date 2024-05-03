@@ -1,0 +1,39 @@
+name: Merge PR Wazuh
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wazuh/Chart.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Helm login
+        run: |
+          helm registry login https://ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Helm Package
+        run: |
+          helm package wazuh
+
+      - name: Helm Push
+        shell: bash
+        run: |
+          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/schub/helm-charts/wazuh
+      
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ steps.version.outputs.version }}
+          tag_prefix: ""
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
