@@ -16,6 +16,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Git Version
+        id: version
+        uses: codacy/git-version@2.7.1
+        with:
+          release-branch: main
+          minor-identifier: "feat:"
+          prefix: wazuh-
+
       - name: Create new branch
         run: git checkout -b temporary-branch/wazuh-version-${{ steps.version.outputs.version }}
 
@@ -24,14 +32,6 @@ jobs:
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
           ./get_helm.sh
-
-      - name: Git Version
-        id: version
-        uses: codacy/git-version@2.7.1
-        with:
-          release-branch: main
-          minor-identifier: "feat:"
-          prefix: wazuh-
 
       - name: Install yq
         id: setup-yq
