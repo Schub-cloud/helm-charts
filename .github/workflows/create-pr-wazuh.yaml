@@ -36,7 +36,7 @@ jobs:
 
       - name: Echo Tags
         run: |
-          echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 8-13)" >> $GITHUB_ENV
+          echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 7-13)" >> $GITHUB_ENV
 
       - name: Upgrade Version
         run: |
