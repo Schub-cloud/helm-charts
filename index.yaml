@@ -110,4 +110,11 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.1/wazuh-0.0.1.tgz
     version: 0.0.1
-generated: "2024-05-06T19:42:42.675061893Z"
+  - apiVersion: v2
+    created: "2024-05-07T17:34:53.465319278Z"
+    digest: 35536e76df8bd543d8c468506faf5f552f405a97f0d2871f84cb487c36f11384
+    name: wazuh
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.0/wazuh-0.0.0.tgz
+    version: 0.0.0
+generated: "2024-05-07T17:34:53.465348854Z"
