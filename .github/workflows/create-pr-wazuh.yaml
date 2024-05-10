@@ -23,6 +23,7 @@ jobs:
           release-branch: main
           minor-identifier: "feat:"
           prefix: wazuh-
+          log-path: wazuh/
 
       - name: Install yq
         id: setup-yq
