@@ -46,9 +46,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          branch: "temporary-branch/wazuh-version-${{ steps.version.outputs.version }}"
+          branch: "temporary-branch/${{ steps.version.outputs.version }}"
           delete-branch: true
-          title: 'wazuh-version-${{ steps.version.outputs.version }}'
+          title: '${{ steps.version.outputs.version }}'
           labels: |
             automated pr
           add-paths: wazuh/Chart.yaml
