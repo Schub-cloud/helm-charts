@@ -20,6 +20,7 @@ wazuhCluster:
 wazuhDashboard:
   enabled: true
   # This is de default user for the Wazuh dashboard. To change it's password you'll have to change the hash in the internalUsers field at the WazuhIndexer.
+  # Add this comment to test versioning wazuh
   username: kibanaserver 
   password: kibanaserver 
   imageRepository: wazuh/wazuh-dashboard
