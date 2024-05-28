@@ -39,11 +39,11 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "AUTO: Bump Wazuh Helm Chart version to ${{ steps.version.outputs.version }}."
+          commit-message: "AUTO: Bump Wazuh Helm Chart version to ${{ inputs.version }}."
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          branch: "temporary-branch/${{ steps.version.outputs.version }}"
+          branch: "temporary-branch/${{ inputs.version }}"
           delete-branch: true
-          title: '${{ steps.version.outputs.version }}'
+          title: '${{ inputs.version }}'
           labels: |
             automated pr
           add-paths: wazuh/Chart.yaml
