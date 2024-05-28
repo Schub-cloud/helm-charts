@@ -1,7 +1,11 @@
 name: Create PR Wazuh
 on:
   workflow_dispatch:
-
+    inputs:
+        version:
+          type: string
+          required: true
+          description: "New wazuh helm chart version wazuh-0.0.0"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,21 +20,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Git Version
-        id: version
-        uses: codacy/git-version@2.7.1
-        with:
-          release-branch: main
-          minor-identifier: "feat:"
-          prefix: wazuh-
-
       - name: Install yq
         id: setup-yq
         uses: shiipou/setup-yq-action@v2.2.0
 
       - name: Echo Tags
         run: |
-          echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 7-13)" >> $GITHUB_ENV
+          echo "TAG=$(echo ${{ inputs.version }} | cut -c 7-13)" >> $GITHUB_ENV
 
       - name: Upgrade Version
         run: |
