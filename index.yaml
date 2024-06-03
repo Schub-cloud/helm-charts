@@ -94,6 +94,13 @@ entries:
     version: 5.4.0
   wazuh:
   - apiVersion: v2
+    created: "2024-06-03T20:42:36.950230662Z"
+    digest: c3f31251315c6c44f5f617c8367dee26a6746fc15f63bd5561246d61ba362e29
+    name: wazuh
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.3.0/wazuh-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 0.0.0
     created: "2024-04-25T18:08:04.62775629Z"
     description: A Helm chart for Kubernetes
@@ -117,4 +124,4 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.0/wazuh-0.0.0.tgz
     version: 0.0.0
-generated: "2024-05-07T17:34:53.465348854Z"
+generated: "2024-06-03T20:42:36.950282409Z"
