@@ -8,6 +8,7 @@ cluster.initial_master_nodes:
 node.max_local_storage_nodes: "3"
 path.data: /var/lib/wazuh-indexer
 path.logs: /var/log/wazuh-indexer
+plugins.security.disabled: true
 
 cluster.routing.allocation.disk.threshold_enabled: false
 compatibility.override_main_response_version: true
