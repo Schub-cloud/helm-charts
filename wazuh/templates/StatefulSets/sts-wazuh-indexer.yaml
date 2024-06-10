@@ -52,13 +52,6 @@ spec:
       containers:
         - name: wazuh-indexer
           image: "{{ .Values.wazuhIndexer.imageRepository }}:{{ .Values.wazuhIndexer.imageTag }}"
-          resources: 
-            limits:
-              cpu: {{ required "wazuh-indexer.resources.limits.cpu is required" .Values.wazuhIndexer.resources.limits.cpu }}
-              memory: {{ required "wazuh-indexer.resources.limits.memory is required" .Values.wazuhIndexer.resources.limits.memory }}
-            requests:
-              cpu: {{ required "wazuh-indexer.resources.requests.cpu is required" .Values.wazuhIndexer.resources.requests.cpu }}
-              memory: {{ required "wazuh-indexer.resources.requests.memory is required" .Values.wazuhIndexer.resources.requests.memory }}
           env:
             - name: OPENSEARCH_JAVA_OPTS
               value: '-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true'
