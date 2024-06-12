@@ -19,9 +19,6 @@ spec:
         - name: config
           configMap:
             name: dashboard-conf
-        - name: dashboard-certs
-          secret:
-            secretName: dashboard-certs
       containers:
         - name: wazuh-dashboard
           image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}" 
@@ -37,24 +34,12 @@ spec:
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
               subPath: opensearch_dashboards.yml
               readOnly: false
-            - name: dashboard-certs
-              mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
-              readOnly: true
-              subPath: cert.pem
-            - name: dashboard-certs
-              mountPath: /usr/share/wazuh-dashboard/certs/key.pem
-              readOnly: true
-              subPath: key.pem
-            - name: dashboard-certs
-              mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
-              subPath: root-ca.pem
-              readOnly: true
           ports:
             - containerPort: {{ .Values.wazuhDashboard.targetPort }}
               name: dashboard
           env:
             - name: INDEXER_URL
-              value: 'https://indexer.wazuh.svc.cluster.local:9200'
+              value: 'http://indexer.wazuh.svc.cluster.local:9200'
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -77,12 +62,8 @@ spec:
                   key: password
             - name: SERVER_SSL_ENABLED
               value: "true"
-            - name: SERVER_SSL_CERTIFICATE
-              value: /usr/share/wazuh-dashboard/certs/cert.pem
-            - name: SERVER_SSL_KEY
-              value: /usr/share/wazuh-dashboard/certs/key.pem
             - name: WAZUH_API_URL
-              value: https://wazuh.wazuh.svc.cluster.local
+              value: http://wazuh.wazuh.svc.cluster.local
             - name: API_USERNAME
               valueFrom:
                 secretKeyRef:

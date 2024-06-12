@@ -18,9 +18,6 @@ spec:
     spec:
       # Set the wazuh-indexer volume permissions so the wazuh-indexer user can use it
       volumes:
-        - name: indexer-certs
-          secret:
-            secretName: indexer-certs
         - name: indexer-conf
           configMap:
             name: indexer-conf
@@ -77,26 +74,6 @@ spec:
           volumeMounts:
             - name: wazuh-indexer
               mountPath: /var/lib/wazuh-indexer
-            - name: indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/node-key.pem
-              subPath: node-key.pem
-              readOnly: true
-            - name: indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/node.pem
-              subPath: node.pem
-              readOnly: true
-            - name: indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/root-ca.pem
-              subPath: root-ca.pem
-              readOnly: true
-            - name: indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/admin.pem
-              subPath: admin.pem
-              readOnly: true
-            - name: indexer-certs
-              mountPath: /usr/share/wazuh-indexer/certs/admin-key.pem
-              subPath: admin-key.pem
-              readOnly: true
             - name: indexer-conf
               mountPath: /usr/share/wazuh-indexer/opensearch.yml
               subPath: opensearch.yml
