@@ -62,7 +62,6 @@ wazuhIndexer:
   targetPort: 9200
   nodePort: 9300
   nodeTargetPort: 9300
-  URL: https://indexer:9200
   internalUsers:
     _meta:
       type: "internalusers"

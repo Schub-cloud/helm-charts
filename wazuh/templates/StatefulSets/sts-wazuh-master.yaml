@@ -116,7 +116,7 @@ spec:
               name: api
           env:
             - name: INDEXER_URL
-              value: {{.Values.wazuhIndexer.URL}}
+              value: https://indexer:9200
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
