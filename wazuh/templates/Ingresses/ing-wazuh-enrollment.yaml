@@ -23,7 +23,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.wazuhManager.ingress.enrollmentHost }}
+    - host: {{ .Values.wazuhManager.ingress.host }}
       http:
         paths:
           - backend:

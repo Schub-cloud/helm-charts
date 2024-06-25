@@ -23,7 +23,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.wazuhDashboard.ingress.dashboardHost }}
+    - host: {{ .Values.wazuhDashboard.ingress.host }}
       http:
         paths:
           - backend:

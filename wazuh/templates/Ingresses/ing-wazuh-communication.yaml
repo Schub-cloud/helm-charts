@@ -23,7 +23,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.wazuhWorkers.ingress.communicationHost }}
+    - host: {{ .Values.wazuhWorkers.ingress.host }}
       http:
         paths:
           - backend:
