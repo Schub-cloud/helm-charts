@@ -3,7 +3,9 @@ ingress:
 #  annotations:
 #    kubernetes.io/ingress.class: nginx
 #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-  host: "wazuh.schub.com"
+  dashboardHost: "wazuh.schub.cloud"
+  enrollmentHost: "wazuh.schub.enrollment"
+  communicationHost: "wazuh.schub.communication"
 #  tls: 
 #    - hosts:
 #      secretName: 
@@ -62,7 +64,6 @@ wazuhIndexer:
   targetPort: 9200
   nodePort: 9300
   nodeTargetPort: 9300
-  URL: https://indexer:9200
   internalUsers:
     _meta:
       type: "internalusers"

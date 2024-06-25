@@ -2,7 +2,8 @@
 apiVersion:  networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wazuh-ingress
+  name: wazuh-ingress-dashboard
+  namespace: {{ .Values.nameSpace }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- range $key, $value := . }}
@@ -22,7 +23,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.ingress.dashboardHost }}
       http:
         paths:
           - backend:
@@ -31,19 +32,5 @@ spec:
                 port:
                   number: {{ .Values.wazuhDashboard.port }}
             path: /
-            pathType: Prefix
-          - backend:
-              service:
-                name: wazuh
-                port:
-                  number: {{ .Values.wazuhManager.ports.regPort }}
-            path: /enrollment
-            pathType: Prefix
-          - backend:
-              service:
-                name: wazuh-workers
-                port:
-                  number: {{ .Values.wazuhWorkers.port }}
-            path: /agent-communication
             pathType: Prefix
 {{- end -}}
