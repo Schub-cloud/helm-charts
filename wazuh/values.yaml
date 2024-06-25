@@ -1,15 +1,3 @@
-ingress:
-  enabled: true
-#  annotations:
-#    kubernetes.io/ingress.class: nginx
-#    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-  dashboardHost: "wazuh.schub.cloud"
-  enrollmentHost: "wazuh.schub.enrollment"
-  communicationHost: "wazuh.schub.communication"
-#  tls: 
-#    - hosts:
-#      secretName: 
-
 nameSpace: wazuh
 
 wazuhCluster:
@@ -20,6 +8,15 @@ wazuhCluster:
   targetPort: 1516
 
 wazuhDashboard:
+  ingress:
+    enabled: true
+  #  annotations:
+  #    kubernetes.io/ingress.class: nginx
+  #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    host: "wazuh.schub.cloud"
+  #  tls: 
+  #    - hosts:
+  #      secretName: 
   enabled: true
   # This is de default user for the Wazuh dashboard. To change it's password you'll have to change the hash in the internalUsers field at the WazuhIndexer.
   # Add this comment to test versioning wazuh
@@ -116,6 +113,15 @@ wazuhMaster:
     password: MyS3cr37P450r.*-
 
 wazuhManager:
+  ingress:
+    enabled: true
+  #  annotations:
+  #    kubernetes.io/ingress.class: nginx
+  #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    host: "wazuh.schub.enrollment"
+  #  tls: 
+  #    - hosts:
+  #      secretName: 
   ports:
     regPort: 1515
     regTargetPort: 1515 
@@ -126,6 +132,15 @@ wazuhStorageClass:
   provisioner: k8s.io/minikube-hostpath
 
 wazuhWorkers:
+  ingress:
+    enabled: true
+  #  annotations:
+  #    kubernetes.io/ingress.class: nginx
+  #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    host: "wazuh.schub.communication"
+  #  tls: 
+  #    - hosts:
+  #      secretName: 
   enabled: true
   imageRepository: wazuh/wazuh-manager
   imageTag: '4.7.2'
