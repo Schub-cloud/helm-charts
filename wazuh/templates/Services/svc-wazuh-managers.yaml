@@ -6,7 +6,6 @@ metadata:
   namespace: {{ .Values.nameSpace }}
   labels:
     app: wazuh-manager
-    # dns: {{ .Values.wazuhManager.dns }}
   {{- with .Values.wazuhMaster.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -15,7 +14,6 @@ spec:
   type: LoadBalancer
   selector:
     app: wazuh-manager
-    node-type: master
   ports:
     - name: registration
       port: {{ .Values.wazuhManager.ports.regPort }}
@@ -23,4 +21,7 @@ spec:
     - name: api
       port: {{ .Values.wazuhManager.ports.apiPort }}
       targetPort: {{ .Values.wazuhManager.ports.apiTargetPort }}
+    - name: agents-events
+      port: {{ .Values.wazuhWorkers.port }}
+      targetPort: {{ .Values.wazuhWorkers.targetPort }}
 {{- end}}
