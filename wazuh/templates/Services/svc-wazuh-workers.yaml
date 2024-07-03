@@ -12,7 +12,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: wazuh-manager
     node-type: worker
@@ -20,4 +20,7 @@ spec:
     - name: agents-events
       port: {{ .Values.wazuhWorkers.port }}
       targetPort: {{ .Values.wazuhWorkers.targetPort }}
+    - name: registration
+      port: {{ .Values.wazuhManager.ports.regPort }}
+      targetPort: {{ .Values.wazuhManager.ports.regTargetPort }}
 {{- end}}

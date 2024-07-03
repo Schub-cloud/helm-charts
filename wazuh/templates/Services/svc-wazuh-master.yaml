@@ -17,9 +17,6 @@ spec:
     app: wazuh-manager
     node-type: master
   ports:
-    - name: registration
-      port: {{ .Values.wazuhManager.ports.regPort }}
-      targetPort: {{ .Values.wazuhManager.ports.regTargetPort }}
     - name: api
       port: {{ .Values.wazuhManager.ports.apiPort }}
       targetPort: {{ .Values.wazuhManager.ports.apiTargetPort }}
