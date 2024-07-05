@@ -23,15 +23,15 @@ wazuhDashboard:
   username: kibanaserver 
   password: kibanaserver 
   imageRepository: wazuh/wazuh-dashboard
-  imageTag: '4.7.2'
+  imageTag: '4.8.0'
   replicas: 1
   resources:
     requests:
-      cpu: 
-      memory: 
+      cpu: 200m
+      memory: 512Mi
     limits:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 400m
+      memory: 2Gi
 #  svcAnnotations:
 #    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
 #    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
@@ -47,7 +47,7 @@ wazuhIndexer:
   username: admin
   password: SecretPassword
   imageRepository: wazuh/wazuh-indexer
-  imageTag: '4.7.2'
+  imageTag: '4.8.0'
   replicas: 1
   resources:
     requests:
@@ -94,18 +94,17 @@ wazuhMaster:
   # This is the password that the agent will use to enroll.
   authd_password: password 
   imageRepository: wazuh/wazuh-manager
-  imageTag: '4.7.2'
+  imageTag: '4.8.0'
   replicas: 1
   resources:
     requests:
-      cpu: 
-      memory: 
+      cpu: 1
+      memory: 1Gi
     limits:
-      cpu: 400m
-      memory: 512Mi
-  volumeStorage: 500Mi
+      cpu: 2
+      memory: 2Gi
+  volumeStorage: 1Gi
 #  svcAnnotations:
-#    # domainName: 'changeme'
 #    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
   # These are the credentials used to secure the API comunication between the Dashboard and the manager master node.
   wazuhApi: 
@@ -125,16 +124,16 @@ wazuhStorageClass:
 wazuhWorkers:
   enabled: true
   imageRepository: wazuh/wazuh-manager
-  imageTag: '4.7.2'
+  imageTag: '4.8.0'
   replicas: 1
   resources:
     requests:
-      cpu: 300m
-      memory: 256Mi
+      cpu: 1
+      memory: 1Gi
     limits:
-      cpu: 400m
-      memory: 512Mi
-  volumeStorage: 500Mi
+      cpu: 2
+      memory: 2Gi
+  volumeStorage: 1Gi
 #  svcAnnotations:
 #    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   port: 1514
