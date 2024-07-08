@@ -13,6 +13,7 @@ kind: StorageClass
 metadata:
   name: wazuh-storage
 provisioner: {{ required "wazuh-sc.provisioner is required" .Values.wazuhStorageClass.provisioner }} 
+allowVolumeExpansion: true
 # parameters:
 #  encrypted: 'true'
 #  type: gp2
