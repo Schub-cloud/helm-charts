@@ -119,7 +119,7 @@ wazuhManager:
     apiTargetPort: 55000
 
 wazuhStorageClass:
-  provisioner: k8s.io/minikube-hostpath
+  provisioner: ebs.csi.aws.com 
 
 wazuhWorkers:
   enabled: true

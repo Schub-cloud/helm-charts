@@ -14,9 +14,9 @@ metadata:
   name: wazuh-storage
 provisioner: {{ required "wazuh-sc.provisioner is required" .Values.wazuhStorageClass.provisioner }} 
 allowVolumeExpansion: true
-# parameters:
-#  encrypted: 'true'
-#  type: gp2
-# volumeBindingMode: WaitForFirstConsumer
-# reclaimPolicy: Retain  # Useful in case you delete the PersistentVolumeClaim
+parameters:
+  encrypted: 'true'
+  type: gp3
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
 {{- end}}
