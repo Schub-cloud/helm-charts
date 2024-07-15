@@ -111,14 +111,5 @@ spec:
             - containerPort: {{ .Values.wazuhIndexer.nodePort }}
               name: indexer-nodes
   volumeClaimTemplates:
-    - metadata:
-        name: wazuh-indexer
-        namespace: indexer-cluster
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: wazuh-storage
-        resources:
-          requests:
-            storage: {{ required "wazuh-indexer.volumeStorage is required" .Values.wazuhIndexer.volumeStorage }} 
+    claimName: "wazuh-indexer"
 {{- end}}

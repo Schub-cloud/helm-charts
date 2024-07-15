@@ -138,14 +138,5 @@ spec:
                   name: wazuh-cluster-key
                   key: key
   volumeClaimTemplates:
-    - metadata:
-        name: wazuh-manager-worker
-        namespace: {{ .Values.nameSpace }}
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: wazuh-storage
-        resources:
-          requests:
-            storage: {{ .Values.wazuhWorkers.volumeStorage }} 
+    claimName: "wazuh-manager-worker"
 {{- end}}
