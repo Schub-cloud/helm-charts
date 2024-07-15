@@ -111,5 +111,5 @@ spec:
             - containerPort: {{ .Values.wazuhIndexer.nodePort }}
               name: indexer-nodes
   volumeClaimTemplates:
-    claimName: "wazuh-indexer"
+    claimName: wazuh-indexer
 {{- end}}

@@ -151,5 +151,5 @@ spec:
                   name: wazuh-cluster-key
                   key: key
   volumeClaimTemplates:
-    claimName: "wazuh-manager-master"
+    claimName: wazuh-manager-master
 {{- end}}
