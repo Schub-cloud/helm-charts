@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wazuh-manager-worker
+  name: wazuh-manager-worker-pvc
   namespace: wazuh
   labels:
     app: wazuh-manager
