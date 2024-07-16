@@ -13,5 +13,5 @@ spec:
   storageClassName: wazuh-storage
   resources:
     requests:
-      storage: {{ .Values.wazuhIndexer.volumeStorage }} 
+      storage: {{ .Values.wazuhMaster.volumeStorage }} 
 {{- end}}
