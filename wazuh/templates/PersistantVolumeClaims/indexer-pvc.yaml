@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wazuh-indexer
-  namespace: indexer-cluster
+  name: wazuh-indexer-pvc
+  namespace: wazuh
   labels:
     app: wazuh-indexer
   spec:
