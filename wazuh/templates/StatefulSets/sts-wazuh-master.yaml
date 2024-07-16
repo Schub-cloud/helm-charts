@@ -153,6 +153,4 @@ spec:
                 secretKeyRef:
                   name: wazuh-cluster-key
                   key: key
-  volumeClaimTemplates:
-    claimName: wazuh-manager-master
 {{- end}}
