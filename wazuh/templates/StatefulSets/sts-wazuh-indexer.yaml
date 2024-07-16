@@ -24,6 +24,9 @@ spec:
         - name: indexer-conf
           configMap:
             name: indexer-conf
+        - name: wazuh-indexer
+          persistentVolumeClaim:
+            claimName: wazuh-indexer-pvc
       initContainers:
         - name: volume-mount-hack
           image: busybox

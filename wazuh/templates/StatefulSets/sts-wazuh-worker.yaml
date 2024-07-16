@@ -41,6 +41,9 @@ spec:
         - name: filebeat-certs
           secret:
             secretName: indexer-certs
+        - name: wazuh-manager-worker
+          persistentVolumeClaim:
+            claimName: wazuh-manager-worker-pvc
       securityContext:
         fsGroup: 101
       containers:

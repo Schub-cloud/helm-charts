@@ -38,6 +38,9 @@ spec:
         - name: wazuh-authd-pass
           secret:
             secretName: wazuh-authd-pass
+        - name: wazuh-manager-master
+          persistentVolumeClaim:
+            claimName: wazuh-manager-master-pvc
       securityContext:
         fsGroup: 101
       containers:
