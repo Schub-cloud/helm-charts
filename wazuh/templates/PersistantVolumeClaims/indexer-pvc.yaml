@@ -3,14 +3,14 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wazuh-indexer
-  namespace: indexer-cluster
+  namespace: wazuh
   labels:
     app: wazuh-indexer
-  spec:
-    accessModes:
-      - ReadWriteOnce
-    storageClassName: wazuh-storage
-    resources:
-      requests:
-        storage: {{ .Values.wazuhIndexer.volumeStorage }} 
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: wazuh-storage
+  resources:
+    requests:
+      storage: {{ .Values.wazuhIndexer.volumeStorage }} 
 {{- end}}
