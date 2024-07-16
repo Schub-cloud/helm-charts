@@ -1,0 +1,17 @@
+{{- if .Values.wazuhWorkers.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wazuh-manager-worker
+  namespace: wazuh
+  labels:
+    app: wazuh-manager
+    node-type: worker
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    storageClassName: wazuh-storage
+    resources:
+      requests:
+        storage: {{ .Values.wazuhIndexer.volumeStorage }} 
+{{- end}}

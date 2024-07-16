@@ -24,6 +24,9 @@ spec:
         - name: indexer-conf
           configMap:
             name: indexer-conf
+        - name: wazuh-indexer
+          persistentVolumeClaim:
+            claimName: wazuh-indexer-pvc
       initContainers:
         - name: volume-mount-hack
           image: busybox
@@ -110,15 +113,4 @@ spec:
               name: indexer-rest
             - containerPort: {{ .Values.wazuhIndexer.nodePort }}
               name: indexer-nodes
-  volumeClaimTemplates:
-    - metadata:
-        name: wazuh-indexer
-        namespace: indexer-cluster
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: wazuh-storage
-        resources:
-          requests:
-            storage: {{ required "wazuh-indexer.volumeStorage is required" .Values.wazuhIndexer.volumeStorage }} 
 {{- end}}
