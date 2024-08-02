@@ -41,6 +41,9 @@ spec:
         - name: wazuh-manager-master
           persistentVolumeClaim:
             claimName: wazuh-manager-master-pvc
+        - name: central-conf
+          configMap:
+            name: central-fim
       securityContext:
         fsGroup: 101
       containers:
@@ -61,6 +64,15 @@ spec:
               mountPath: /wazuh-config-mount/etc/ossec.conf
               subPath: master.conf
               readOnly: true
+            - name: central-conf
+              mountPath: /var/ossec/etc/shared/Linux/agent.conf
+              subPath: Linux.conf
+            - name: central-conf
+              mountPath: /var/ossec/etc/shared/Windows/agent.conf
+              subPath: Windows.conf
+            - name: central-conf
+              mountPath: /var/ossec/etc/shared/MacOS/agent.conf
+              subPath: MacOS.conf
             - name: filebeat-certs
               mountPath: /etc/ssl/root-ca.pem
               readOnly: true
