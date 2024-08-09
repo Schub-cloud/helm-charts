@@ -92,6 +92,7 @@ wazuhIndexer:
 wazuhMaster:
   enabled: true
   # This is the password that the agent will use to enroll.
+  slackURL: defaultURL.com
   authd_password: password 
   imageRepository: wazuh/wazuh-manager
   imageTag: '4.8.0'
