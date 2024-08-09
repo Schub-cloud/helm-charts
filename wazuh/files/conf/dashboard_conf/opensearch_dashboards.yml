@@ -13,5 +13,5 @@ opensearch.ssl.certificateAuthorities: ["/usr/share/wazuh-dashboard/certs/root-c
 uiSettings.overrides.defaultRoute: /app/wz-home
 opensearchDashboards.branding:
   mark:
-    defaultUrl: "https://i.imgur.com/2Ac0zhD.png"
-    darkModeUrl: "https://i.imgur.com/K1MnHGY.png"
+    defaultUrl: "https://i.imgur.com/VPPbCNS.png"
+    darkModeUrl: "https://i.imgur.com/1mma7ZQ.png"
