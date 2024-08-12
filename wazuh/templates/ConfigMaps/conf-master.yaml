@@ -5,5 +5,6 @@ metadata:
   name: wazuh-conf
   namespace: {{ .Values.nameSpace }}
 data:
-{{ (.Files.Glob "files/conf/wazuh_conf/*").AsConfig | indent 2 }}
+  master.conf: {{ tpl ((.Files.Get "files/conf/wazuh_conf/master.conf") | quote) . }}
+  worker.conf: {{ tpl ((.Files.Get "files/conf/wazuh_conf/worker.conf") | quote) . }}
 {{- end}}
