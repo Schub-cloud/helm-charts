@@ -8,6 +8,9 @@ wazuhCluster:
   targetPort: 1516
 
 wazuhDashboard:
+  assets: 
+    default: https://i.imgur.com/yAl7vBQ.png
+    dark: https://i.imgur.com/ASGo09q.png
   ingress:
     enabled: true
   #  annotations:
@@ -139,4 +142,3 @@ wazuhWorkers:
 #    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   port: 1514
   targetPort: 1514
-
