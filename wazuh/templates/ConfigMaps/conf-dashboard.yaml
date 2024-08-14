@@ -5,5 +5,5 @@ metadata:
   name: dashboard-conf
   namespace: {{ .Values.nameSpace }}
 data: 
-{{ (.Files.Glob "files/conf/dashboard_conf/*").AsConfig | indent 2 }}
+  opensearch_dashboards.yml: {{ tpl ((.Files.Get "files/conf/dashboard_conf/opensearch_dashboards.yml") | quote) . }}
 {{- end}}
