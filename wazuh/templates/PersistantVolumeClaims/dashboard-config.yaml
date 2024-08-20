@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wazuh-dashboard-config-pvc
+  namespace: wazuh
+  labels:
+    app: wazuh-dashboard
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: wazuh-storage
+  resources:
+    requests:
+      storage: 100Mi

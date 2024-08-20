@@ -22,6 +22,12 @@ spec:
         - name: dashboard-certs
           secret:
             secretName: dashboard-certs
+        - name: wazuh-dashboard-branding
+          persistentVolumeClaim:
+            claimName: wazuh-dashboard-branding-pvc
+        - name: wazuh-dashboard-config
+          persistentVolumeClaim:
+            claimName: wazuh-dashboard-config-pvc
       containers:
         - name: wazuh-dashboard
           image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}" 
@@ -33,6 +39,10 @@ spec:
               cpu: {{ .Values.wazuhDashboard.resources.requests.cpu }}
               memory: {{ .Values.wazuhDashboard.resources.requests.memory }}
           volumeMounts:
+            - name: wazuh-dashboard-branding
+              mountPath: /usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom/images/
+            - name: wazuh-dashboard-config
+              mountPath: /usr/share/wazuh-dashboard/data/wazuh/config/
             - name: config
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
               subPath: opensearch_dashboards.yml
