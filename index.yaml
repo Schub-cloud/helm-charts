@@ -94,6 +94,13 @@ entries:
     version: 5.4.0
   wazuh:
   - apiVersion: v2
+    created: "2024-08-21T20:06:57.45940067Z"
+    digest: 179a4de9a518a8b2eb75e38e71eb0252a406b9a5efe4e79530bf1b8cfe39af97
+    name: wazuh
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.35.0/wazuh-0.35.0.tgz
+    version: 0.35.0
+  - apiVersion: v2
     created: "2024-08-21T19:30:08.380665899Z"
     digest: 5c9a20677afa60b0813a69b883e48bc03cb3e346f656608363cab553fc1ee02b
     name: wazuh
@@ -341,4 +348,4 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.0/wazuh-0.0.0.tgz
     version: 0.0.0
-generated: "2024-08-21T19:30:08.380915861Z"
+generated: "2024-08-21T20:06:57.45972677Z"
