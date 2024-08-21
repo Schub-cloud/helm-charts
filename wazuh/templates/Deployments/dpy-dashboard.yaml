@@ -29,7 +29,7 @@ spec:
           persistentVolumeClaim:
             claimName: wazuh-dashboard-config-pvc
       initContainers:
-        - name: volume-mount-hack
+        - name: volume-mount-hack-2
           image: busybox
           resources:
             requests:
@@ -46,6 +46,22 @@ spec:
           volumeMounts:
             - name: wazuh-dashboard-branding
               mountPath: /usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom/images/
+            - name: wazuh-dashboard-config
+              mountPath: /usr/share/wazuh-dashboard/data/wazuh/config/
+      - name: volume-mount-hack-2
+          image: busybox
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          command:
+            - sh
+            - '-c'
+            - 'chown -R 1000:1000 /usr/share/wazuh-dashboard/data/wazuh/config/'
+          volumeMounts:
             - name: wazuh-dashboard-config
               mountPath: /usr/share/wazuh-dashboard/data/wazuh/config/
       containers:
