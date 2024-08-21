@@ -28,6 +28,26 @@ spec:
         - name: wazuh-dashboard-config
           persistentVolumeClaim:
             claimName: wazuh-dashboard-config-pvc
+      initContainers:
+        - name: volume-mount-hack
+          image: busybox
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          command:
+            - sh
+            - '-c'
+            - 'chown -R 1000:1000 /usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom/images/'
+            - 'chown -R 1000:1000 /usr/share/wazuh-dashboard/data/wazuh/config/'
+          volumeMounts:
+            - name: wazuh-dashboard-branding
+              mountPath: /usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom/images/
+            - name: wazuh-dashboard-config
+              mountPath: /usr/share/wazuh-dashboard/data/wazuh/config/
       containers:
         - name: wazuh-dashboard
           image: "{{ .Values.wazuhDashboard.imageRepository }}:{{ .Values.wazuhDashboard.imageTag }}" 
