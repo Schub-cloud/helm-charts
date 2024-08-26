@@ -1,0 +1,9 @@
+{{- if .Values.wazuhMaster.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-slack
+  namespace: {{ .Values.nameSpace }}
+data:
+{{ (.Files.Glob "files/auxi/slack.py").AsConfig | indent 2 }}
+{{- end}}
