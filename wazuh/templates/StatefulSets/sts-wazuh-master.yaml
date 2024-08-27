@@ -64,7 +64,7 @@ spec:
               add: ["SYS_CHROOT"]
           volumeMounts:
             - name: slack-integration
-              mountPath: /var/ossec/integrations/slack.py
+              mountPath: /var/ossec/data_tmp/exclusion/slack.py
               subPath: slack.py
             - name: config
               mountPath: /wazuh-config-mount/etc/ossec.conf
