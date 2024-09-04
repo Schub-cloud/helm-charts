@@ -36,7 +36,10 @@ jobs:
 
       - name: Echo Tags
         run: |
-          echo "FILENAME=$(ls -1 | grep '\.tgz')" >> $GITHUB_ENV
+          FILENAME=$(ls -1 | grep '\.tgz')
+          TAG_NAME=$(echo $FILENAME | sed 's/\.tgz$//')
+          echo "FILENAME=${FILENAME}" >> $GITHUB_ENV
+          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
 
       - name: Helm Push
         shell: bash
@@ -48,7 +51,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{ env.FILENAME }}
+          custom_tag: ${{ env.TAG_NAME }}
           tag_prefix: ""
 
       - name: Create a GitHub release
