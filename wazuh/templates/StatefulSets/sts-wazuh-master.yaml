@@ -47,6 +47,27 @@ spec:
         - name: slack-integration
           configMap:
             name: custom-slack
+      initContainers:
+        - name: slack-integration-hack
+          image: busybox
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          command:
+            - sh
+            - '-c'
+            - 'rm wazuh/var/ossec/integrations/slack.py; mv /wazuh-config-mount/tmp/slack.py wazuh/var/ossec/integrations/slack.py'
+          volumeMounts:
+            - name: slack-integration
+              mountPath: /wazuh-config-mount/tmp/slack.py
+              subPath: slack.py
+            - name: wazuh-manager-master
+              mountPath: /var/ossec/integrations
+              subPath: wazuh/var/ossec/integrations
       securityContext:
         fsGroup: 101
       containers:
@@ -64,7 +85,7 @@ spec:
               add: ["SYS_CHROOT"]
           volumeMounts:
             - name: slack-integration
-              mountPath: /var/ossec/data_tmp/exclusion/slack.py
+              mountPath: /wazuh-config-mount/tmp/slack.py
               subPath: slack.py
             - name: config
               mountPath: /wazuh-config-mount/etc/ossec.conf
