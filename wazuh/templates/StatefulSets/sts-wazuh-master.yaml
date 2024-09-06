@@ -64,7 +64,7 @@ spec:
               ls -l /wazuh-config-mount/tmp;
               ls -l /var/ossec/integrations;
               rm /var/ossec/integrations/slack.py;
-              mv /wazuh-config-mount/tmp/slack.py /var/ossec/integrations/slack.py
+              cp /wazuh-config-mount/tmp/slack.py /var/ossec/integrations/slack.py
           volumeMounts:
             - name: slack-integration
               mountPath: /wazuh-config-mount/tmp/slack.py
