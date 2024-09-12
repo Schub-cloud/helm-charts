@@ -102,7 +102,7 @@ config:
         description: "Authenticate via HTTP Basic against internal users database"
         http_enabled: true
         transport_enabled: true
-        order: 0
+        order: {{ if .Values.wazuhIndexer.sso.enabled }}0{{ else }}4{{ end }}
         http_authenticator:
           type: "basic"
           challenge: false

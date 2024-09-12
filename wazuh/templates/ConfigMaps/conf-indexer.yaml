@@ -5,7 +5,6 @@ metadata:
   name: indexer-conf
   namespace: {{ .Values.nameSpace }}
 data:
-  config.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/config.yml") | quote) . }}
   opensearch.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/opensearch.yml") | quote) . }}
   internal_users.yml: |-
 {{- toYaml .Values.wazuhIndexer.internalUsers | nindent 4 }}

@@ -24,6 +24,9 @@ spec:
         - name: indexer-conf
           configMap:
             name: indexer-conf
+        - name: sso-conf
+          configMap:
+            name: sso-conf
         - name: wazuh-indexer
           persistentVolumeClaim:
             claimName: wazuh-indexer-pvc
@@ -108,7 +111,7 @@ spec:
               mountPath: /usr/share/wazuh-indexer/opensearch-security/internal_users.yml
               subPath: internal_users.yml
               readOnly: true
-            - name: indexer-conf
+            - name: sso-conf
               mountPath: /usr/share/wazuh-indexer/opensearch-security/config.yml
               subPath: config.yml
           ports:
