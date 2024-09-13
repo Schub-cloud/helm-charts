@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Values.nameSpace }}
 data:
   opensearch.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/opensearch.yml") | quote) . }}
+  opensearch.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/roles_mapping.yml") | quote) . }}
   internal_users.yml: |-
 {{- toYaml .Values.wazuhIndexer.internalUsers | nindent 4 }}
 {{- end}}
