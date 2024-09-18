@@ -6,4 +6,5 @@ metadata:
   namespace: {{ .Values.nameSpace }}
 data:
   config.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/config.yml") | quote) . }}
+  roles_mapping.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/roles_mapping.yml") | quote) . }}
 {{- end}}
