@@ -117,6 +117,9 @@ spec:
             - name: sso-conf
               mountPath: /usr/share/wazuh-indexer/opensearch-security/config.yml
               subPath: config.yml
+            - name: sso-conf
+              mountPath: /usr/share/wazuh-indexer/opensearch-security/roles_mapping.yml
+              subPath: config.yml
             {{- end }}
           ports:
             - containerPort: {{ .Values.wazuhIndexer.port }}
