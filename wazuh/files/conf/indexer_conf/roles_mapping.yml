@@ -15,7 +15,7 @@ all_access:
   backend_roles:
   - "admin"
   {{- if .Values.wazuhIndexer.sso.enabled }}
-  - "Wazuh_role"
+  - "wazuh_role"
   {{- end}}
   description: "Maps admin to all_access"
 
