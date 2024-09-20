@@ -1,17 +1,11 @@
 name: Merge PR Wazuh
-# on:
-#   push:
-#     branches:
-#       - main
-#     paths:
-#       - 'wazuh/Chart.yaml'
 on:
-  workflow_dispatch:
-    inputs:
-        version:
-          type: string
-          required: true
-          description: "Test wazuh action disabled."
+  push:
+    branches:
+      - main
+    paths:
+      - 'wazuh/Chart.yaml'
+
 jobs:
   build:
     runs-on: ubuntu-latest
