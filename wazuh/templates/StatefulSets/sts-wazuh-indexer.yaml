@@ -60,6 +60,13 @@ spec:
       containers:
         - name: wazuh-indexer
           image: "{{ .Values.wazuhIndexer.imageRepository }}:{{ .Values.wazuhIndexer.imageTag }}"
+          resources:
+            requests:
+              cpu: {{ .Values.wazuhIndexer.resources.requests.cpu }}
+              memory: {{ .Values.wazuhIndexer.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.wazuhIndexer.resources.limits.cpu }}
+              memory: {{ .Values.wazuhIndexer.resources.limits.memory }}
           env:
             - name: OPENSEARCH_JAVA_OPTS
               value: '-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true'
