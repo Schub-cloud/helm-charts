@@ -148,3 +148,10 @@ wazuhWorkers:
 #    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   port: 1514
   targetPort: 1514
+
+workflow:
+  image:
+    repository: ghcr.io/schub-cloud/wazuh-images
+    tag: latest
+  url: https://wazuh:55000
+  time: 45d
