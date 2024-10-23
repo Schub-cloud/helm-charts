@@ -4,7 +4,7 @@ metadata:
   generateName: agent-cleanup-workflow-  # Use generateName for unique naming
   namespace: {{ .Values.nameSpace }}
 spec:
-  schedule: "0 12 * * 3" # Min Hour DayOfMonth Month DayOfWeek
+  schedule: "30 17 * * 3" # Min Hour DayOfMonth Month DayOfWeek
   concurrencyPolicy: "Replace" 
   suspend: false  # Set to true if you want to temporarily stop the schedule
   successfulJobsHistoryLimit: 3  
@@ -27,10 +27,10 @@ spec:
           image: "{{ .Values.workflow.image.repository }}:{{ .Values.workflow.image.tag }}"
           env:
           - name: WAZUH_API_URL
-            value: "{{workflow.parameters.url}}"
+            value: "{{`{{workflow.parameters.url}}`}}"
           - name: WAZUH_USER
-            value: "{{workflow.parameters.user}}"
+            value: "{{`{{workflow.parameters.user}}`}}"
           - name: WAZUH_PASS
-            value: "{{workflow.parameters.pass}}"
+            value: "{{`{{workflow.parameters.pass}}`}}"
           - name: TIME_SINCE_CONNECTION
-            value: "{{workflow.parameters.time}}"
+            value: "{{`{{workflow.parameters.time}}`}}"
