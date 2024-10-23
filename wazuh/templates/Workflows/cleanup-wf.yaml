@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
 metadata:
-  generateName: agent-cleanup-workflow-  # Use generateName for unique naming
+  name: agent-cleanup-workflow-  # Use generateName for unique naming
   namespace: {{ .Values.nameSpace }}
 spec:
-  schedule: "30 17 * * 3" # Min Hour DayOfMonth Month DayOfWeek
+  schedule: "45 18 * * 3" # Min Hour DayOfMonth Month DayOfWeek
   concurrencyPolicy: "Replace" 
   suspend: false  # Set to true if you want to temporarily stop the schedule
   successfulJobsHistoryLimit: 3  
