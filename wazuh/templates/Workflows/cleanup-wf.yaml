@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  generateName: agent-cleanup-workflow-  # Use generateName for unique naming
+  namespace: {{ .Values.nameSpace }}
+spec:
+  schedule: "0 12 * * 3" # Min Hour DayOfMonth Month DayOfWeek
+  concurrencyPolicy: "Replace" 
+  suspend: false  # Set to true if you want to temporarily stop the schedule
+  successfulJobsHistoryLimit: 3  
+  failedJobsHistoryLimit: 1 
+  workflowSpec: 
+    entrypoint: agent-cleanup
+    arguments:
+      parameters:
+      - name: url
+        value: {{ .Values.workflow.url }}
+      - name: user
+        value: {{ .Values.wazuhMaster.wazuhApi.username }}
+      - name: pass
+        value: {{ .Values.wazuhMaster.wazuhApi.password }}
+      - name: time
+        value: {{ .Values.workflow.time }}
+    templates:
+      - name: agent-cleanup
+        container:
+          image: "{{ .Values.workflow.image.repository }}:{{ .Values.workflow.image.tag }}"
+          env:
+          - name: WAZUH_API_URL
+            value: "{{workflow.parameters.url}}"
+          - name: WAZUH_USER
+            value: "{{workflow.parameters.user}}"
+          - name: WAZUH_PASS
+            value: "{{workflow.parameters.pass}}"
+          - name: TIME_SINCE_CONNECTION
+            value: "{{workflow.parameters.time}}"
