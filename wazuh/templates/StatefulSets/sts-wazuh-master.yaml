@@ -47,6 +47,9 @@ spec:
         - name: slack-integration
           configMap:
             name: custom-slack
+        - name: upgrade-script
+          configMap:
+            name: upgrade-script
       securityContext:
         fsGroup: 101
       containers:
