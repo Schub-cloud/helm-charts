@@ -69,7 +69,7 @@ spec:
               memory: {{ .Values.wazuhIndexer.resources.limits.memory }}
           env:
             - name: OPENSEARCH_JAVA_OPTS
-              value: '-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true'
+              value: '-Xms2g -Xmx2g -Dlog4j2.formatMsgNoLookups=true'
             - name: CLUSTER_NAME
               value: wazuh
             - name: NETWORK_HOST
