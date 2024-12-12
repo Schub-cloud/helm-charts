@@ -69,6 +69,9 @@ spec:
             - name: slack-integration
               mountPath: /wazuh-config-mount/integrations/slack.py
               subPath: slack.py
+            - name: upgrade-script
+              mountPath: /wazuh-config-mount/tmp/upgrade.sh
+              subPath: upgrade.sh
             - name: config
               mountPath: /wazuh-config-mount/etc/ossec.conf
               subPath: master.conf
