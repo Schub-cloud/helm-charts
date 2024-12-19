@@ -15,6 +15,7 @@ spec:
   type: LoadBalancer
   selector:
     app: wazuh-manager
+    node-type: worker
   ports:
     - name: agents-events
       port: {{ .Values.wazuhWorkers.port }}
