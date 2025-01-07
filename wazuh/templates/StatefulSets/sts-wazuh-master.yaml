@@ -47,11 +47,36 @@ spec:
         - name: slack-integration
           configMap:
             name: custom-slack
-        - name: upgrade-script
-          configMap:
-            name: upgrade-script
       securityContext:
         fsGroup: 101
+      initContainers:
+        - name: mac-os-wpk
+          image: python:3.12-slim
+          volumeMounts:
+            - name: wazuh-manager-master
+              mountPath: /var/ossec/wpk
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              apt update
+              apt install curl -y
+              pip install cryptography
+              cd /var/ossec/wpk
+              openssl req -x509 -new -nodes -newkey rsa:2048 -keyout wpk_root.key -out wpk_root.pem -batch
+              openssl req -new -nodes -newkey rsa:2048 -keyout wpkcert.key -out wpkcert.csr -subj /C=US/ST=CA/O=Wazuh
+              openssl x509 -req -days 365 -in wpkcert.csr -CA wpk_root.pem -CAkey wpk_root.key -out wpkcert.pem -CAcreateserial
+              curl -Ls https://github.com/wazuh/wazuh/archive/v{{ .Values.wazuhMaster.imageTag }}.tar.gz | tar zx
+              curl -Ls https://packages.wazuh.com/4.x/macos/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg --output wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg
+              cp ./wpk_root.pem wazuh-{{ .Values.wazuhMaster.imageTag }}/etc/wpk_root.pem
+              cp wazuh-{{ .Values.wazuhMaster.imageTag }}/src/init/pkg_installer.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/.
+              wazuh-{{ .Values.wazuhMaster.imageTag }}/tools/agent-upgrade/wpkpack.py ./Mac_OS_agent.wpk ./wpkcert.pem ./wpkcert.key wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg wazuh-{{ .Values.wazuhMaster.imageTag }}/upgrade.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/pkg_installer.sh
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
       containers:
         - name: wazuh-manager
           image: "{{ .Values.wazuhMaster.imageRepository }}:{{ .Values.wazuhMaster.imageTag }}"
@@ -66,12 +91,11 @@ spec:
             capabilities:
               add: ["SYS_CHROOT"]
           volumeMounts:
+            - name: wazuh-manager-master
+              mountPath: /var/ossec/wpk
             - name: slack-integration
               mountPath: /wazuh-config-mount/integrations/slack.py
               subPath: slack.py
-            - name: upgrade-script
-              mountPath: /wazuh-config-mount/tmp/upgrade.sh
-              subPath: upgrade.sh
             - name: config
               mountPath: /wazuh-config-mount/etc/ossec.conf
               subPath: master.conf
@@ -134,6 +158,8 @@ spec:
             - name: wazuh-manager-master
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
+            - name: wazuh-manager-master
+              mountPath: /var/ossec/wpk
           ports: 
             - containerPort: {{ .Values.wazuhManager.ports.regPort }}
               name: registration
