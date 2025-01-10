@@ -47,13 +47,16 @@ spec:
         - name: slack-integration
           configMap:
             name: custom-slack
+        - name: wpk-volume
+          persistentVolumeClaim:
+            claimName: wazuh-managers-wpk-pvc
       securityContext:
         fsGroup: 101
       initContainers:
         - name: mac-os-wpk
           image: python:3.12-slim
           volumeMounts:
-            - name: wazuh-manager-master
+            - name: wpk-volume
               mountPath: /var/ossec/wpk
           command: ["/bin/sh", "-c"]
           args:
@@ -156,7 +159,7 @@ spec:
             - name: wazuh-manager-master
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
-            - name: wazuh-manager-master
+            - name: wpk-volume
               mountPath: /var/ossec/wpk
           ports: 
             - containerPort: {{ .Values.wazuhManager.ports.regPort }}

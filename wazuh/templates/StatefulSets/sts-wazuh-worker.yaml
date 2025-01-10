@@ -44,6 +44,9 @@ spec:
         - name: wazuh-manager-worker
           persistentVolumeClaim:
             claimName: wazuh-manager-worker-pvc
+        - name: wpk-volume
+          persistentVolumeClaim:
+            claimName: wazuh-managers-wpk-pvc
       securityContext:
         fsGroup: 101
       containers:
@@ -109,6 +112,8 @@ spec:
             - name: wazuh-manager-worker
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
+            - name: wpk-volume
+              mountPath: /var/ossec/wpk
           ports:
             - containerPort: {{ .Values.wazuhWorkers.port }}
               name: agents-events
