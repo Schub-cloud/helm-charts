@@ -35,6 +35,9 @@ spec:
         - name: filebeat-certs
           secret:
             secretName: indexer-certs
+        - name: upgrade-certs
+          secret:
+            secretName: upgrade-certs
         - name: wazuh-authd-pass
           secret:
             secretName: wazuh-authd-pass
@@ -58,6 +61,30 @@ spec:
           volumeMounts:
             - name: wpk-volume
               mountPath: /var/ossec/wpk
+            - name: upgrade-certs
+              mountPath: /var/ossec/wpk_root.key
+              readOnly: true
+              subPath: wpk_root.key
+            - name: upgrade-certs
+              mountPath: /var/ossec/wpk_root.pem
+              readOnly: true
+              subPath: wpk_root.pem
+            - name: upgrade-certs
+              mountPath: /var/ossec/wpkcert.key
+              readOnly: true
+              subPath: wpkcert.key
+            - name: upgrade-certs
+              mountPath: /var/ossec/wpkcert.pem
+              readOnly: true
+              subPath: wpkcert.pem
+            - name: upgrade-certs
+              mountPath: /var/ossec/wpkcert.csr
+              readOnly: true
+              subPath: wpkcert.csr
+            - name: upgrade-certs
+              mountPath: /var/ossec/wpk_root.srl
+              readOnly: true
+              subPath: wpk_root.srl
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -65,9 +92,6 @@ spec:
               apt install curl -y
               pip install cryptography
               cd /var/ossec/wpk
-              openssl req -x509 -new -nodes -newkey rsa:2048 -keyout wpk_root.key -out wpk_root.pem -batch
-              openssl req -new -nodes -newkey rsa:2048 -keyout wpkcert.key -out wpkcert.csr -subj /C=US/ST=CA/O=Wazuh
-              openssl x509 -req -days 365 -in wpkcert.csr -CA wpk_root.pem -CAkey wpk_root.key -out wpkcert.pem -CAcreateserial
               curl -Ls https://github.com/wazuh/wazuh/archive/v{{ .Values.wazuhMaster.imageTag }}.tar.gz | tar zx
               curl -Ls https://packages.wazuh.com/4.x/macos/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg --output wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg
               cp ./wpk_root.pem wazuh-{{ .Values.wazuhMaster.imageTag }}/etc/wpk_root.pem
