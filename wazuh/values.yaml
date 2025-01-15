@@ -120,6 +120,13 @@ wazuhMaster:
   wazuhApi: 
     username: wazuh-wui
     password: MyS3cr37P450r.*-
+  upgrade_certs:
+    wpk_root_key: none
+    wpk_root_pem: none
+    wpkcert_key: none
+    wpkcert_pem: none
+    wpkcert_csr: none
+    wpk_root_srl: none
 
 wazuhManager:
   ports:
