@@ -8,7 +8,7 @@ metadata:
     app: wazuh-manager
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: wazuh-storage
   resources:
     requests:
