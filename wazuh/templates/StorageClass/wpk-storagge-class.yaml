@@ -7,4 +7,6 @@ provisioner: efs.csi.aws.com
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
 reclaimPolicy: Delete
+parameters:
+  provisioningMode: efs
 {{- end }}
