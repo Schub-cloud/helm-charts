@@ -9,7 +9,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: wazuh-storage
+  storageClassName: wazuh-wpk-sc
   resources:
     requests:
       storage: 20G 

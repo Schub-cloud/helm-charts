@@ -1,0 +1,10 @@
+{{- if .Values.wazuhMaster.enabled }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: wazuh-wpk-sc
+provisioner: efs.csi.aws.com
+allowVolumeExpansion: true
+volumeBindingMode: Immediate
+reclaimPolicy: Delete
+{{- end }}
