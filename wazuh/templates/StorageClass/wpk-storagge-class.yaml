@@ -8,5 +8,5 @@ allowVolumeExpansion: true
 volumeBindingMode: Immediate
 reclaimPolicy: Delete
 parameters:
-  provisioningMode: efs
+  provisioningMode: efs-ap
 {{- end }}
