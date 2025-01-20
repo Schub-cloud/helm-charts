@@ -52,7 +52,7 @@ spec:
             name: custom-slack
         - name: wpk-volume
           persistentVolumeClaim:
-            claimName: wazuh-managers-wpk-pvc
+            claimName: wazuh-master-wpk-pvc
       securityContext:
         fsGroup: 101
       initContainers:
