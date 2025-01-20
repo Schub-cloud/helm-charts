@@ -47,6 +47,9 @@ spec:
         - name: wpk-volume
           persistentVolumeClaim:
             claimName: wazuh-managers-wpk-pvc
+        - name: upgrade-certs
+          secret:
+            secretName: upgrade-certs
       securityContext:
         fsGroup: 101
       initContainers:
