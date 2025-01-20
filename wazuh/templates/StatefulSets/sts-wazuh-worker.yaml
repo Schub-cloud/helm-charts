@@ -46,7 +46,7 @@ spec:
             claimName: wazuh-manager-worker-pvc
         - name: wpk-volume
           persistentVolumeClaim:
-            claimName: wazuh-managers-wpk-pvc
+            claimName: wazuh-worker-wpk-pvc
         - name: upgrade-certs
           secret:
             secretName: upgrade-certs
