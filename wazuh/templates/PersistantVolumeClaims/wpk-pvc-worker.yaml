@@ -9,7 +9,7 @@ metadata:
     node-type: worker
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: wazuh-storage
   resources:
     requests:
