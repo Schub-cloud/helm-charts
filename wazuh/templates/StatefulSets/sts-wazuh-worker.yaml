@@ -59,27 +59,27 @@ spec:
           - name: wpk-volume
             mountPath: /var/ossec/wpk
           - name: upgrade-certs
-            mountPath: /var/ossec/wpk_root.key
+            mountPath: /var/ossec/wpk/wpk_root.key
             readOnly: true
             subPath: wpk_root.key
           - name: upgrade-certs
-            mountPath: /var/ossec/wpk_root.pem
+            mountPath: /var/ossec/wpk/wpk_root.pem
             readOnly: true
             subPath: wpk_root.pem
           - name: upgrade-certs
-            mountPath: /var/ossec/wpkcert.key
+            mountPath: /var/ossec/wpk/wpkcert.key
             readOnly: true
             subPath: wpkcert.key
           - name: upgrade-certs
-            mountPath: /var/ossec/wpkcert.pem
+            mountPath: /var/ossec/wpk/wpkcert.pem
             readOnly: true
             subPath: wpkcert.pem
           - name: upgrade-certs
-            mountPath: /var/ossec/wpkcert.csr
+            mountPath: /var/ossec/wpk/wpkcert.csr
             readOnly: true
             subPath: wpkcert.csr
           - name: upgrade-certs
-            mountPath: /var/ossec/wpk_root.srl
+            mountPath: /var/ossec/wpk/wpk_root.srl
             readOnly: true
             subPath: wpk_root.srl
         command: ["/bin/sh", "-c"]
