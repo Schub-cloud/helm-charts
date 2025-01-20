@@ -2,14 +2,15 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wazuh-managers-wpk-pvc
+  name: wazuh-master-wpk-pvc
   namespace: wazuh
   labels:
     app: wazuh-manager
+    node-type: master
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: wazuh-wpk-sc
+  storageClassName: wazuh-storage
   resources:
     requests:
       storage: 20G 

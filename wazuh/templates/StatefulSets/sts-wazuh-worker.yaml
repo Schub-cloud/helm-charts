@@ -49,6 +49,55 @@ spec:
             claimName: wazuh-managers-wpk-pvc
       securityContext:
         fsGroup: 101
+      initContainers:
+      - name: mac-os-wpk
+        image: python:3.12-slim
+        volumeMounts:
+          - name: wpk-volume
+            mountPath: /var/ossec/wpk
+          - name: upgrade-certs
+            mountPath: /var/ossec/wpk_root.key
+            readOnly: true
+            subPath: wpk_root.key
+          - name: upgrade-certs
+            mountPath: /var/ossec/wpk_root.pem
+            readOnly: true
+            subPath: wpk_root.pem
+          - name: upgrade-certs
+            mountPath: /var/ossec/wpkcert.key
+            readOnly: true
+            subPath: wpkcert.key
+          - name: upgrade-certs
+            mountPath: /var/ossec/wpkcert.pem
+            readOnly: true
+            subPath: wpkcert.pem
+          - name: upgrade-certs
+            mountPath: /var/ossec/wpkcert.csr
+            readOnly: true
+            subPath: wpkcert.csr
+          - name: upgrade-certs
+            mountPath: /var/ossec/wpk_root.srl
+            readOnly: true
+            subPath: wpk_root.srl
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            apt update
+            apt install curl -y
+            pip install cryptography
+            cd /var/ossec/wpk
+            curl -Ls https://github.com/wazuh/wazuh/archive/v{{ .Values.wazuhMaster.imageTag }}.tar.gz | tar zx
+            curl -Ls https://packages.wazuh.com/4.x/macos/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg --output wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg
+            cp ./wpk_root.pem wazuh-{{ .Values.wazuhMaster.imageTag }}/etc/wpk_root.pem
+            cp wazuh-{{ .Values.wazuhMaster.imageTag }}/src/init/pkg_installer.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/.
+            wazuh-{{ .Values.wazuhMaster.imageTag }}/tools/agent-upgrade/wpkpack.py ./Mac_OS_agent.wpk ./wpkcert.pem ./wpkcert.key wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg wazuh-{{ .Values.wazuhMaster.imageTag }}/upgrade.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/pkg_installer.sh
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
       containers:
         - name: wazuh-manager
           image: "{{ .Values.wazuhWorkers.imageRepository }}:{{ .Values.wazuhWorkers.imageTag }}"
