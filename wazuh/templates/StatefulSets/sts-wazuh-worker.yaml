@@ -91,6 +91,7 @@ spec:
             cd /var/ossec/wpk
             curl -Ls https://github.com/wazuh/wazuh/archive/v{{ .Values.wazuhMaster.imageTag }}.tar.gz | tar zx
             curl -Ls https://packages.wazuh.com/4.x/macos/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg --output wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg
+            curl -Ls https://packages.wazuh.com/4.x/wpk/linux/deb/amd64/wazuh_agent_v{{ .Values.wazuhMaster.imageTag }}_linux_amd64.deb.wpk --output Pop_OS_WPK.deb.wpk
             cp ./wpk_root.pem wazuh-{{ .Values.wazuhMaster.imageTag }}/etc/wpk_root.pem
             cp wazuh-{{ .Values.wazuhMaster.imageTag }}/src/init/pkg_installer.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/.
             chmod a+x wazuh-{{ .Values.wazuhMaster.imageTag }}/upgrade.sh
