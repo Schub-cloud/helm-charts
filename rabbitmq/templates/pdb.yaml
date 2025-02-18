@@ -1,0 +1,17 @@
+{{- if .Values.pdb.enabled }}
+{{- if or .Values.pdb.minAvailable .Values.pdb.maxUnavailable }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: "{{ .Values.clusterName }}-pdb"
+spec:
+  {{- if .Values.pdb.minAvailable }}
+  minAvailable: {{ .Values.pdb.minAvailable }}
+  {{- else }}
+  maxUnavailable: {{ .Values.pdb.maxUnavailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.clusterName }}
+{{- end }}
+{{- end }}

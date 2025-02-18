@@ -1,0 +1,8 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: {{ .Values.clusterName }}
+  annotations:
+    {{ .Values.rabbitmq.annotations | toYaml | indent 4 }}
+spec:
+{{ .Values.rabbitmq.spec | toYaml | indent 2 }}

@@ -1,0 +1,12 @@
+{{ $clusterName := .Values.clusterName}}
+{{ range $key, $value := .Values.policies }}
+apiVersion: rabbitmq.com/v1beta1
+kind: Policy
+metadata:
+  name: {{ $clusterName }}-{{ $key }}
+spec:
+  name: {{ $key }}
+{{ $value | toYaml | indent 2 }}
+  rabbitmqClusterReference:
+    name: {{ $clusterName }}
+{{ end }}
