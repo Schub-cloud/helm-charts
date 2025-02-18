@@ -1,0 +1,80 @@
+clusterName: rabbitmq
+rabbitmq:
+  annotations:
+    rabbitmq.com/topology-allowed-namespaces: "*"
+  spec:
+    replicas: 1
+    # imagePullSecrets: 
+    # - name: docker-registry-secret
+    # rabbitmq:
+    #   addtionnalConfig: |
+    #     vm_memory_high_watermark.relative = 0.8
+    persistence:
+      storageClassName: 
+      storage: 8Gi
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        memory: 2Gi
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #       - matchExpressions:
+    #         - key: pool
+    #           operator: In
+    #           values:
+    #           - databases
+    # tolerations:
+    #   - key: pool
+    #     operator: Equal
+    #     value: databases
+    #     effect: NoSchedule
+
+serviceMonitor:
+  enabled: false
+  additionalLabels:
+    release: kube-prometheus-stack
+  endpoints:
+    - port: prometheus
+      path: /metrics/per-object
+      scheme: http
+      interval: 15s
+      scrapeTimeout: 14s
+
+queues: {}
+  # queue-name:
+  #   autoDelete: false
+  #   durable: false
+  #   exchanges:
+  #     queue-name:
+  #       vhost: "/"
+  #       type: fanout
+  #       autoDelete: false
+  #       durable: true
+users: {}
+  # queue-user:
+  #   vhost: "/"
+  #   tags:
+  #     administrator: {}
+  #   permissions:
+  #     write: ".*"
+  #     configure: ".*"
+  #     read: ".*"
+  #   credentialsNamespaces: # Namespaces where the secret will be created
+  #     services: {}
+
+policies:
+  remove-amq-gen-queues:
+    pattern: "^amq.gen*"
+    applyTo: "queues"
+    definition:
+      expires: 600
+
+pdb:
+  enabled: false
+
+clusterPolicy: # Kyverno policy to sync secrets across namespaces
+  enabled: false

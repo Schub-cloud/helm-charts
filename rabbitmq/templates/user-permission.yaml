@@ -1,0 +1,27 @@
+{{ $clusterName := .Values.clusterName}}
+{{ range $userName, $userSpec := .Values.users }}
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: {{ $userName }}
+spec:
+  tags:
+{{ range $tag, $value := $userSpec.tags}}
+{{- printf "- %s" $tag | indent 2 }}
+{{ end }}
+  rabbitmqClusterReference:
+    name: {{ $clusterName }}
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: {{ $userName }}-permission
+spec:
+  vhost: {{ $userSpec.vhost }}
+  userReference:
+    name: {{ $userName }}
+  permissions:
+{{ .permissions | toYaml | indent 4 }}
+  rabbitmqClusterReference:
+    name: {{ $clusterName }}
+{{ end }}
