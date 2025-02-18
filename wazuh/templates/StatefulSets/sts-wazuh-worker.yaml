@@ -82,11 +82,11 @@ spec:
             mountPath: /var/ossec/wpk/wpk_root.srl
             readOnly: true
             subPath: wpk_root.srl
-        command: ["/bin/sh", "-c"]
+        command: ["/bin/bash", "-c"]
         args:
           - |
             apt update
-            apt install curl -y
+            apt install make gcc libc6-dev curl policycoreutils automake autoconf libtool unzip -y
             pip install cryptography
             cd /var/ossec/wpk
             curl -Ls https://github.com/wazuh/wazuh/archive/v{{ .Values.wazuhMaster.imageTag }}.tar.gz | tar zx
