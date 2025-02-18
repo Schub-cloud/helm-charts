@@ -92,6 +92,15 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/postgrescluster-5.4.0/postgrescluster-5.4.0.tgz
     version: 5.4.0
+  rabbitmq:
+  - apiVersion: v1
+    created: "2025-02-18T14:35:01.679960287Z"
+    description: Generic RabbitMQ helm chart
+    digest: 209ec466d1b5cb955430582cff64373ed7f73a852d0e322a1303a9f42f92ba6b
+    name: rabbitmq
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/rabbitmq-1.0.0/rabbitmq-1.0.0.tgz
+    version: 1.0.0
   wazuh:
   - apiVersion: v2
     created: "2025-01-23T15:01:19.061980324Z"
@@ -390,4 +399,4 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.0/wazuh-0.0.0.tgz
     version: 0.0.0
-generated: "2025-01-23T15:01:19.062279253Z"
+generated: "2025-02-18T14:35:01.680080041Z"
