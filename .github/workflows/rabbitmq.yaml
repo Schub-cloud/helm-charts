@@ -60,7 +60,7 @@ jobs:
       - name: Helm Push
         shell: bash
         run: |
-          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/findmine/helm-charts/portkey-ai
+          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/schub-cloud/helm-charts/rabbitmq
       
       - name: Bump version and push tag
         id: tag_version
