@@ -94,6 +94,14 @@ entries:
     version: 5.4.0
   rabbitmq:
   - apiVersion: v1
+    created: "2025-02-28T15:29:14.412237126Z"
+    description: Generic RabbitMQ helm chart
+    digest: e1d70291f65253916829f484ec93c3c88fa1141ab0fcc6a09d6c8d30a86ecfae
+    name: rabbitmq
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/rabbitmq-1.1.0/rabbitmq-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
     created: "2025-02-18T14:35:01.679960287Z"
     description: Generic RabbitMQ helm chart
     digest: 209ec466d1b5cb955430582cff64373ed7f73a852d0e322a1303a9f42f92ba6b
@@ -399,4 +407,4 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.0/wazuh-0.0.0.tgz
     version: 0.0.0
-generated: "2025-02-18T14:35:01.680080041Z"
+generated: "2025-02-28T15:29:14.412381033Z"
