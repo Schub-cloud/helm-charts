@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: wazuh-dashboard
+  {{- with .Values.goPhish.svcAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  selector:
+    app: wazuh-dashboard
+  ports:
+    - name: dashboard
+      port: {{ .Values.goPhish.svcPorts.dashboard.port }}
+      targetPort: {{ .Values.goPhish.svcPorts.dashboard.targetPort }}
+    - name: communication
+      port: {{ .Values.goPhish.svcPorts.communication.port }}
+      targetPort: {{ .Values.goPhish.svcPorts.communication.targetPort }}
