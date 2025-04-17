@@ -30,6 +30,7 @@ jobs:
           release-branch: main
           minor-identifier: "feat:"
           prefix: gophish-
+          log-path: gophish/
       
       - name: Install yq
         id: setup-yq
