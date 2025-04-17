@@ -4,7 +4,7 @@ metadata:
   name: dashboard
   namespace: {{ .Values.nameSpace }}
   labels:
-    app: wazuh-dashboard
+    app: gophish
   {{- with .Values.goPhish.svcAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -12,7 +12,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: wazuh-dashboard
+    app: gophish
   ports:
     - name: dashboard
       port: {{ .Values.goPhish.svcPorts.dashboard.port }}
