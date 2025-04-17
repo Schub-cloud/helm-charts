@@ -1,7 +1,7 @@
 apiVersion:  networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gophish-ingress-dashboard
+  name: gophish-ingress
   namespace: {{ .Values.nameSpace }}
   {{- with .Values.goPhish.ingress.annotations }}
   annotations:
@@ -27,7 +27,7 @@ spec:
         paths:
           - backend:
               service:
-                name: dashboard
+                name: gophish-service
                 port:
                   number: {{ .Values.goPhish.ports.dashboard }}
             path: /

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gophish-config-files
+  name: gophish-pvc
   namespace: {{ .Values.nameSpace }}
   labels:
     app: gophish
