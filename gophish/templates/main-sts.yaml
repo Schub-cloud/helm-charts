@@ -24,7 +24,7 @@ spec:
             claimName: gophish-pvc
         - name: conf-file
           configMap:
-            name: conf-file
+            name: gophish-conf-file
       securityContext:
         fsGroup: 101
       containers:
