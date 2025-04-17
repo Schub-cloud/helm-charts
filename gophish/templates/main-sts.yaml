@@ -21,7 +21,7 @@ spec:
       volumes:
         - name: config-pvc
           persistentVolumeClaim:
-            claimName: gophish-config-files
+            claimName: gophish-pvc
         - name: conf-file
           configMap:
             name: conf-file
