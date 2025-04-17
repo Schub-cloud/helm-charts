@@ -84,6 +84,16 @@ entries:
   gophish:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-04-17T15:44:21.533731228Z"
+    description: Unofficial gophish helm chart for kubernetes
+    digest: c821ae58f9b54c30f496e611257fedf2c73dd88bc8dcb7dea8764c2fa1e7cda5
+    name: gophish
+    type: application
+    urls:
+    - https://github.com/Schub-cloud/helm-charts/releases/download/gophish-0.1.0/gophish-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-04-17T15:07:17.229064669Z"
     description: Unofficial gophish helm chart for kubernetes
     digest: eabd0d384082a4fa42a9e5fdf2b2c240de7e8afe37bddbaca588a6aea8b78bc4
@@ -418,4 +428,4 @@ entries:
     urls:
     - https://github.com/Schub-cloud/helm-charts/releases/download/wazuh-0.0.0/wazuh-0.0.0.tgz
     version: 0.0.0
-generated: "2025-04-17T15:07:17.229207426Z"
+generated: "2025-04-17T15:44:21.534331344Z"
