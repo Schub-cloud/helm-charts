@@ -1,0 +1,28 @@
+nameSpace: addons
+
+goPhish:
+  resources:
+    requests:
+      cpu: 1
+      memory: 1Gi
+    limits:
+      cpu: 2
+      memory: 2Gi
+  ports:
+    communication: 80
+    dashboard: 3333
+  svcPorts:
+    communication:
+      port: 80
+      targetPort: 80
+    dashboard:
+      port: 3333
+      targetPort: 3333
+  ingress:
+  #  annotations:
+  #    kubernetes.io/ingress.class: nginx
+  #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    host: "gophish.schub.cloud"
+  #  tls: 
+  #    - hosts:
+  #      secretName: 

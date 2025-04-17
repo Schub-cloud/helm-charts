@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gophish
+  namespace: {{ .Values.nameSpace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gophish
+      node-type: main
+  serviceName: gophish-service
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: gophish
+        node-type: main
+      name: gophish
+    spec:
+      volumes:
+        - name: config-pvc
+          persistentVolumeClaim:
+            claimName: gophish-config-files
+        - name: conf-file
+          configMap:
+            name: conf-file
+      securityContext:
+        fsGroup: 101
+      containers:
+        - name: gophish
+          image: "gophish/gophish:latest"
+          resources: 
+            limits:
+              cpu: {{ .Values.goPhish.resources.limits.cpu }}
+              memory: {{ .Values.goPhish.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.goPhish.resources.requests.cpu }}
+              memory: {{ .Values.goPhish.resources.requests.memory }}
+          securityContext:
+            capabilities:
+              add: ["SYS_CHROOT"]
+          volumeMounts:
+            - name: config-pvc
+              mountPath: /opt/gophish/database
+            - name: conf-file
+              mountPath: /opt/gophish/config.json
+              subPath: config.json
+          ports: 
+            - containerPort: {{ .Values.goPhish.ports.communication }}
+              name: communication
+            - containerPort: {{ .Values.goPhish.ports.dashboard }}
+              name: dashboard

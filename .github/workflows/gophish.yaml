@@ -1,0 +1,72 @@
+name: Helm Chart Build gophish
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Install helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      - name: Git Version
+        id: version
+        uses: codacy/git-version@2.7.1
+        with:
+          release-branch: main
+          minor-identifier: "feat:"
+          prefix: gophish-
+          log-path: gophish/
+      
+      - name: Install yq
+        id: setup-yq
+        uses: shiipou/setup-yq-action@v2.2.0
+      
+      - name: Echo Tags
+        run: |
+          echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 9-14)" >> $GITHUB_ENV
+
+      - name: Updade Version
+        run: |
+          cd gophish
+          yq -i ".version = \"${{ env.TAG }}\"" Chart.yaml
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add Chart.yaml
+          git commit -m "AUTO: Bump gophish Helm Chart version to ${{ steps.version.outputs.version }}"
+          git push
+       
+      - name: Helm login
+        run: |
+          helm registry login https://ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Helm Package
+        run: |
+          helm package gophish
+
+      - name: Helm Push
+        shell: bash
+        run: |
+          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/schub-cloud/helm-charts/gophish
+      
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ steps.version.outputs.version }}
+          tag_prefix: ""
