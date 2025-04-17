@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: gophish
+  name: gophish-statefulset
   namespace: {{ .Values.nameSpace }}
 spec:
   replicas: 1
