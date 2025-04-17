@@ -61,7 +61,7 @@ jobs:
       - name: Helm Push
         shell: bash
         run: |
-          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/schub-cloud/helm-charts/gophish
+          helm push ${{ steps.version.outputs.version }}.tgz oci://ghcr.io/schub-cloud/helm-charts
       
       - name: Bump version and push tag
         id: tag_version
