@@ -19,10 +19,19 @@ goPhish:
       port: 3333
       targetPort: 3333
   ingress:
-    host: "gophish.schub.cloud"
-  #  annotations:
-  #    kubernetes.io/ingress.class: nginx
-  #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-  #  tls: 
-  #    - hosts:
-  #      secretName: 
+    dashboard:
+      host: "gophish.schub.cloud"
+    #  annotations:
+    #    kubernetes.io/ingress.class: nginx
+    #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #  tls: 
+    #    - hosts:
+    #      secretName: 
+    server:
+      host: "gophish.server.schub.cloud"
+    #  annotations:
+    #    kubernetes.io/ingress.class: nginx
+    #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #  tls: 
+    #    - hosts:
+    #      secretName: 
