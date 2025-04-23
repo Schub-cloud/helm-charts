@@ -1,9 +1,9 @@
 apiVersion:  networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gophish-dashboard-ingress
+  name: gophish-server-ingress
   namespace: {{ .Values.nameSpace }}
-  {{- with .Values.goPhish.ingress.dashboard.annotations }}
+  {{- with .Values.goPhish.ingress.server.annotations }}
   annotations:
     {{- range $key, $value := . }}
     {{ $key }}: {{ tpl $value $ | quote }}
@@ -11,9 +11,9 @@ metadata:
   {{- end }}
 spec:
   ingressClassName: nginx
-  {{- if .Values.goPhish.ingress.dashboard.tls }}
+  {{- if .Values.goPhish.ingress.server.tls }}
   tls:
-    {{- range .Values.goPhish.ingress.dashboard.tls }}
+    {{- range .Values.goPhish.ingress.server.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -22,13 +22,13 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: {{ .Values.goPhish.ingress.dashboard.host }}
+    - host: {{ .Values.goPhish.ingress.server.host }}
       http:
         paths:
           - backend:
               service:
                 name: gophish-service
                 port:
-                  number: {{ .Values.goPhish.ports.dashboard }}
+                  number: {{ .Values.goPhish.ports.communication }}
             path: /
             pathType: Prefix
