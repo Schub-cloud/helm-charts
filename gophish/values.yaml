@@ -8,13 +8,10 @@ goPhish:
     limits:
       cpu: 2
       memory: 2Gi
-  ports:
-    communication: 80
-    dashboard: 3333
   svcPorts:
     communication:
       port: 80
-      targetPort: 80
+      targetPort: 8080
     dashboard:
       port: 3333
       targetPort: 3333

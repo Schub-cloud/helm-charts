@@ -47,7 +47,7 @@ spec:
               mountPath: /opt/gophish/config.json
               subPath: config.json
           ports: 
-            - containerPort: {{ .Values.goPhish.ports.communication }}
+            - containerPort: {{ .Values.goPhish.svcPorts.communication.targetPort }}
               name: communication
-            - containerPort: {{ .Values.goPhish.ports.dashboard }}
+            - containerPort: {{ .Values.goPhish.svcPorts.dashboard.targetPort }}
               name: dashboard
