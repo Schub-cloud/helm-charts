@@ -4,4 +4,4 @@ metadata:
   name: gophish-conf-file
   namespace: {{ .Values.nameSpace }}
 data:
-{{ (.Files.Glob "files/config.json").AsConfig | indent 2 }}
+  config.json: {{ tpl ((.Files.Get "files/config.json") | quote) . }}

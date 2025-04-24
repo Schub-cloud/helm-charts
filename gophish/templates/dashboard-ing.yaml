@@ -29,6 +29,6 @@ spec:
               service:
                 name: gophish-service
                 port:
-                  number: {{ .Values.goPhish.ports.dashboard }}
+                  number: {{ .Values.goPhish.svcPorts.dashboard.port }}
             path: /
             pathType: Prefix
