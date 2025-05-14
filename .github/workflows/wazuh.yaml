@@ -4,8 +4,8 @@ on:
     branches:
       - main
     paths:
-      - 'wazuh/files/*'
-      - 'wazuh/templates/*'
+      - 'wazuh/files/**'
+      - 'wazuh/templates/**'
 
 jobs:
   build:
