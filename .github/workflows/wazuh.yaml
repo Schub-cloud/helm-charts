@@ -6,6 +6,7 @@ on:
     paths:
       - 'wazuh/files/**'
       - 'wazuh/templates/**'
+      - 'wazuh/values.yaml'
 
 jobs:
   build:
