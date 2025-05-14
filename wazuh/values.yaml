@@ -30,10 +30,10 @@ wazuhDashboard:
   replicas: 1
   resources:
     requests:
-      cpu: 200m
+      cpu: 250m
       memory: 512Mi
     limits:
-      cpu: 400m
+      cpu: 500m
       memory: 2Gi
 #  svcAnnotations:
 #    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
