@@ -45,7 +45,7 @@ jobs:
       
       - name: Echo Tags
         run: |
-          echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 9-14)" >> $GITHUB_ENV
+          echo "TAG=$(echo ${{ steps.version.outputs.version }} | cut -c 7-13)" >> $GITHUB_ENV
 
       - name: Updade Version
         run: |
