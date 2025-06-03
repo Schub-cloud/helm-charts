@@ -151,7 +151,8 @@ wazuhWorkers:
       cpu: 2
       memory: 2Gi
   volumeStorage: 1Gi
-#  svcAnnotations:
+  svcAnnotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 #    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   port: 1514
   targetPort: 1514
