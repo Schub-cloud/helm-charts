@@ -48,65 +48,12 @@ spec:
         - name: wazuh-manager-worker
           persistentVolumeClaim:
             claimName: wazuh-manager-worker-pvc
-        - name: wpk-volume
-          persistentVolumeClaim:
-            claimName: wazuh-worker-wpk-pvc
         - name: upgrade-certs
           secret:
             secretName: upgrade-certs
       securityContext:
         fsGroup: 101
       initContainers:
-      - name: mac-os-wpk
-        image: python:3.12-slim
-        volumeMounts:
-          - name: wpk-volume
-            mountPath: /var/ossec/wpk
-          - name: upgrade-certs
-            mountPath: /var/ossec/wpk/wpk_root.key
-            readOnly: true
-            subPath: wpk_root.key
-          - name: upgrade-certs
-            mountPath: /var/ossec/wpk/wpk_root.pem
-            readOnly: true
-            subPath: wpk_root.pem
-          - name: upgrade-certs
-            mountPath: /var/ossec/wpk/wpkcert.key
-            readOnly: true
-            subPath: wpkcert.key
-          - name: upgrade-certs
-            mountPath: /var/ossec/wpk/wpkcert.pem
-            readOnly: true
-            subPath: wpkcert.pem
-          - name: upgrade-certs
-            mountPath: /var/ossec/wpk/wpkcert.csr
-            readOnly: true
-            subPath: wpkcert.csr
-          - name: upgrade-certs
-            mountPath: /var/ossec/wpk/wpk_root.srl
-            readOnly: true
-            subPath: wpk_root.srl
-        command: ["/bin/bash", "-c"]
-        args:
-          - |
-            apt update
-            apt install make gcc libc6-dev curl policycoreutils automake autoconf libtool unzip -y
-            pip install cryptography
-            cd /var/ossec/wpk
-            curl -Ls https://github.com/wazuh/wazuh/archive/v{{ .Values.wazuhMaster.imageTag }}.tar.gz | tar zx
-            curl -Ls https://packages.wazuh.com/4.x/macos/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg --output wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg
-            curl -Ls https://packages.wazuh.com/4.x/wpk/linux/deb/amd64/wazuh_agent_v{{ .Values.wazuhMaster.imageTag }}_linux_amd64.deb.wpk --output Pop_OS_WPK.deb.wpk
-            cp ./wpk_root.pem wazuh-{{ .Values.wazuhMaster.imageTag }}/etc/wpk_root.pem
-            cp wazuh-{{ .Values.wazuhMaster.imageTag }}/src/init/pkg_installer.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/.
-            chmod a+x wazuh-{{ .Values.wazuhMaster.imageTag }}/upgrade.sh
-            wazuh-{{ .Values.wazuhMaster.imageTag }}/tools/agent-upgrade/wpkpack.py ./Mac_OS_agent.wpk ./wpkcert.pem ./wpkcert.key wazuh-{{ .Values.wazuhMaster.imageTag }}/wazuh-agent-{{ .Values.wazuhMaster.imageTag }}-1.pkg wazuh-{{ .Values.wazuhMaster.imageTag }}/upgrade.sh wazuh-{{ .Values.wazuhMaster.imageTag }}/pkg_installer.sh
-        resources:
-          requests:
-            cpu: 50m
-            memory: 128Mi
-          limits:
-            cpu: 100m
-            memory: 256Mi
       containers:
         - name: wazuh-manager
           image: "{{ .Values.wazuhWorkers.imageRepository }}:{{ .Values.wazuhWorkers.imageTag }}"
@@ -170,8 +117,6 @@ spec:
             - name: wazuh-manager-worker
               mountPath: /var/lib/filebeat
               subPath: filebeat/var/lib/filebeat
-            - name: wpk-volume
-              mountPath: /var/ossec/wpk
           ports:
             - containerPort: {{ .Values.wazuhWorkers.port }}
               name: agents-events
