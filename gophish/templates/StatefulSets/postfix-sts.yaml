@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postfix-statefulset
+  namespace: {{ .Values.nameSpace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postfix
+      node-type: main
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: postfix
+        node-type: main
+      name: postfix
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: postfix-conf
+      securityContext:
+        fsGroup: 101
+      containers:
+        - name: postfix
+          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-a590d9"
+          resources: 
+            limits:
+              cpu: {{ .Values.postfix.resources.limits.cpu }}
+              memory: {{ .Values.postfix.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.postfix.resources.requests.cpu }}
+              memory: {{ .Values.postfix.resources.requests.memory }}
+          securityContext:
+            capabilities:
+              add: ["SYS_CHROOT"]
+          volumeMounts:
+            - name: config
+              mountPath: /etc/postfix/aliases
+              subPath: aliases
+            - name: config
+              mountPath: /etc/postfix/mailname
+              subPath: mailname
+            - name: config
+              mountPath: /etc/postfix/sasl_password
+              subPath: sasl_password
+            - name: config
+              mountPath: /etc/postfix/main.cf
+              subPath: main.cf
