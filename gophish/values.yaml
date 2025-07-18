@@ -32,3 +32,18 @@ goPhish:
     #  tls: 
     #    - hosts:
     #      secretName: 
+
+postfix:
+  email: default@email.com
+  email_password: default_password
+  port: 25
+  mail_name: default_mailname.com
+  smtp_domain: smtp.outlook.com
+  smtp_port: 587
+  resources:
+    requests:
+      cpu: 1
+      memory: 1Gi
+    limits:
+      cpu: 2
+      memory: 2Gi
