@@ -4,8 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'gophish/files/*'
-      - 'gophish/templates/*'
+      - 'gophish/**'
 
 jobs:
   build:

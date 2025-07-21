@@ -34,10 +34,10 @@ goPhish:
     #      secretName: 
 
 postfix:
-  email: default@email.com
+  email: default-email@schub.cloud
   email_password: default_password
   port: 25
-  mail_name: default_mailname.com
+  mail_name: schub.cloud
   smtp_domain: smtp.outlook.com
   smtp_port: 587
   resources:
