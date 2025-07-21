@@ -42,8 +42,8 @@ postfix:
   smtp_port: 587
   resources:
     requests:
+      cpu: 0.5
+      memory: 500Mi
+    limits:
       cpu: 1
       memory: 1Gi
-    limits:
-      cpu: 2
-      memory: 2Gi
