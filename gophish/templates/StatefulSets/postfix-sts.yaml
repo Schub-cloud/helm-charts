@@ -1,3 +1,4 @@
+{{- if .Values.postfix.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -49,3 +50,4 @@ spec:
             - name: config
               mountPath: /etc/postfix/main.cf
               subPath: main.cf
+{{- end}}
