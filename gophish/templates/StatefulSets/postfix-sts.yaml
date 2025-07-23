@@ -26,7 +26,7 @@ spec:
         fsGroup: 101
       containers:
         - name: postfix
-          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-a590d9"
+          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-439f76"
           resources: 
             limits:
               cpu: {{ .Values.postfix.resources.limits.cpu }}
