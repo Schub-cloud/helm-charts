@@ -39,10 +39,10 @@ spec:
               add: ["SYS_CHROOT"]
           volumeMounts:
             - name: config
-              mountPath: /etc/postfix/aliases
+              mountPath: /etc/aliases
               subPath: aliases
             - name: config
-              mountPath: /etc/postfix/mailname
+              mountPath: /etc/mailname
               subPath: mailname
             - name: config
               mountPath: /etc/postfix/sasl_password
