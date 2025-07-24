@@ -22,11 +22,14 @@ spec:
         - name: config
           configMap:
             name: postfix-conf
+        - name: resolv-conf
+          hostPath:
+            path: /etc/resolv.conf
       securityContext:
         fsGroup: 101
       containers:
         - name: postfix
-          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-439f76"
+          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-b78833"
           resources: 
             limits:
               cpu: {{ .Values.postfix.resources.limits.cpu }}
@@ -50,4 +53,7 @@ spec:
             - name: config
               mountPath: /etc/postfix/main.cf
               subPath: main.cf
+            - name: resolv-conf
+              mountPath: /var/spool/postfix/etc/resolv.conf
+              subPath: resolv.conf
 {{- end}}
