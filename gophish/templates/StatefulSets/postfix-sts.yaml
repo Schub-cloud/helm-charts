@@ -25,6 +25,7 @@ spec:
         - name: resolv-conf
           hostPath:
             path: /etc/resolv.conf
+            type: File
       securityContext:
         fsGroup: 101
       containers:
@@ -55,5 +56,4 @@ spec:
               subPath: main.cf
             - name: resolv-conf
               mountPath: /var/spool/postfix/etc/resolv.conf
-              subPath: resolv.conf
 {{- end}}
