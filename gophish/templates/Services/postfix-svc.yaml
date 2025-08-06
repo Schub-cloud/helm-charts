@@ -1,0 +1,18 @@
+{{- if .Values.postfix.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: postfix
+  namespace: {{ .Values.nameSpace }}
+  labels:
+    app: postfix
+spec:
+  selector:
+    app: postfix
+    node-type: main
+  ports:
+    - name: smtp
+      port: {{ .Values.postfix.port }}
+      targetPort: {{ .Values.postfix.port }}
+  type: ClusterIP
+{{- end }}
