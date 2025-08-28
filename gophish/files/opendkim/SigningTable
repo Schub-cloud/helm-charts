@@ -1,0 +1,1 @@
+*@{{ .Values.postfix.mail_name }} yourselector._domainkey.{{ .Values.postfix.mail_name }}

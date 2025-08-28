@@ -7,6 +7,5 @@ metadata:
 data:
   aliases: {{ tpl ((.Files.Get "files/postfix/aliases") | quote) . }}
   mailname: {{ tpl ((.Files.Get "files/postfix/mailname") | quote) . }}
-  sasl_password: {{ tpl ((.Files.Get "files/postfix/sasl_password") | quote) . }}
   main.cf: {{ tpl ((.Files.Get "files/postfix/main.cf") | quote) . }}
 {{- end}}

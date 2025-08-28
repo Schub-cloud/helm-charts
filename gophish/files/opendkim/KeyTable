@@ -1,0 +1,1 @@
+default._domainkey.{{ .Values.postfix.mail_name }} {{ .Values.postfix.mail_name }}:default:/etc/opendkim/keys/{{ .Values.postfix.mail_name }}/default.private
