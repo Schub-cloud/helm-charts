@@ -19,9 +19,15 @@ spec:
       name: postfix
     spec:
       volumes:
-        - name: config
+        - name: postfix-config
           configMap:
             name: postfix-conf
+        - name: opendkim-config
+          configMap:
+            name: opendkim-conf
+        - name: opendkim-certs
+          secret:
+            secretName: opendkim-certs
         - name: resolv-conf
           hostPath:
             path: /etc/resolv.conf
@@ -30,7 +36,7 @@ spec:
         fsGroup: 101
       containers:
         - name: postfix
-          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-0ffe78"
+          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-4d9b39"
           resources: 
             limits:
               cpu: {{ .Values.postfix.resources.limits.cpu }}
@@ -42,18 +48,30 @@ spec:
             capabilities:
               add: ["SYS_CHROOT"]
           volumeMounts:
-            - name: config
+            - name: postfix-config
               mountPath: /etc/aliases
               subPath: aliases
-            - name: config
+            - name: postfix-config
               mountPath: /etc/mailname
               subPath: mailname
-            - name: config
-              mountPath: /etc/postfix/sasl_password
-              subPath: sasl_password
-            - name: config
+            - name: postfix-config
               mountPath: /etc/postfix/main.cf
               subPath: main.cf
+            - name: opendkim-config
+              mountPath: /etc/opendkim.conf
+              subPath: opendkim.conf
+            - name: opendkim-config
+              mountPath: /etc/opendkim/SigningTable
+              subPath: SigningTable
+            - name: opendkim-config
+              mountPath: /etc/opendkim/KeyTable
+              subPath: KeyTable
+            - name: opendkim-config
+              mountPath: /etc/opendkim/TrustedHosts
+              subPath: TrustedHosts
+            - name: opendkim-certs
+              mountPath: /etc/opendkim/keys/schub.cloud
+              subPath: default.private
             - name: resolv-conf
               mountPath: /var/spool/postfix/etc/resolv.conf
 {{- end}}

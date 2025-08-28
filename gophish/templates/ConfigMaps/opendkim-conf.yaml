@@ -1,0 +1,12 @@
+{{- if .Values.postfix.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opendkim-conf
+  namespace: {{ .Values.nameSpace }}
+data:
+  KeyTable: {{ tpl ((.Files.Get "files/opendkim/KeyTable") | quote) . }}
+  opendkim.conf: {{ tpl ((.Files.Get "files/opendkim/opendkim.conf") | quote) . }}
+  SigningTable: {{ tpl ((.Files.Get "files/opendkim/SigningTable") | quote) . }}
+  TrusdedHosts: {{ tpl ((.Files.Get "files/opendkim/TrusdedHosts") | quote) . }}
+{{- end}}
