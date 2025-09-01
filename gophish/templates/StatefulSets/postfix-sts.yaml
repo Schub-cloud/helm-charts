@@ -32,8 +32,21 @@ spec:
           hostPath:
             path: /etc/resolv.conf
             type: File
+        - name: postfix-etc   # writable directory for configs
+          emptyDir: {}
       securityContext:
         fsGroup: 101
+      initContainers:
+        - name: copy-postfix-config
+          image: busybox:latest 
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /config/* /etc/postfix/;
+          volumeMounts:
+            - name: postfix-config
+              mountPath: /config
+            - name: postfix-etc
+              mountPath: /etc/postfix
       containers:
         - name: postfix
           image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-4d9b39"
@@ -48,15 +61,15 @@ spec:
             capabilities:
               add: ["SYS_CHROOT"]
           volumeMounts:
+            # now mount the writable directory
+            - name: postfix-etc
+              mountPath: /etc/postfix
             - name: postfix-config
               mountPath: /etc/aliases
               subPath: aliases
             - name: postfix-config
               mountPath: /etc/mailname
               subPath: mailname
-            - name: postfix-config
-              mountPath: /etc/postfix/main.cf
-              subPath: main.cf
             - name: opendkim-config
               mountPath: /etc/opendkim.conf
               subPath: opendkim.conf
@@ -74,4 +87,4 @@ spec:
               subPath: default.private
             - name: resolv-conf
               mountPath: /var/spool/postfix/etc/resolv.conf
-{{- end}}
+{{- end }}
