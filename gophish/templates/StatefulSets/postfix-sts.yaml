@@ -33,8 +33,12 @@ spec:
           hostPath:
             path: /etc/resolv.conf
             type: File
+        - name: postfix-queue                # NEW: queue directory
+          emptyDir: {}
       securityContext:
-        fsGroup: 101
+        runAsUser: 0                         # run as root so postfix can init
+        runAsGroup: 0
+        fsGroup: 101                         # postfix group ID
       initContainers:
         - name: copy-postfix-config
           image: busybox:latest
@@ -47,6 +51,17 @@ spec:
               mountPath: /config
             - name: postfix-data
               mountPath: /etc/postfix
+        - name: init-postfix-queue           # NEW: initialize /var/spool/postfix
+          image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-4d9b39"
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              mkdir -p /var/spool/postfix && \
+              postfix set-permissions && \
+              postfix check
+          volumeMounts:
+            - name: postfix-queue
+              mountPath: /var/spool/postfix
       containers:
         - name: postfix
           image: "ghcr.io/schub-cloud/docker-images:gophish-postfix-4d9b39"
@@ -86,7 +101,9 @@ spec:
               subPath: default.private
             - name: resolv-conf
               mountPath: /var/spool/postfix/etc/resolv.conf
-  volumeClaimTemplates:
+            - name: postfix-queue             # NEW: mount queue
+              mountPath: /var/spool/postfix
+    volumeClaimTemplates:
     - metadata:
         name: postfix-data
       spec:
@@ -94,4 +111,6 @@ spec:
         resources:
           requests:
             storage: "100Mi"
+            - name: postfix-queue             # NEW: mount queue
+              mountPath: /var/spool/postfix
 {{- end }}
