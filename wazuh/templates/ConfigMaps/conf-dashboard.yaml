@@ -4,6 +4,7 @@ kind: ConfigMap
 metadata:
   name: dashboard-conf
   namespace: {{ .Values.nameSpace }}
-data: 
-  opensearch_dashboards.yml: {{ tpl ((.Files.Get "files/conf/dashboard_conf/opensearch_dashboards.yml") | quote) . }}
-{{- end}}
+data:
+  opensearch_dashboards.yml: |
+    {{ tpl (.Files.Get "files/conf/dashboard_conf/opensearch_dashboards.yml") . | nindent 4 }}
+{{- end }}

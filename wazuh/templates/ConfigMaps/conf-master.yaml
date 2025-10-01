@@ -5,6 +5,8 @@ metadata:
   name: wazuh-conf
   namespace: {{ .Values.nameSpace }}
 data:
-  master.conf: {{ tpl ((.Files.Get "files/conf/wazuh_conf/master.conf") | quote) . }}
-  worker.conf: {{ tpl ((.Files.Get "files/conf/wazuh_conf/worker.conf") | quote) . }}
+  master.conf: |
+    {{ tpl (.Files.Get "files/conf/wazuh_conf/master.conf") . | nindent 4 }}
+  worker.conf: |
+    {{ tpl (.Files.Get "files/conf/wazuh_conf/worker.conf") . | nindent 4 }}
 {{- end}}

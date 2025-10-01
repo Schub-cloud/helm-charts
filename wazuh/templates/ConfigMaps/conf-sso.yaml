@@ -5,6 +5,8 @@ metadata:
   name: sso-conf
   namespace: {{ .Values.nameSpace }}
 data:
-  config.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/config.yml") | quote) . }}
-  roles_mapping.yml: {{ tpl ((.Files.Get "files/conf/indexer_conf/roles_mapping.yml") | quote) . }}
+  config.yml: |
+    {{ tpl (.Files.Get "files/conf/indexer_conf/config.yml") . | nindent 4 }}
+  roles_mapping.yml: |
+    {{ tpl (.Files.Get "files/conf/indexer_conf/roles_mapping.yml") . | nindent 4 }}
 {{- end}}
