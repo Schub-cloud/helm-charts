@@ -18,5 +18,5 @@ parameters:
   encrypted: 'true'
   type: gp3
 volumeBindingMode: WaitForFirstConsumer
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 {{- end}}
