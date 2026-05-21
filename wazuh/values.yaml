@@ -6,6 +6,25 @@ wazuhCluster:
   key: 123a45bc67def891gh23i45jk67l8mn9
   port: 1516
   targetPort: 1516
+  falco:
+    enabled: true
+    syslog:
+      containerPort: 514
+      servicePort: 514
+      targetPort: 514
+
+      # Used in ossec.conf
+      allowedIps:
+        - 10.0.0.0/8
+
+    service:
+      enabled: true
+      type: ClusterIP
+
+      # Keep this empty unless you want to override the default worker selector.
+      selector:
+        app: wazuh-manager
+        node-type: worker
 
 wazuhDashboard:
   assets: 
