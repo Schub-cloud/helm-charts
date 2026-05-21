@@ -139,6 +139,11 @@ spec:
               name: cluster
             - containerPort: {{ .Values.wazuhManager.ports.apiPort }}
               name: api
+            {{- if .Values.wazuhCluster.falco.enabled }}
+            - containerPort: {{ .Values.wazuhCluster.falco.syslog.containerPort }}
+              name: syslog
+              protocol: udp
+            {{- end }}
           env:
             - name: INDEXER_URL
               value: https://indexer:9200

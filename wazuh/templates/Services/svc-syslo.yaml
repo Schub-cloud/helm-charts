@@ -1,0 +1,16 @@
+{{- if and .Values.wazuhWorkers.enabled .Values.wazuhCluster.falco.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: wazuh-falco-service
+  namespace: {{ .Values.nameSpace }}
+spec:
+  type: ClusterIP
+  selector:
+{{- toYaml .Values.wazuhCluster.falco.service.selector | nindent 4 }}
+  ports:
+    - name: syslog
+      port: {{ .Values.wazuhCluster.falco.syslog.servicePort }}
+      targetPort: {{ .Values.wazuhCluster.falco.syslog.targetPort }}
+      protocol: udp
+{{- end }}
