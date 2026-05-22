@@ -12,5 +12,5 @@ spec:
     - name: syslog
       port: {{ .Values.wazuhCluster.falco.syslog.servicePort }}
       targetPort: {{ .Values.wazuhCluster.falco.syslog.targetPort }}
-      protocol: udp
+      protocol: UDP
 {{- end }}
