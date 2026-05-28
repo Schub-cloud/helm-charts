@@ -211,7 +211,12 @@ def send_msg(msg: str, url: str) -> None:
             URL of the API.
     """
     headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
-    res     = requests.post(url, data=msg, headers=headers, timeout=10)
+    res = requests.post(
+        url,
+        data=msg.encode("utf-8", errors="replace"),
+        headers=headers,
+        timeout=10
+    )
     debug("# Response received: %s" % res.json)
 
 def get_json_alert(file_location: str) -> any:
@@ -236,7 +241,7 @@ def get_json_alert(file_location: str) -> any:
             If no valid JSON file are used
     """
     try:
-        with open(file_location) as alert_file:
+        with open(file_location, "r", encoding="utf-8", errors="replace") as alert_file:
             return json.load(alert_file)
     except FileNotFoundError:
         debug("# JSON file for alert %s doesn't exist" % file_location)
@@ -265,7 +270,7 @@ def get_json_options(file_location: str) -> any:
             If no valid JSON file are used
     """
     try:
-        with open(file_location) as options_file:
+        with open(file_location, "r", encoding="utf-8", errors="replace") as options_file:
             return json.load(options_file)
     except FileNotFoundError:
         debug("# JSON file for options %s doesn't exist" % file_location)
