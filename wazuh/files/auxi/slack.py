@@ -175,7 +175,7 @@ def generate_msg(alert: any, options: any) -> any:
         msg['title'] = f"{match.group(1)} - {match.group(2)}"
     else:
         msg['title']    = alert['rule']['description'] if 'description' in alert['rule'] else "N/A"
-    msg['text']     = alert.get('full_log')
+        msg['text']     = alert.get('full_log')
 
     msg['fields']   = []
     if 'agent' in alert:
