@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import time
+import re
 
 
 # Exit error codes
@@ -167,7 +168,13 @@ def generate_msg(alert: any, options: any) -> any:
     msg             = {}
     msg['color']    = color
     msg['pretext']  = "WAZUH Alert"
-    msg['title']    = alert['rule']['description'] if 'description' in alert['rule'] else "N/A"
+    if ['decoder'] == 'falco':
+        pattern = r'"?(Falco Alert)\s*-?\s*"?\s*(?:[\d:.]+:\s*)?([^|]+)\|'
+        text = alert['rule']['description']
+        match = re.search(pattern, text)
+        msg['title'] = f"{match.group(1)} - {match.group(2)}"
+    else:
+        msg['title']    = alert['rule']['description'] if 'description' in alert['rule'] else "N/A"
     msg['text']     = alert.get('full_log')
 
     msg['fields']   = []
