@@ -122,11 +122,6 @@ spec:
               name: agents-events
             - containerPort: {{ .Values.wazuhCluster.port }}
               name: cluster
-            {{- if .Values.wazuhCluster.falco.enabled }}
-            - containerPort: {{ .Values.wazuhCluster.falco.syslog.containerPort }}
-              name: syslog
-              protocol: UDP
-            {{- end }}
           env:
             - name: INDEXER_URL
               value: https://indexer:9200
