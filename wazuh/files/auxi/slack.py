@@ -173,6 +173,7 @@ def generate_msg(alert: any, options: any) -> any:
         text = alert['rule']['description']
         match = re.search(pattern, text)
         msg['title'] = f"{match.group(1)} - {match.group(2)}"
+        msg['text']  = alert.get('full_log')
     else:
         msg['title']    = alert['rule']['description'] if 'description' in alert['rule'] else "N/A"
         msg['text']     = alert.get('full_log')
