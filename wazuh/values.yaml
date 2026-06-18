@@ -24,7 +24,7 @@ wazuhCluster:
       # Keep this empty unless you want to override the default worker selector.
       selector:
         app: wazuh-manager
-        node-type: worker
+        node-type: master
 
 wazuhDashboard:
   assets: 
