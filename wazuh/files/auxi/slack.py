@@ -168,7 +168,7 @@ def generate_msg(alert: any, options: any) -> any:
     msg             = {}
     msg['color']    = color
     msg['pretext']  = "WAZUH Alert"
-    if msg['decoder'] == 'falco':
+    if alert['decoder'] == 'falco':
         pattern = r'"?(Falco Alert)\s*-?\s*"?\s*(?:[\d:.]+:\s*)?([^|]+)\|'
         text = alert['rule']['description']
         match = re.search(pattern, text)
